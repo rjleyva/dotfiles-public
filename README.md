@@ -38,6 +38,7 @@ This repository serves as:
 ### Terminal Workflow
 
 - tmux – Terminal multiplexer created by (Nicholas Marriott)
+- The Fuck created by nvbn (Andrey Sitnik)
 
 ### Aesthetics & Experience
 
@@ -103,5 +104,6 @@ This repository serves as:
 - David Peter (sharkdp)
 - Dan Davison
 - Steve Baker
+- Andrey Sitnik
 - tawara (yuru7)
 - Nicholas Marriott
