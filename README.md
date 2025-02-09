@@ -13,21 +13,21 @@ This repository serves as:
 - A personal reference for my evolving Neovim configuration.
 - A way to document and refine my workflow over time.
 
-# My Neovim Setup
+## My Neovim Setup
 
-## Core Utilities
+### Core Utilities
 
 - Neovim – Modern, extensible Vim alternative (Thiago de Arruda)
 - Git – Version control system (Linus Torvalds)
 - lazygit – Simple terminal UI for Git (jesseduffield)
 
-## Search & Navigation
+### Search & Navigation
 
 - ripgrep – Fast text searching (Andrew Gallant)
 - fzf – Fuzzy finder (Junegunn Choi)
 - fd – Simpler find alternative (David Peter)
 
-## Terminal Enhancements
+### Terminal Enhancements
 
 - Oh My Zsh – Zsh configuration framework (Robby Russell)
 - eza – Modern ls replacement (Christina Sørensen)
@@ -35,24 +35,24 @@ This repository serves as:
 - delta – Git diff viewer (dandavison)
 - tree – Directory structure visualization (Steve Baker)
 
-## Terminal Workflow
+### Terminal Workflow
 
 - tmux – Terminal multiplexer created by (Nicholas Marriott)
 
-## Aesthetics & Experience
+### Aesthetics & Experience
 
 - Solarized Osaka – My go-to colorscheme (Takuya Matsuyama)
 - Nerd Font (PlemolJP) – Beautiful, functional fonts (tawara / yuru7)
 - WezTerm – Terminal with true color and undercurl support (Wez Furlong)
 
-# Recommende Plugins by Josean Martinez's Neovim Configuration
+## Neovim Configuration Breakdown
 
-## Core Functionality
+### Core Functionality
 
 - nvim-lspconfig – Easy configuration for Neovim's built-in LSP.
 - mason.nvim – Manages LSP servers, linters, and formatters.
 
-## Productivity & Editing Enhancements
+### Productivity & Editing Enhancements
 
 - nvim-cmp – Autocompletion framework for Neovim.
 - nvim-autopairs – Automatically closes brackets and quotes.
@@ -61,7 +61,7 @@ This repository serves as:
 - vim-maximizer – Maximizes and restores the current split window.
 - which-key.nvim – Displays available keybindings in a popup.
 
-## UI & Theming
+### UI & Theming
 
 - colorscheme.lua – Custom theme configuration (e.g., Solarized Osaka).
 - nvim-tree.lua – A file explorer for better project navigation.
@@ -69,24 +69,24 @@ This repository serves as:
 - todo-comments.nvim – Highlights and manages TODOs in your code.
 - ui.lua – Custom UI tweaks (likely for better aesthetics and usability).
 
-## Navigation & Searching
+### Navigation & Searching
 
 - telescope.nvim – Fuzzy finder for files, text, and more.
 - nvim-treesitter – Better syntax highlighting and parsing.
 - nvim-treesitter-text-objects – Enhances text object selection with Treesitter.
 
-## Git & Version Control
+### Git & Version Control
 
 - gitsigns.nvim – Git integration to show changes in the gutter.
 - lazygit.nvim – Integrates lazygit for an interactive Git UI inside Neovim.
 
-## Code Refactoring & Testing
+### Code Refactoring & Testing
 
 - refactoring.nvim – Simplifies common refactoring operations.
 - testing.lua – Likely for running tests (you might be using nvim-test or a custom setup).
 - formatting.lua – Configures code formatting tools.
 
-# Inspirations & Credits
+## Inspirations & Credits
 
 - [Josean Martinez’s Neovim Config](https://github.com/josean-dev/dev-environment-files)
 - [Folke’s LazyVim](https://github.com/LazyVim/LazyVim)
