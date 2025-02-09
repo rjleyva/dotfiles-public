@@ -88,6 +88,20 @@ This repository serves as:
 
 ## Inspirations & Credits
 
-- [Josean Martinez’s Neovim Config](https://github.com/josean-dev/dev-environment-files)
-- [Folke’s LazyVim](https://github.com/LazyVim/LazyVim)
-- [Takuya Matsuyama’s Solarized Osaka](https://github.com/craftzdog)
+- Josean Martinez’s
+- Folke
+- Takuya Matsuyama
+- Thiago de Arruda
+- Linus Torvalds
+- Jesse Duffield
+- Wez Furlong
+- Robby Russell
+- Andrew Gallant (BurntSushi)
+- Junegunn Choi
+- David Peter (sharkdp)
+- Christina Sørensen (cafkafk)
+- David Peter (sharkdp)
+- Dan Davison
+- Steve Baker
+- tawara (yuru7)
+- Nicholas Marriott
