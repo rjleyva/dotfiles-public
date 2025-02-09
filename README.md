@@ -89,8 +89,8 @@ This repository serves as:
 
 ## Inspirations & Credits
 
-- Josean Martinez’s
 - Folke
+- Josean Martinez’s
 - Takuya Matsuyama
 - Thiago de Arruda
 - Linus Torvalds
