@@ -1,16 +1,12 @@
 # RJ Leyva's dotfiles
 
-<a href="https://dotfyle.com/bsc7th/dotfiles-nvim"><img src="https://dotfyle.com/bsc7th/dotfiles-nvim/badges/plugins?style=for-the-badge" /></a>
-<a href="https://dotfyle.com/bsc7th/dotfiles-nvim"><img src="https://dotfyle.com/bsc7th/dotfiles-nvim/badges/leaderkey?style=for-the-badge" /></a>
-<a href="https://dotfyle.com/bsc7th/dotfiles-nvim"><img src="https://dotfyle.com/bsc7th/dotfiles-nvim/badges/plugin-manager?style=for-the-badge" /></a>
-
 ![Neovim Performace](assets/nvim-perf.jpeg)
 
 Welcome to my personal dotfiles, the configuration I use daily as I continue my journey in web development. This setup evolves as I learn and discover better tools and workflows.
 
-## Inspiration
+> ⚠️ **NOTE:** This setup is highly personal and tailored to my specific needs. I don’t recommend copying it directly. Instead, feel free to explore, take inspiration, and adapt it to fit your own preferences and tools. As I grow and learn, I will continue refining and improving this setup to better support my workflow.
 
-I'm deeply grateful to the developers who have inspired and guided my setup:
+## Inspiration
 
 ### [Folke](https://github.com/folke)
 
@@ -34,9 +30,8 @@ While Solarized Osaka remains my all-time favorite colorscheme, I’ve recently 
 
 ![tmux](assets/tmux-sc.jpeg)
 
-Josean’s Neovim tutorials on [YouTube](https://www.youtube.com/watch?v=6pAG3BHurdM) played a huge role in shaping my configuration and understanding of [ lazy.nvim ](https://lazy.folke.io/). His videos were the spark that got me into Neovim and self-taught web development in the first place.
-Most of my keymaps and structural choices are based on his setup, though I've made a few changes to accommodate new plugins and avoid conflicts.  
-If you're new to Neovim, I highly recommend watching his [videos](https://www.youtube.com/watch?v=6pAG3BHurdM), they’re clear, beginner-friendly, and incredibly valuable.
+Josean’s Neovim tutorials on [YouTube](https://www.youtube.com/watch?v=6pAG3BHurdM) played a huge role in shaping my configuration and understanding of [ lazy.nvim ](https://lazy.folke.io/). His videos were the spark that got me into Neovim.
+Most of my keymaps and structural choices are based on his setup, though I've made a few changes to accommodate new plugins and avoid conflicts. If you're new to Neovim, I highly recommend watching his [videos](https://www.youtube.com/watch?v=6pAG3BHurdM), they’re clear, beginner-friendly, and incredibly valuable.
 
 ### [Mateo Sindičić (JazzyGrim / Sindo)](https://github.com/JazzyGrim/dotfiles/)
 
@@ -44,16 +39,3 @@ If you're new to Neovim, I highly recommend watching his [videos](https://www.yo
 
 I discovered plugins like [`rest.nvim`](https://github.com/rest-nvim/rest.nvim) and [`neotest`](https://github.com/nvim-neotest/neotest) thanks to his [YouTube video](https://www.youtube.com/watch?v=V070Zmvx9AM).  
 His content introduced me to the idea of integrating testing into my daily workflow, even for small projects like my blog. I also learned how to send HTTP requests directly from Neovim using `rest.nvim`, which has become a surprisingly useful part of my toolkit.
-
-## Purpose
-
-This configuration is aligned with my current tech stack and development goals:
-
-- Primarily focused on front-end development using HTMX, React, and Astro
-- Involved in some back-end work using Python and Go, often integrated with HTMX
-
-As I grow and learn, I continue refining and improving this setup to better support my workflow.
-
-> ⚠️ **Note:** This setup is highly personal and tailored to my specific needs. I don’t recommend copying it directly. Instead, feel free to explore, take inspiration, and adapt it to fit your own preferences and tools.
-
-### Thank you for stopping by, and happy coding!
