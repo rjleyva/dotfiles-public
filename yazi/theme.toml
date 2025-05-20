@@ -1,0 +1,17 @@
+[colors]
+background = "#2e2e2e"
+foreground = "#d8d8d8"
+selected_bg = "#565656"
+selected_fg = "#d8d8d8"
+directory_fg = "#7ca45c"
+symlink_fg = "#d1a19a"
+executable_fg = "#e59e6a"
+error_fg = "#d75f5f"
+
+[highlights]
+directory = "#7ca45c"
+symlink = "#d1a19a"
+executable = "#e59e6a"
+error = "#d75f5f"
+selected = "#e3d78f"
+
