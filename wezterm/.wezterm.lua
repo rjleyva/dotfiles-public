@@ -6,7 +6,7 @@ return {
 	window_background_opacity = 0.75,
 	macos_window_background_blur = 10,
 
-	color_scheme = "tokyonight_night",
+	color_scheme = "GruvboxDark",
 	max_fps = 120,
 
 	font = wezterm.font("PlemolJP Console NF"),
