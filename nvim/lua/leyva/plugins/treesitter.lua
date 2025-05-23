@@ -78,5 +78,12 @@ return {
       trim_scope = "outer",
       mode = "cursor",
     })
+
+    vim.filetype.add({
+      extension = {
+        mdx = "mdx",
+      },
+    })
+    vim.treesitter.language.register("markdown", "mdx")
   end,
 }
