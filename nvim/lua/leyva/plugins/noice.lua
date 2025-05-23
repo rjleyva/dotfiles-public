@@ -100,6 +100,7 @@ return {
     },
   },
   config = function(_, opts)
+    opts.presets.lsp_doc_border = true
     -- HACK: noice shows messages from before it was enabled,
     -- but this is not ideal when Lazy is installing plugins,
     -- so clear the messages in this case.
