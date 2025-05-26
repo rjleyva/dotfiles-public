@@ -12,6 +12,25 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Load zsh syntax highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Git commands Alias
+alias g="git"
+alias gst="git status"
+alias ga="git add"
+alias gaa="git add ."
+alias gra="git remote add"
+alias gca="git commit --amend"
+alias gl="git log"
+alias gd="git diff"
+alias gb="git branch"
+alias gp="git push"
+alias gmv="git mv -f"
+
+# Alias "lg" to open LazyGit
+alias lg="lazygit"
+
+# Alias "nv" to lauch neovim
+alias vim="nvim"
+
 # Alias "ls" to use eza with icons and simplified output
 alias ls="eza -al --color=always --long --git --icons=always --created --time-style=long-iso"
 
@@ -21,11 +40,8 @@ eval "$(zoxide init zsh)"
 # Set the default theme for bat syntax highlighting
 export BAT_THEME="gruvbox-dark"
 
-# Preview files or directories in FZF
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
-
 # Customize FZF options for file and directory preview
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
+export FZF_CTRL_T_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
 # Custom FZF completion runner with different previews based on command
@@ -37,7 +53,7 @@ _fzf_comprun() {
     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo ${}'" "$@" ;;
     ssh)          fzf --preview 'dig {}' "$@" ;;
-    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+    *)            fzf --preview "eza --tree --color=always {} | head -200" "$@" ;;
   esac
 }
 
@@ -62,8 +78,10 @@ eval "$(fzf --zsh)"
 # Load Powerlevel10k configuration if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Load NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$(brew --prefix nvm)/nvm.sh" ] && \. "$(brew --prefix nvm)/nvm.sh"
+[ -s "$(brew --prefix nvm)/bash_completion" ] && \. "$(brew --prefix nvm)/bash_completion"
 
 export EDITOR=nvim
+
