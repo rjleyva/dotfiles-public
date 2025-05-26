@@ -12,19 +12,6 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Load zsh syntax highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Git commands Alias
-alias g="git"
-alias gst="git status"
-alias ga="git add"
-alias gaa="git add ."
-alias gra="git remote add"
-alias gca="git commit --amend"
-alias gl="git log"
-alias gd="git diff"
-alias gb="git branch"
-alias gp="git push"
-alias gmv="git mv -f"
-
 # Alias "lg" to open LazyGit
 alias lg="lazygit"
 
