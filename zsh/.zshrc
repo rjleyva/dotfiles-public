@@ -12,6 +12,9 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Load zsh syntax highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# ALias "g" for git
+alias g="git"
+
 # Alias "lg" to open LazyGit
 alias lg="lazygit"
 
