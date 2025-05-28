@@ -15,6 +15,9 @@ return {
     "DBUIAddConnection",
     "DBUIFindBuffer",
   },
+  keys = {
+    { "<leader>db", "<cmd>DBUI<cr>", desc = "Open DBUI" },
+  },
   opts = {
     db_ui_use_nerd_fonts = 1,
   },
