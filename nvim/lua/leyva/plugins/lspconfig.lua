@@ -88,8 +88,6 @@ return {
           "typescript",
           "typescriptreact",
           "javascriptreact",
-          "astro",
-          "svelte",
         },
       },
       lua_ls = {
