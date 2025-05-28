@@ -37,7 +37,7 @@ return {
       },
       mason_tool_installer = {
         ensure_installed = {
-          "prettierd",
+          "prettier",
           "stylua",
           "isort",
           "black",
