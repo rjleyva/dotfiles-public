@@ -15,7 +15,6 @@ return {
       yaml = { "prettier" },
       graphql = { "prettier" },
       markdown = { "prettier" },
-      liquid = { "prettier" },
       lua = { "stylua" },
     },
     format_on_save = {
