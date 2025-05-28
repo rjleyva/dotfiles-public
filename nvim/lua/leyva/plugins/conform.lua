@@ -1,4 +1,5 @@
 return {
+
   "stevearc/conform.nvim",
   version = "*",
   enabled = true,
@@ -40,6 +41,7 @@ return {
 
     local ok, conform = pcall(require, "conform")
     if not ok then
+      ---@diagnostic disable-next-line: redundant-parameter
       vim.notify("conform.nvim failed to load!", vim.log.levels.ERROR)
       return
     end
@@ -47,12 +49,7 @@ return {
     conform.setup(opts)
 
     vim.keymap.set({ "n", "v" }, "<leader>pf", function()
-      conform.format({
-        lsp_fallback = true,
-        async = false,
-        quiet = false,
-        timeout_ms = 3000,
-      })
+      conform.format()
     end, { desc = "Format file or range (in visual mode)" })
 
     if opts.format_on_save then
