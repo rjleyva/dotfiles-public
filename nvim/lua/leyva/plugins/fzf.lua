@@ -97,6 +97,27 @@ return {
       end,
       desc = "Resume previous search",
     },
+    {
+      "<leader>fb",
+      function()
+        require("fzf-lua").dap_breakpoints()
+      end,
+      desc = "FZF: DAP Breakpoints",
+    },
+    {
+      "<leader>fv",
+      function()
+        require("fzf-lua").dap_variables()
+      end,
+      desc = "FZF: DAP Variables",
+    },
+    {
+      "<leader>fs",
+      function()
+        require("fzf-lua").dap_frames()
+      end,
+      desc = "FZF: DAP Stack Frames",
+    },
   },
   opts = {
     file_icon_padding = "",
@@ -115,9 +136,12 @@ return {
       formatter = "path.filename_first",
     },
   },
+
   config = function(_, opts)
     local fzf = require("fzf-lua")
     fzf.setup(opts)
+
+    fzf.dap = require("fzf-lua.providers.dap")
 
     vim.api.nvim_create_user_command("FzfDirectories", function()
       local cwd = vim.fn.getcwd()
