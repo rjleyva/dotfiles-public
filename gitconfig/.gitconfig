@@ -14,6 +14,7 @@
 
 [merge]
     conflictstyle = diff3
+
 [diff]
     colorMoved = default
 [init]
@@ -38,14 +39,14 @@
   cb = checkout -b
   cm = commit -m
   stl = stash list
-  save = stash save 
+  sv = stash save 
   pop = stash pop
   rb = rebase
   rbc = rebase --continue
   rbs = rebase --skip  
   ustg = reset HEAD --  
   cln = clean -fd    
-  undo = reset --soft HEAD^
+  ud = reset --soft HEAD^
   fxp = commit --fixup
   csq = commit --squash
   sw = show
