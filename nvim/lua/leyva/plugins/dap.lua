@@ -1,29 +1,92 @@
--- https://github.com/nikolovlazar/dotfiles/blob/6c580d1e360f23aa4414516f73c5779a307b4e2e/.config/nvim/lua/plugins/dap.lua
-
 return {
   {
     "mfussenegger/nvim-dap",
-    keys = {
-      {
-        ";dO",
-        function()
-          require("dap").step_out()
-        end,
-        desc = "Step Out",
-      },
-      {
-        ";do",
-        function()
-          require("dap").step_over()
-        end,
-        desc = "Step Over",
-      },
+    dependencies = {
+      "leoluz/nvim-dap-go",
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+      "williamboman/mason.nvim",
+      "mxsdev/nvim-dap-vscode-js",
     },
-  },
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    opts = {
-      virt_text_win_col = 80,
-    },
+    config = function()
+      local dap = require("dap")
+      local dapui = require("dapui")
+
+      require("dapui").setup()
+      require("dap-go").setup()
+
+      require("nvim-dap-virtual-text").setup({
+        display_callback = function(variable)
+          local name = string.lower(variable.name)
+          local value = string.lower(variable.value)
+          if name:match("secret") or name:match("api") or value:match("secret") or value:match("api") then
+            return "*****"
+          end
+          if #variable.value > 15 then
+            return " " .. string.sub(variable.value, 1, 15) .. "... "
+          end
+          return " " .. variable.value
+        end,
+      })
+
+      require("dap-vscode-js").setup({
+        debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
+        adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal" },
+      })
+
+      for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+        dap.configurations[language] = {
+          {
+            type = "pwa-chrome",
+            request = "launch",
+            name = "Launch Chrome to debug client",
+            url = "http://localhost:3000",
+            webRoot = "${workspaceFolder}",
+          },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch Node backend",
+            program = "${workspaceFolder}/server.js",
+            cwd = "${workspaceFolder}",
+          },
+          {
+            type = "pwa-node",
+            request = "attach",
+            name = "Attach to Node process",
+            processId = require("dap.utils").pick_process,
+            cwd = "${workspaceFolder}",
+          },
+        }
+      end
+
+      vim.keymap.set("n", "<space>dtb", dap.toggle_breakpoint)
+      vim.keymap.set("n", "<space>drc", dap.run_to_cursor)
+      vim.keymap.set("n", "<space>das", function()
+        dapui.eval(nil, { enter = true })
+      end)
+      vim.keymap.set("n", "<space>du", dapui.toggle)
+
+      vim.keymap.set("n", ";c", dap.continue)
+      vim.keymap.set("n", ";si", dap.step_into)
+      vim.keymap.set("n", ";sO", dap.step_over)
+      vim.keymap.set("n", ";so", dap.step_out)
+      vim.keymap.set("n", ";sb", dap.step_back)
+      vim.keymap.set("n", ";rt", dap.restart)
+
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+    end,
   },
 }
