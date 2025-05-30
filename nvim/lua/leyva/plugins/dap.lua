@@ -61,19 +61,19 @@ return {
         }
       end
 
-      vim.keymap.set("n", "<space>dtb", dap.toggle_breakpoint)
-      vim.keymap.set("n", "<space>drc", dap.run_to_cursor)
+      vim.keymap.set("n", "<space>dtb", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
+      vim.keymap.set("n", "<space>drc", dap.run_to_cursor, { desc = "DAP: Run to Cursor" })
       vim.keymap.set("n", "<space>das", function()
         dapui.eval(nil, { enter = true })
-      end)
-      vim.keymap.set("n", "<space>du", dapui.toggle)
+      end, { desc = "DAP: Eval Variable Under Cursor" })
+      vim.keymap.set("n", "<space>du", dapui.toggle, { desc = "DAP: Toggle UI" })
 
-      vim.keymap.set("n", ";c", dap.continue)
-      vim.keymap.set("n", ";si", dap.step_into)
-      vim.keymap.set("n", ";sO", dap.step_over)
-      vim.keymap.set("n", ";so", dap.step_out)
-      vim.keymap.set("n", ";sb", dap.step_back)
-      vim.keymap.set("n", ";rt", dap.restart)
+      vim.keymap.set("n", ";c", dap.continue, { desc = "DAP: Continue" })
+      vim.keymap.set("n", ";si", dap.step_into, { desc = "DAP: Step Into" })
+      vim.keymap.set("n", ";sO", dap.step_over, { desc = "DAP: Step Over" })
+      vim.keymap.set("n", ";so", dap.step_out, { desc = "DAP: Step Out" })
+      vim.keymap.set("n", ";sb", dap.step_back, { desc = "DAP: Step Back" })
+      vim.keymap.set("n", ";rt", dap.restart, { desc = "DAP: Restart" })
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
