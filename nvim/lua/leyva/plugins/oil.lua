@@ -143,11 +143,11 @@ return {
     require("mini.icons").setup()
     require("oil").setup(opts)
 
-    vim.api.nvim_set_hl(0, "WinBar", { fg = "#d3869b", bg = "#282828", bold = true })
+    vim.api.nvim_set_hl(0, "WinBar", { fg = "#ebbcba", bg = "#191724", bold = true })
     vim.api.nvim_create_autocmd("ColorScheme", {
       pattern = "*",
       callback = function()
-        vim.api.nvim_set_hl(0, "WinBar", { fg = "#d3869b", bg = "#282828", bold = true })
+        vim.api.nvim_set_hl(0, "WinBar", { fg = "#ebbcba", bg = "#191724", bold = true })
       end,
     })
 
