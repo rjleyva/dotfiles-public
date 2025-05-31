@@ -7,21 +7,21 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-vitest",
+      -- ["neotest-vitest"] = {}, -- not yet available
       "nvim-neotest/neotest-jest",
       "nvim-neotest/neotest-plenary",
     },
     opts = {
       adapters = {
         ["neotest-plenary"] = {},
-        ["neotest-vitest"] = {
-          is_test_file = function(file_path)
-            return file_path:match(".*%.test%.[jt]sx?$") or file_path:match(".*%.spec%.[jt]sx?$")
-          end,
-          filter_dir = function(name)
-            return name ~= "node_modules"
-          end,
-        },
+        -- ["neotest-vitest"] = {
+        --   is_test_file = function(file_path)
+        --     return file_path:match(".*%.test%.[jt]sx?$") or file_path:match(".*%.spec%.[jt]sx?$")
+        --   end,
+        --   filter_dir = function(name)
+        --     return name ~= "node_modules"
+        --   end,
+        -- },
         ["neotest-jest"] = {
           jestCommand = "npm test --",
           jestConfigFile = function()
