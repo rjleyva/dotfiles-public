@@ -33,11 +33,18 @@ return {
       })
 
       require("dap-vscode-js").setup({
-        debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
+        debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/out/vsDebugServer.js",
         adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal" },
       })
 
-      for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+      local js_based_languages = {
+        "typescript",
+        "javascript",
+        "typescriptreact",
+        "javascriptreact",
+      }
+
+      for _, language in ipairs(js_based_languages) do
         dap.configurations[language] = {
           {
             type = "pwa-chrome",
@@ -45,6 +52,30 @@ return {
             name = "Launch Chrome to debug client",
             url = "http://localhost:3000",
             webRoot = "${workspaceFolder}",
+          },
+          {
+            type = "pwa-chrome",
+            request = "launch",
+            name = "Launch & Debug Chrome (prompt)",
+            url = function()
+              local co = coroutine.running()
+              return coroutine.create(function()
+                vim.ui.input({
+                  prompt = "Enter URL: ",
+                  default = "http://localhost:3000",
+                }, function(url)
+                  if url == nil or url == "" then
+                    return
+                  else
+                    coroutine.resume(co, url)
+                  end
+                end)
+              end)
+            end,
+            webRoot = "${workspaceFolder}",
+            protocol = "inspector",
+            sourceMaps = true,
+            userDataDir = false,
           },
           {
             type = "pwa-node",
@@ -118,6 +149,18 @@ return {
       vim.keymap.set("n", ";td", function()
         require("neotest").run.run({ strategy = "dap" })
       end, { desc = "Neotest: Debug Nearest Test" })
+
+      vim.keymap.set("n", "<space>da", function()
+        if vim.fn.filereadable(".vscode/launch.json") then
+          local dap_vscode = require("dap.ext.vscode")
+          dap_vscode.load_launchjs(nil, {
+            ["pwa-node"] = js_based_languages,
+            ["chrome"] = js_based_languages,
+            ["pwa-chrome"] = js_based_languages,
+          })
+        end
+        dap.continue()
+      end, { desc = "DAP: Run from launch.json" })
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
