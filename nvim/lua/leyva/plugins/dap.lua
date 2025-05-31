@@ -11,6 +11,11 @@ return {
       "nvim-neotest/nvim-nio",
       "williamboman/mason.nvim",
       "mxsdev/nvim-dap-vscode-js",
+      {
+        "microsoft/vscode-js-debug",
+        build = "npm install --legacy-peer-deps --no-save && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+        version = "1.*",
+      },
     },
     config = function()
       local dap = require("dap")
@@ -33,8 +38,7 @@ return {
       })
 
       require("dap-vscode-js").setup({
-        debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/out/vsDebugServer.js",
-        adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal" },
+        debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
       })
 
       local js_based_languages = {
@@ -49,33 +53,25 @@ return {
           {
             type = "pwa-chrome",
             request = "launch",
-            name = "Launch Chrome to debug client",
-            url = "http://localhost:3000",
-            webRoot = "${workspaceFolder}",
-          },
-          {
-            type = "pwa-chrome",
-            request = "launch",
             name = "Launch & Debug Chrome (prompt)",
             url = function()
-              local co = coroutine.running()
               return coroutine.create(function()
+                local co = coroutine.running()
                 vim.ui.input({
                   prompt = "Enter URL: ",
                   default = "http://localhost:3000",
-                }, function(url)
-                  if url == nil or url == "" then
-                    return
-                  else
-                    coroutine.resume(co, url)
-                  end
+                }, function(input)
+                  coroutine.resume(co, input)
                 end)
+                local input = coroutine.yield()
+                return input
               end)
             end,
             webRoot = "${workspaceFolder}",
             protocol = "inspector",
             sourceMaps = true,
             userDataDir = false,
+            runtimeExecutable = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", -- 👈 Add this
           },
           {
             type = "pwa-node",
