@@ -1,7 +1,5 @@
 return {
   "kylechui/nvim-surround",
-  version = "*",
-  -- event = { "BufReadPre", "BufNewFile" }, -- use BufReadPre/BufNewFile for earlier loading
   event = "VeryLazy",
   opts = {
     keymaps = {
