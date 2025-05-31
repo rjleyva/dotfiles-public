@@ -1,3 +1,7 @@
+-- https://github.com/tjdevries/config.nvim/blob/master/lua/custom/plugins/dap.lua
+-- If you want to learn more about this plugin, I highly recommend watching this TJ DeVries YouTube video
+-- [simple neovim debugging setup (in 10 minutes)](https://www.youtube.com/watch?v=lyNfnI-B640)
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -62,7 +66,8 @@ return {
             name = "Launch TS backend",
             program = "${workspaceFolder}/server.ts",
             cwd = "${workspaceFolder}",
-            runtimeExecutable = "ts-node",
+            runtimeExecutable = "npx",
+            runtimeArgs = { "ts-node" },
           },
           {
             type = "pwa-node",
