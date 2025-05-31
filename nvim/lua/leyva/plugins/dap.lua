@@ -1,5 +1,5 @@
 -- https://github.com/tjdevries/config.nvim/blob/master/lua/custom/plugins/dap.lua
--- If you want to learn more about this plugin, I highly recommend watching this TJ DeVries YouTube video
+-- If you want to learn more about nvim-dap, I highly recommend watching TJ DeVries YouTube video
 -- [simple neovim debugging setup (in 10 minutes)](https://www.youtube.com/watch?v=lyNfnI-B640)
 
 return {
@@ -71,7 +71,7 @@ return {
             protocol = "inspector",
             sourceMaps = true,
             userDataDir = false,
-            runtimeExecutable = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", -- 👈 Add this
+            runtimeExecutable = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
           },
           {
             type = "pwa-node",
