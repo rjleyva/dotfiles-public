@@ -5,7 +5,7 @@ return {
     require("rose-pine").setup({
       variant = "main", -- auto, main, moon, or dawn
       dark_variant = "main", -- main, moon, or dawn
-      dim_inactive_windows = true,
+      dim_inactive_windows = false,
       extend_background_behind_borders = true,
 
       enable = {
@@ -67,6 +67,11 @@ return {
         -- VertSplit = { fg = "muted", bg = "muted" },
         -- Visual = { fg = "base", bg = "text", inherit = false },
         Visual = { reverse = true, inherit = false },
+        Normal = { bg = "none" },
+        NormalNC = { bg = "none" },
+        MsgArea = { bg = "none" },
+        FloatBorder = { bg = "none" },
+        NormalFloat = { bg = "none" },
       },
 
       before_highlight = function(group, highlight, palette)
