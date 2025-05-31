@@ -6,7 +6,7 @@ return {
     timeout = 3000,
     stages = "static",
     on_open = function()
-      local border_color = "#98971a"
+      local border_color = "#31748f"
 
       local levels = { "ERROR", "WARN", "INFO", "DEBUG", "TRACE" }
 
