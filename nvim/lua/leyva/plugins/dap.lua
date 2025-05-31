@@ -78,6 +78,26 @@ return {
             protocol = "inspector",
             skipFiles = { "<node_internals>/**" },
           },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Debug Jest Test (DAP)",
+            runtimeExecutable = "node",
+            runtimeArgs = {
+              "./node_modules/jest/bin/jest.js",
+              "${file}",
+              "--runInBand",
+              "--testTimeout=10000",
+              "--no-cache",
+              "--detectOpenHandles",
+              "--forceExit",
+            },
+            rootPath = "${workspaceFolder}",
+            cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+          },
         }
       end
 
@@ -94,6 +114,10 @@ return {
       vim.keymap.set("n", ";so", dap.step_out, { desc = "DAP: Step Out" })
       vim.keymap.set("n", ";sb", dap.step_back, { desc = "DAP: Step Back" })
       vim.keymap.set("n", ";rt", dap.restart, { desc = "DAP: Restart" })
+
+      vim.keymap.set("n", ";td", function()
+        require("neotest").run.run({ strategy = "dap" })
+      end, { desc = "Neotest: Debug Nearest Test" })
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
