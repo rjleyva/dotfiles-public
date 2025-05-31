@@ -7,17 +7,23 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/neotest-vitest",
       "nvim-neotest/neotest-jest",
       "nvim-neotest/neotest-plenary",
     },
     opts = {
-      -- Can be a list of adapters like what neotest expects,
-      -- or a list of adapter names,
-      -- or a table of adapter names, mapped to adapter configs.
-      -- The adapter will then be automatically loaded with the config.
       adapters = {
         ["neotest-plenary"] = {},
+        ["neotest-vitest"] = {
+          is_test_file = function(file_path)
+            return file_path:match(".*%.test%.[jt]sx?$") or file_path:match(".*%.spec%.[jt]sx?$")
+          end,
+          filter_dir = function(name)
+            return name ~= "node_modules"
+          end,
+        },
         ["neotest-jest"] = {
+          jestCommand = "npm test --",
           jestConfigFile = function()
             local file = vim.fn.expand("%:p")
             if string.find(file, "/packages/") then
@@ -48,10 +54,10 @@ return {
     },
     config = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace("neotest")
+
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            -- Replace newline and tab characters with space for more compact diagnostics
             local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
             return message
           end,
@@ -60,15 +66,12 @@ return {
 
       if require("lazyvim.util").has("trouble.nvim") then
         opts.consumers = opts.consumers or {}
-        -- Refresh and auto close trouble after running tests
-        ---@type neotest.Consumer
         opts.consumers.trouble = function(client)
           client.listeners.results = function(adapter_id, results, partial)
             if partial then
               return
             end
             local tree = assert(client:get_position(nil, { adapter = adapter_id }))
-
             local failed = 0
             for pos_id, result in pairs(results) do
               if result.status == "failed" and tree:get_key(pos_id) then
@@ -117,16 +120,65 @@ return {
 
       require("neotest").setup(opts)
     end,
-  -- stylua: ignore
+
+    -- Keymaps
     keys = {
-      { ";tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run File" },
-      { ";tr", function() require("neotest").run.run() end, desc = "Run Nearest" },
-      { ";tT", function() require("neotest").run.run(vim.loop.cwd()) end, desc = "Run All Test Files" },
-      { ";tl", function() require("neotest").run.run_last() end, desc = "Run Last" },
-      { ";ts", function() require("neotest").summary.toggle() end, desc = "Toggle Summary" },
-      { ";to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
-      { ";tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel" },
-      { ";tS", function() require("neotest").run.stop() end, desc = "Stop" },
+      {
+        ";tt",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Run File",
+      },
+      {
+        ";tr",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run Nearest",
+      },
+      {
+        ";tT",
+        function()
+          require("neotest").run.run(vim.loop.cwd())
+        end,
+        desc = "Run All Test Files",
+      },
+      {
+        ";tl",
+        function()
+          require("neotest").run.run_last()
+        end,
+        desc = "Run Last",
+      },
+      {
+        ";ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Toggle Summary",
+      },
+      {
+        ";to",
+        function()
+          require("neotest").output.open({ enter = true, auto_close = true })
+        end,
+        desc = "Show Output",
+      },
+      {
+        ";tO",
+        function()
+          require("neotest").output_panel.toggle()
+        end,
+        desc = "Toggle Output Panel",
+      },
+      {
+        ";tS",
+        function()
+          require("neotest").run.stop()
+        end,
+        desc = "Stop",
+      },
     },
   },
 }
