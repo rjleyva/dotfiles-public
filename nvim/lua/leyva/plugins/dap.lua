@@ -2,7 +2,6 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "leoluz/nvim-dap-go",
       "rcarriga/nvim-dap-ui",
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
@@ -14,7 +13,6 @@ return {
       local dapui = require("dapui")
 
       require("dapui").setup()
-      require("dap-go").setup()
 
       require("nvim-dap-virtual-text").setup({
         display_callback = function(variable)
@@ -57,6 +55,23 @@ return {
             name = "Attach to Node process",
             processId = require("dap.utils").pick_process,
             cwd = "${workspaceFolder}",
+          },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch TS backend",
+            program = "${workspaceFolder}/server.ts",
+            cwd = "${workspaceFolder}",
+            runtimeExecutable = "ts-node",
+          },
+          {
+            type = "pwa-node",
+            request = "attach",
+            name = "Attach to Next.js backend",
+            processId = require("dap.utils").pick_process,
+            cwd = "${workspaceFolder}",
+            protocol = "inspector",
+            skipFiles = { "<node_internals>/**" },
           },
         }
       end
