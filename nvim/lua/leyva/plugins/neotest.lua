@@ -7,21 +7,12 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      -- ["neotest-vitest"] = {}, -- not yet available
       "nvim-neotest/neotest-jest",
       "nvim-neotest/neotest-plenary",
     },
     opts = {
       adapters = {
         ["neotest-plenary"] = {},
-        -- ["neotest-vitest"] = {
-        --   is_test_file = function(file_path)
-        --     return file_path:match(".*%.test%.[jt]sx?$") or file_path:match(".*%.spec%.[jt]sx?$")
-        --   end,
-        --   filter_dir = function(name)
-        --     return name ~= "node_modules"
-        --   end,
-        -- },
         ["neotest-jest"] = {
           jestCommand = "npm test --",
           jestConfigFile = function()
@@ -64,7 +55,7 @@ return {
         },
       }, neotest_ns)
 
-      if require("lazyvim.util").has("trouble.nvim") then
+      if require("lazy.core.config").plugins["trouble.nvim"] then
         opts.consumers = opts.consumers or {}
         opts.consumers.trouble = function(client)
           client.listeners.results = function(adapter_id, results, partial)
