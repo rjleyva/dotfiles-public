@@ -145,10 +145,10 @@ return {
 --       operators = { bold = true },
 --       properties = { italic = true },
 --       string = { bold = false },
---       types = { italic = true },
+--       types = { bold = true },
 --       underline = true,
 --       undercurl = true,
---       variables = { italic = true },
+--       variables = { bold = true },
 --     },
 --   },
 --   config = function(_, opts)
