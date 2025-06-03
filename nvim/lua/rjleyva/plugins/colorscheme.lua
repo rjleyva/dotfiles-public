@@ -1,38 +1,35 @@
 return {
-    "folke/tokyonight.nvim",
-    priority = 1000,
-    opts = {
-      style = "night",
-      on_colors = function(colors)
-        local bg = "#011628"
-        local bg_dark = "#011423"
-        local bg_highlight = "#143652"
-        local bg_search = "#0A64AC"
-        local bg_visual = "#275378"
-        local fg = "#CBE0F0"
-        local fg_dark = "#B4D0E9"
-        local fg_gutter = "#627E97"
-        local border = "#547998"
-
-        colors.bg = bg
-        colors.bg_dark = bg_dark
-        colors.bg_float = bg_dark
-        colors.bg_highlight = bg_highlight
-        colors.bg_popup = bg_dark
-        colors.bg_search = bg_search
-        colors.bg_sidebar = bg_dark
-        colors.bg_statusline = bg_dark
-        colors.bg_visual = bg_visual
-        colors.border = border
-        colors.fg = fg
-        colors.fg_dark = fg_dark
-        colors.fg_float = fg
-        colors.fg_gutter = fg_gutter
-        colors.fg_sidebar = fg_dark
-      end,
+  "craftzdog/solarized-osaka.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {
+    use_background = "dark",
+    border = "rounded",
+    enable_italics = true,
+    style = "dark",
+    transparent = true,
+    terminal_colors = true,
+    styles = {
+      boolean = { bold = true },
+      comments = { bold = true },
+      conditionals = { italic = true },
+      functions = { bold = true },
+      keywords = { bold = true },
+      loops = { italic = true },
+      misc = { italic = true },
+      numbers = { bold = true },
+      operators = { bold = true },
+      properties = { italic = true },
+      string = { bold = false },
+      types = { bold = true },
+      underline = true,
+      undercurl = true,
+      variables = { bold = true },
     },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd([[colorscheme tokyonight]])
-    end,
+  },
+  config = function(_, opts)
+    require("solarized-osaka").setup(opts)
+    vim.cmd.colorscheme("solarized-osaka")
+    vim.api.nvim_set_hl(0, "Visual", { reverse = true })
+  end,
 }
