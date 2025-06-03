@@ -1,5 +1,4 @@
 return {
-  {
     "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
@@ -36,5 +35,4 @@ return {
       require("tokyonight").setup(opts)
       vim.cmd([[colorscheme tokyonight]])
     end,
-  },
 }
