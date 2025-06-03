@@ -2,6 +2,9 @@ return {
   "folke/which-key.nvim",
   version = "*",
   event = "VeryLazy",
+  dependencies = {
+    "echasnovski/mini.icons",
+  },
   opts = {
     plugins = {
       spelling = { enabled = false },
