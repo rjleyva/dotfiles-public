@@ -11,7 +11,7 @@ return {
     terminal_colors = true,
     styles = {
       boolean = { bold = true },
-      comments = { bold = true },
+      comments = { italic = true },
       conditionals = { italic = true },
       functions = { bold = true },
       keywords = { bold = true },
@@ -20,11 +20,11 @@ return {
       numbers = { bold = true },
       operators = { bold = true },
       properties = { italic = true },
-      string = { bold = false },
+      string = { bold = true },
       types = { bold = true },
+      variables = { bold = false },
       underline = true,
       undercurl = true,
-      variables = { bold = true },
     },
   },
   config = function(_, opts)
