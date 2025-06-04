@@ -4,6 +4,8 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "jay-babu/mason-null-ls.nvim",
+    "nvimtools/none-ls.nvim",
   },
   opts = function()
     return {
@@ -36,17 +38,19 @@ return {
       },
       mason_tool_installer = {
         ensure_installed = {
-          "black",
           "eslint_d",
-          "isort",
           "prettier",
           "stylua",
-          "stylelint",
         },
         automatic_installation = true,
         automatic_enable = true,
         run_on_start = true,
-        start_delay = 5000,
+        start_delay = 1000,
+      },
+      mason_null_ls = {
+        ensure_installed = { "eslint_d", "prettier", "stylua" },
+        automatic_installation = true,
+        handlers = {},
       },
     }
   end,
@@ -54,5 +58,15 @@ return {
     require("mason").setup(opts.mason)
     require("mason-lspconfig").setup(opts.mason_lspconfig)
     require("mason-tool-installer").setup(opts.mason_tool_installer)
+    require("mason-null-ls").setup(opts.mason_null_ls)
+
+    local null_ls = require("null-ls")
+    null_ls.setup({
+      sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.diagnostics.eslint_d,
+      },
+    })
   end,
 }
