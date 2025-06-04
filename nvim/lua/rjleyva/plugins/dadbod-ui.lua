@@ -1,23 +1,21 @@
 return {
   "kristijanhusak/vim-dadbod-ui",
   version = "*",
+  ft = { "sql", "mysql", "plsql", "graphql" },
   dependencies = {
-    { "tpope/vim-dadbod", lazy = true },
+    "tpope/vim-dadbod",
     {
       "kristijanhusak/vim-dadbod-completion",
       ft = { "sql", "mysql", "plsql", "graphql" },
-      lazy = true,
     },
   },
   keys = {
     { "<leader>db", "<cmd>DBUI<cr>", desc = "Open DBUI" },
+    { "<leader>dt", "<cmd>DBUIToggle<cr>", desc = "Toggle DBUI" },
+    { "<leader>da", "<cmd>DBUIAddConnection<cr>", desc = "Add DB connection" },
+    { "<leader>df", "<cmd>DBUIFindBuffer<cr>", desc = "Find DB buffer" },
   },
-  opts = {
-    db_ui_use_nerd_fonts = 1,
-  },
-  config = function(_, opts)
-    for k, v in pairs(opts) do
-      vim.g[k] = v
-    end
+  init = function()
+    vim.g.db_ui_use_nerd_fonts = 1
   end,
 }
