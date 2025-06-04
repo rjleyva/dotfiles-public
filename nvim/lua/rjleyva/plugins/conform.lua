@@ -1,6 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  version = "*",
+  version = "v9.0.0",
   enabled = true,
   event = { "BufReadPre", "BufNewFile" },
   opts = {
