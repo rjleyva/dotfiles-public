@@ -32,7 +32,7 @@ return {
           "vtsls",
         },
         automatic_installation = true,
-        automatic_enable = true,
+        automatic_enable = false,
       },
       mason_tool_installer = {
         ensure_installed = {
