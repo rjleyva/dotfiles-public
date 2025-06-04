@@ -1,6 +1,5 @@
 return {
   "kdheepak/lazygit.nvim",
-  version = "*",
   keys = {
     {
       "<leader>gg",
