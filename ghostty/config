@@ -1,0 +1,91 @@
+# Automatically summon updates from the netherworld every time you blink
+auto-update = summon
+
+# Choose the spectral release channel: unleash the stable wraiths
+auto-update-channel = stable
+
+# Distort the very fabric of the terminal universe by adjusting cell width
+adjust-cell-width = 4%
+
+# Pull the terminal's cells deeper into the void, adjusting vertical height
+adjust-cell-height = 4%
+
+# Align your terminal's text to the mystical baseline of existence
+adjust-font-baseline = 25%
+
+# Envelop the terminal in an abyssal shade of blackest blue
+background = #010e17
+
+# Add a mystical blur effect, making it look like you're gazing through ghostly fog
+background-blur-radius = 25
+
+# Let the background fade in and out, casting an eerie, ephemeral glow
+background-opacity = 0.8
+
+# Invoke the default spellbooks provided by Ghostty
+config-default-files = true
+
+# Change the cursor to a glowing, moving monolith
+cursor-style = bar
+
+# The cursor shall not blink—time itself is frozen in this realm
+cursor-style-blink = false
+
+# Cast a golden light on the cursor, like a lantern in the dark
+cursor-text = #FFD700
+
+# Use a font forged in the digital ether
+font-family = "Fantasque Sans Mono"
+
+# Let your terminal's text be bold and unapologetic, like an ancient tome
+font-family-bold = true
+
+# Thicken the font like it’s been carved into stone
+font-thicken = true
+
+# Add hidden glyphs for ultimate power
+font-feature = 2
+
+# Font size is now fit for a king’s eyes, mighty and powerful
+font-size = 21
+
+# Focus the mouse on the void, it follows you wherever you go
+focus-follows-mouse = true
+
+# Keybind for quick terminal access, for when you need to command the void
+keybind = global:cmd+shift+t=toggle_quick_terminal
+
+# macOS-specific rites:
+
+# Hide the title bar like you're summoning a ghost from the shadows
+macos-titlebar-style = hidden
+
+# Hide the icon as though your presence is imperceptible
+macos-titlebar-proxy-icon = hidden
+
+# Ensure no boundaries confine your existence in fullscreen mode
+macos-non-native-fullscreen = true
+
+# Make the mouse disappear, like a ghost in the night, while typing
+mouse-hide-while-typing = true
+
+# The quick terminal shall rise from the bottom like a spectral apparition
+quick-terminal-position = bottom
+
+# The shell whispers in the ancient tongue of zsh
+shell-integration = zsh
+
+# Theme it like a solar flare, but dark as the void
+theme = "Solarized Dark - Patched"
+
+# Add window decorations like mystical borders framing your terminal’s portal
+window-decoration = true
+
+# Padding on the x-axis like an ethereal cushion for your commands
+window-padding-x = 5
+
+# Padding on the y-axis like a soft cloud around your text
+window-padding-y = 7
+
+# Let the padding balance be a harmonious force, always in equilibrium
+window-padding-balance = true
