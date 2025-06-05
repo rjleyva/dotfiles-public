@@ -118,6 +118,34 @@ return {
       end,
       desc = "Search directories",
     },
+    {
+      "<leader>fR",
+      function()
+        require("fzf-lua").lsp_references()
+      end,
+      desc = "References",
+    },
+    {
+      "<leader>fD",
+      function()
+        require("fzf-lua").lsp_definitions()
+      end,
+      desc = "Definitions",
+    },
+    {
+      "<leader>fi",
+      function()
+        require("fzf-lua").lsp_implementations()
+      end,
+      desc = "Implementations",
+    },
+    {
+      "<leader>ft",
+      function()
+        require("fzf-lua").lsp_typedefs()
+      end,
+      desc = "Type Definitions",
+    },
   },
   opts = {
     file_icon_padding = "",
