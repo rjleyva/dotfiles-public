@@ -4,7 +4,7 @@ return {
   event = "VeryLazy",
   opts = {},
   keys = {
-    { "sa", desc = "Add surrounding", mode = "n" },
+    { "sm", desc = "Add surrounding (manual input)", mode = "n" },
     { "sy", desc = "Add surrounding to current word", mode = "n" },
     { "sl", desc = "Add surrounding to current line", mode = "n" },
     { "sY", desc = "Add surrounding to entire line", mode = "n" },
@@ -13,10 +13,11 @@ return {
     { "sd", desc = "Delete surrounding", mode = "n" },
     { "sc", desc = "Change surrounding", mode = "n" },
   },
+
   config = function(_, _)
     require("nvim-surround").setup({
       keymaps = {
-        normal = "sa",
+        normal = "sm",
         normal_cur = "sy",
         normal_line = "sl",
         normal_cur_line = "sY",
