@@ -14,11 +14,11 @@ return {
     },
   },
   keys = {
-    { ";xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Trouble: Workspace Diagnostics" },
-    { ";xd", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Trouble: Document Diagnostics" },
-    { ";xf", "<cmd>Trouble quickfix toggle<CR>", desc = "Trouble: Quickfix List" },
-    { ";xl", "<cmd>Trouble loclist toggle<CR>", desc = "Trouble: Location List" },
-    { ";xt", "<cmd>Trouble todo toggle<CR>", desc = "Trouble: TODO Comments" },
+    { "<leader>xw", "<cmd>Trouble diagnostics toggle<CR>", desc = "Workspace diagnostics" },
+    { "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Document diagnostics" },
+    { "<leader>xf", "<cmd>Trouble quickfix toggle<CR>", desc = "Quickfix list" },
+    { "<leader>xl", "<cmd>Trouble loclist toggle<CR>", desc = "Location list" },
+    { "<leader>xt", "<cmd>Trouble todo toggle<CR>", desc = "TODOs" },
   },
   config = function(_, opts)
     require("trouble").setup(opts)
