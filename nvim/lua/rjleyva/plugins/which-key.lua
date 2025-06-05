@@ -38,10 +38,13 @@ return {
     wk.add({
       { "<leader>w", group = "Window Managment" },
       { "<leader>t", group = "Tab Management" },
+      { "<leader>e", group = "Neo Tree Explorer" },
+      { "<leader>f", group = "Fuzzy Finder" },
       { "<leader>c", group = "Code" },
       { "<leader>d", group = "Dadbod" },
       { "<leader>x", group = "Diagnostics" },
       { "<leader>g", group = "Git" },
+      { "<leader>r", group = "Refactoring" },
     })
   end,
 }
