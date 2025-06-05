@@ -2,6 +2,205 @@ return {
   "lewis6991/gitsigns.nvim",
   version = "*",
   event = { "BufReadPre", "BufNewFile" },
+  keys = {
+    {
+      "g]h",
+      function()
+        if vim.wo.diff then
+          vim.cmd.normal({ "]c", bang = true })
+        else
+          require("gitsigns").nav_hunk("next")
+        end
+      end,
+      desc = "Next Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "g[h",
+      function()
+        if vim.wo.diff then
+          vim.cmd.normal({ "[c", bang = true })
+        else
+          require("gitsigns").nav_hunk("prev")
+        end
+      end,
+      desc = "Prev Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "g]H",
+      function()
+        require("gitsigns").nav_hunk("last")
+      end,
+      desc = "Last Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "g[H",
+      function()
+        require("gitsigns").nav_hunk("first")
+      end,
+      desc = "First Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gs",
+      ":Gitsigns stage_hunk<CR>",
+      mode = { "n", "v" },
+      desc = "Stage Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gr",
+      ":Gitsigns reset_hunk<CR>",
+      mode = { "n", "v" },
+      desc = "Rest Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gS",
+      function()
+        require("gitsigns").stage_buffer()
+      end,
+      desc = "Stage Buffer",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gu",
+      function()
+        require("gitsigns").reset_hunk({ to_index = true })
+      end,
+      desc = "Undo Stage Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gR",
+      function()
+        require("gitsigns").reset_buffer()
+      end,
+      desc = "Reset Buffer",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gp",
+      function()
+        require("gitsigns").preview_hunk_inline()
+      end,
+      desc = "Preview Hunk Inline",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gb",
+      function()
+        vim.schedule(function()
+          require("gitsigns").blame_line({ full = true })
+        end)
+      end,
+      desc = "Blame Line",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gB",
+      function()
+        require("gitsigns").blame()
+      end,
+      desc = "Blame Buffer",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gd",
+      function()
+        require("gitsigns").diffthis()
+      end,
+      desc = "Diff This",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gD",
+      function()
+        require("gitsigns").diffthis("~")
+      end,
+      desc = "Diff This ~",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gt",
+      function()
+        require("gitsigns").toggle_signs()
+      end,
+      desc = "Toggle GitSigns",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gl",
+      function()
+        require("gitsigns").toggle_linehl()
+      end,
+      desc = "Toggle Line Highlight",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gn",
+      function()
+        require("gitsigns").toggle_numhl()
+      end,
+      desc = "Toggle Number Highlight",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "<leader>gl",
+      function()
+        require("gitsigns").toggle_current_line_blame()
+      end,
+      desc = "Toggle Current Line Blame",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+    {
+      "ih",
+      ":<C-U>Gitsigns select_hunk<CR>",
+      mode = { "o", "x" },
+      desc = "Select Hunk",
+      buffer = true,
+      noremap = true,
+      silent = true,
+    },
+  },
   opts = {
     signs = {
       add = { text = "┃" },
@@ -27,65 +226,5 @@ return {
     watch_gitdir = {
       follow_files = true,
     },
-    on_attach = function(bufnr)
-      local gs = package.loaded.gitsigns
-
-      local function map(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-      end
-
-      map("n", "]h", function()
-        if vim.wo.diff then
-          vim.cmd.normal({ "]c", bang = true })
-        else
-          gs.nav_hunk("next")
-        end
-      end, "Next Hunk")
-
-      map("n", "[h", function()
-        if vim.wo.diff then
-          vim.cmd.normal({ "[c", bang = true })
-        else
-          gs.nav_hunk("prev")
-        end
-      end, "Prev Hunk")
-
-      map("n", "]H", function()
-        gs.nav_hunk("last")
-      end, "Last Hunk")
-      map("n", "[H", function()
-        gs.nav_hunk("first")
-      end, "First Hunk")
-
-      map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-      map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-      map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-      map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-      map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-
-      map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
-
-      map(
-        "n",
-        "<leader>ghb",
-        vim.schedule_wrap(function()
-          gs.blame_line({ full = true })
-        end),
-        "Blame Line"
-      )
-
-      map("n", "<leader>ghB", gs.blame, "Blame Buffer")
-      map("n", "<leader>ghd", gs.diffthis, "Diff This")
-      map("n", "<leader>ghD", function()
-        gs.diffthis("~")
-      end, "Diff This ~")
-
-      map("n", "<leader>gtg", gs.toggle_signs, "Toggle GitSigns")
-      map("n", "<leader>glh", gs.toggle_linehl, "Toggle Line Highlight")
-      map("n", "<leader>gnh", gs.toggle_numhl, "Toggle Number Highlight")
-      map("n", "<leader>glb", gs.toggle_current_line_blame, "Toggle Current Line Blame")
-
-      map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "Select Hunk")
-    end,
   },
 }
