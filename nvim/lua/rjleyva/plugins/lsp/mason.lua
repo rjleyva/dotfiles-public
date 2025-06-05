@@ -23,6 +23,7 @@ return {
       },
       mason_lspconfig = {
         ensure_installed = {
+          "astro",
           "cssls",
           "emmet_ls",
           "graphql",
@@ -30,6 +31,7 @@ return {
           "jsonls",
           "lua_ls",
           "prismals",
+          "svelte",
           "ts_ls",
           "vtsls",
         },
