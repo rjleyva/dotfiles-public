@@ -105,7 +105,7 @@
   },
   "nvim-lspconfig": {
     "branch": "master",
-    "commit": "3ea99227e316c5028f57a4d86a1a7fd01dd876d0"
+    "commit": "036885e8e5456d3907626b634693234f628afef6"
   },
   "nvim-surround": {
     "branch": "main",
