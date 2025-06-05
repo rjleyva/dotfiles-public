@@ -31,8 +31,8 @@ return {
 
     conform.setup(opts)
 
-    vim.keymap.set({ "n", "v" }, "<leader>pf", function()
+    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
       conform.format({ async = false, lsp_fallback = true })
-    end, { desc = "Format file or range (in visual mode)" })
+    end, { desc = "Manually format file or range" })
   end,
 }
