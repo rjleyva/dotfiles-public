@@ -11,10 +11,10 @@ return {
     {
       "<leader>ee",
       "<cmd>Neotree toggle<cr>",
-      desc = "Toggle Neo-tree",
+      desc = "Toggle Neo-tree sidebar",
     },
     {
-      "-",
+      "<leader>ec",
       function()
         local reveal_file = vim.fn.expand("%:p")
         if reveal_file == "" or vim.uv.fs_stat(reveal_file) == nil then
@@ -29,7 +29,7 @@ return {
           reveal_force_cwd = true,
         })
       end,
-      desc = "Open Neo-tree at current file or working directory",
+      desc = "Reveal current file in Neo-tree",
     },
   },
   opts = {
