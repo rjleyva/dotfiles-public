@@ -3,7 +3,7 @@ return {
   version = "*",
   event = "VeryLazy",
   dependencies = {
-    "echasnovski/mini.icons",
+    "nvim-tree/nvim-web-devicons",
   },
   opts = {
     plugins = {
@@ -36,8 +36,12 @@ return {
     local wk = require("which-key")
     wk.setup(opts)
     wk.add({
-      { "<leader>c", group = "+code" },
-      { "<leader>d", group = "+dadbod" },
+      { "<leader>w", group = "Window Managment" },
+      { "<leader>t", group = "Tab Management" },
+      { "<leader>c", group = "Code" },
+      { "<leader>d", group = "Dadbod" },
+      { "<leader>x", group = "Diagnostics" },
+      { "<leader>g", group = "Git" },
     })
   end,
 }
