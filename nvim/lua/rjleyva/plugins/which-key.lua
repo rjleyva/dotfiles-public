@@ -36,7 +36,8 @@ return {
     local wk = require("which-key")
     wk.setup(opts)
     wk.add({
-      {"<leader>c", group = "+code" },
+      { "<leader>c", group = "+code" },
+      { "<leader>d", group = "+dadbod" },
     })
   end,
 }
