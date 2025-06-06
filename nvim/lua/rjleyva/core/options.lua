@@ -34,7 +34,7 @@ vim.opt.path:append({ "**" })
 vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.clipboard:append("unnamedplus")
 
-vim.opt.shortmess:append("I")
+-- vim.opt.shortmess:append("I")
 vim.opt.formatoptions:append({ "r" })
 
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
