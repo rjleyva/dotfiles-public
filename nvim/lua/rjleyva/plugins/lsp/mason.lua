@@ -40,6 +40,7 @@ return {
       },
       mason_tool_installer = {
         ensure_installed = {
+          "biome",
           "eslint_d",
           "prettier",
           "stylua",
@@ -50,7 +51,7 @@ return {
         start_delay = 1000,
       },
       mason_null_ls = {
-        ensure_installed = { "eslint_d", "prettier", "stylua" },
+        ensure_installed = { "biome", "eslint_d", "prettier", "stylua" },
         automatic_installation = true,
         handlers = {},
       },
@@ -62,13 +63,38 @@ return {
     require("mason-tool-installer").setup(opts.mason_tool_installer)
     require("mason-null-ls").setup(opts.mason_null_ls)
 
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    if not string.find(vim.env.PATH, mason_bin, 1, true) then
+      vim.env.PATH = vim.env.PATH .. ":" .. mason_bin
+    end
+
     local null_ls = require("null-ls")
-    null_ls.setup({
-      sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.eslint_d,
-      },
-    })
+    local util = require("lspconfig.util")
+    local sources = {
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.prettier,
+    }
+
+    local root = util.root_pattern(
+      "biome.json",
+      ".eslintrc.js",
+      ".eslintrc.json",
+      "eslint.config.js",
+      "package.json",
+      ".git"
+    )(vim.fn.expand("%:p")) or vim.fn.getcwd()
+
+    if vim.fn.filereadable(root .. "/biome.json") == 1 then
+      table.insert(sources, null_ls.builtins.formatting.biome)
+      table.insert(sources, null_ls.builtins.diagnostics.biome)
+    elseif
+      vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+      or vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+      or vim.fn.filereadable(root .. "/eslint.config.js") == 1
+    then
+      table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+    end
+
+    null_ls.setup({ sources = sources })
   end,
 }
