@@ -57,11 +57,13 @@ return {
     }
   end,
   config = function(_, opts)
+    -- Setup Mason ecosystem plugins
     require("mason").setup(opts.mason)
     require("mason-lspconfig").setup(opts.mason_lspconfig)
     require("mason-tool-installer").setup(opts.mason_tool_installer)
     require("mason-null-ls").setup(opts.mason_null_ls)
 
+    -- Add Mason bin to PATH early
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
     if not string.find(vim.env.PATH, mason_bin, 1, true) then
       vim.env.PATH = vim.env.PATH .. ":" .. mason_bin
@@ -70,6 +72,7 @@ return {
     local null_ls = require("null-ls")
     local util = require("lspconfig.util")
 
+    -- Custom eslint_d generator
     local eslint_d = {
       method = null_ls.methods.DIAGNOSTICS,
       filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
@@ -80,12 +83,17 @@ return {
         from_stderr = false,
         format = "json",
         check_exit_code = function(code)
-          return code <= 1
+          return code <= 1 -- 0 = no errors, 1 = lint errors found
         end,
         on_output = function(params)
+          -- Uncomment for debug:
+          -- print(vim.inspect(params.output))
+
           local diagnostics = {}
-          local output = params.output and params.output[1]
-          if output and output.messages then
+          -- Defensive fallback for output shape
+          local output = params.output and params.output[1] or {}
+
+          if output.messages then
             for _, message in ipairs(output.messages) do
               table.insert(diagnostics, {
                 row = message.line,
@@ -123,6 +131,8 @@ return {
       table.insert(sources, eslint_d)
     end
 
-    null_ls.setup({ sources = sources })
+    vim.defer_fn(function()
+      null_ls.setup({ sources = sources })
+    end, 100)
   end,
 }
