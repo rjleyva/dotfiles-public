@@ -179,7 +179,7 @@ return {
       "<leader>rs",
       function()
         for _, client in pairs(vim.lsp.get_active_clients()) do
-          client.stop()
+          client:stop()
         end
         vim.defer_fn(function()
           vim.cmd("edit")
