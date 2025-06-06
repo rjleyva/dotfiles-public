@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.o.winborder = "rounded"
 vim.opt.mouse = ""
 vim.opt.splitkeep = "cursor"
 vim.opt.number = true
