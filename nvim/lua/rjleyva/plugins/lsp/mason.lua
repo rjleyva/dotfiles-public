@@ -17,7 +17,6 @@ return {
             package_uninstalled = "✗",
             check_outdated_packages_on_open = true,
           },
-          border = "rounded",
         },
         log_level = vim.log.levels.WARN,
       },
@@ -42,6 +41,7 @@ return {
         ensure_installed = {
           "eslint_d",
           "prettier",
+          "selene",
           "stylua",
         },
         automatic_installation = true,
@@ -50,20 +50,18 @@ return {
         start_delay = 1000,
       },
       mason_null_ls = {
-        ensure_installed = { "eslint_d", "prettier", "stylua" },
+        ensure_installed = { "selene", "eslint_d", "prettier", "stylua" },
         automatic_installation = true,
         handlers = {},
       },
     }
   end,
   config = function(_, opts)
-    -- Setup Mason ecosystem plugins
     require("mason").setup(opts.mason)
     require("mason-lspconfig").setup(opts.mason_lspconfig)
     require("mason-tool-installer").setup(opts.mason_tool_installer)
     require("mason-null-ls").setup(opts.mason_null_ls)
 
-    -- Add Mason bin to PATH early
     local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
     if not string.find(vim.env.PATH, mason_bin, 1, true) then
       vim.env.PATH = vim.env.PATH .. ":" .. mason_bin
@@ -72,7 +70,6 @@ return {
     local null_ls = require("null-ls")
     local util = require("lspconfig.util")
 
-    -- Custom eslint_d generator
     local eslint_d = {
       method = null_ls.methods.DIAGNOSTICS,
       filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
@@ -83,14 +80,10 @@ return {
         from_stderr = false,
         format = "json",
         check_exit_code = function(code)
-          return code <= 1 -- 0 = no errors, 1 = lint errors found
+          return code <= 1
         end,
         on_output = function(params)
-          -- Uncomment for debug:
-          -- print(vim.inspect(params.output))
-
           local diagnostics = {}
-          -- Defensive fallback for output shape
           local output = params.output and params.output[1] or {}
 
           if output.messages then
