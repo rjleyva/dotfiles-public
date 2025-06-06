@@ -40,7 +40,6 @@ return {
       },
       mason_tool_installer = {
         ensure_installed = {
-          "biome",
           "eslint_d",
           "prettier",
           "stylua",
@@ -51,7 +50,7 @@ return {
         start_delay = 1000,
       },
       mason_null_ls = {
-        ensure_installed = { "biome", "eslint_d", "prettier", "stylua" },
+        ensure_installed = { "eslint_d", "prettier", "stylua" },
         automatic_installation = true,
         handlers = {},
       },
@@ -70,28 +69,58 @@ return {
 
     local null_ls = require("null-ls")
     local util = require("lspconfig.util")
+
+    local eslint_d = {
+      method = null_ls.methods.DIAGNOSTICS,
+      filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
+      generator = null_ls.generator({
+        command = "eslint_d",
+        args = { "--format", "json", "--stdin", "--stdin-filename", "$FILENAME" },
+        to_stdin = true,
+        from_stderr = false,
+        format = "json",
+        check_exit_code = function(code)
+          return code <= 1
+        end,
+        on_output = function(params)
+          local diagnostics = {}
+          local output = params.output and params.output[1]
+          if output and output.messages then
+            for _, message in ipairs(output.messages) do
+              table.insert(diagnostics, {
+                row = message.line,
+                col = message.column,
+                end_row = message.endLine or message.line,
+                end_col = message.endColumn or message.column,
+                message = message.message,
+                source = "eslint_d",
+                severity = ({
+                  [2] = vim.diagnostic.severity.ERROR,
+                  [1] = vim.diagnostic.severity.WARN,
+                })[message.severity] or vim.diagnostic.severity.INFO,
+              })
+            end
+          end
+          return diagnostics
+        end,
+      }),
+    }
+
     local sources = {
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.prettier,
     }
 
-    local root = util.root_pattern(
-      "biome.json",
-      ".eslintrc.js",
-      ".eslintrc.json",
-      "eslint.config.js",
-      "package.json",
-      ".git"
-    )(vim.fn.expand("%:p")) or vim.fn.getcwd()
+    local root = util.root_pattern(".eslintrc.js", ".eslintrc.json", "eslint.config.js", "package.json", ".git")(
+      vim.fn.expand("%:p")
+    ) or vim.fn.getcwd()
 
-    if vim.fn.filereadable(root .. "/biome.json") == 1 then
-      table.insert(sources, null_ls.builtins.formatting.biome)
-      table.insert(sources, null_ls.builtins.diagnostics.biome)
-    elseif vim.fn.filereadable(root .. "/.eslintrc.js") == 1 or vim.fn.filereadable(root .. "/.eslintrc.json") == 1 then
-      table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
-    elseif vim.fn.filereadable(root .. "/eslint.config.js") == 1 then
-      table.insert(sources, null_ls.builtins.formatting.biome)
-      table.insert(sources, null_ls.builtins.diagnostics.biome)
+    if
+      vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+      or vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+      or vim.fn.filereadable(root .. "/eslint.config.js") == 1
+    then
+      table.insert(sources, eslint_d)
     end
 
     null_ls.setup({ sources = sources })
