@@ -133,13 +133,6 @@ return {
       desc = "Document Diagnostics (LSP)",
     },
     {
-      "<leader>lD",
-      function()
-        vim.lsp.buf.declaration()
-      end,
-      desc = "Declaration (LSP)",
-    },
-    {
       "<leader>lh",
       function()
         vim.lsp.buf.hover({ border = "rounded" })
