@@ -142,7 +142,7 @@ return {
     {
       "<leader>lh",
       function()
-        vim.lsp.buf.hover()
+        vim.lsp.buf.hover({ border = "rounded" })
       end,
       desc = "Hover (LSP)",
     },
