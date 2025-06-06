@@ -84,13 +84,6 @@ return {
       desc = "Resume last search session",
     },
     {
-      "<leader>fd",
-      function()
-        vim.cmd("FzfDirectories")
-      end,
-      desc = "Search project directories",
-    },
-    {
       "<leader>fR",
       function()
         require("fzf-lua").lsp_references()
@@ -146,21 +139,6 @@ return {
   config = function(_, opts)
     local fzf = require("fzf-lua")
     fzf.setup(opts)
-
-    fzf.dap = require("fzf-lua.providers.dap")
-
-    vim.api.nvim_create_user_command("FzfDirectories", function()
-      local cwd = vim.fn.getcwd()
-      fzf.fzf_exec("fd --type d", {
-        prompt = require("fzf-lua.path").shorten(cwd) .. "> ",
-        cwd = cwd,
-        actions = {
-          ["default"] = function(selected)
-            vim.cmd("Oil --float " .. vim.fn.fnameescape(cwd .. "/" .. selected[1]))
-          end,
-        },
-      })
-    end, {})
 
     vim.api.nvim_create_user_command("FzfGitFiles", function()
       fzf.fzf_exec("git ls-files", { prompt = "Git Files > " })
