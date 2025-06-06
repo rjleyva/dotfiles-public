@@ -19,7 +19,6 @@ return {
           },
           border = "rounded",
         },
-        -- luacheck: globals vim
         log_level = vim.log.levels.WARN,
       },
       mason_lspconfig = {
