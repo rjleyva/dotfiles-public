@@ -30,6 +30,7 @@ return {
         "svelte",
         "lua_ls",
         "graphql",
+        "jsonls",
         "emmet_ls",
         "vtsls",
       },
