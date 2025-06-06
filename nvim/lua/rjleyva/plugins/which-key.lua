@@ -42,6 +42,7 @@ return {
       { "<leader>f", group = "Fuzzy Finder" },
       { "<leader>c", group = "Code" },
       { "<leader>d", group = "Dadbod" },
+      { "<leader>l", group = "LSP Actions" },
       { "<leader>x", group = "Diagnostics" },
       { "<leader>g", group = "Git" },
       { "<leader>r", group = "Refactoring" },
