@@ -87,12 +87,11 @@ return {
     if vim.fn.filereadable(root .. "/biome.json") == 1 then
       table.insert(sources, null_ls.builtins.formatting.biome)
       table.insert(sources, null_ls.builtins.diagnostics.biome)
-    elseif
-      vim.fn.filereadable(root .. "/.eslintrc.js") == 1
-      or vim.fn.filereadable(root .. "/.eslintrc.json") == 1
-      or vim.fn.filereadable(root .. "/eslint.config.js") == 1
-    then
+    elseif vim.fn.filereadable(root .. "/.eslintrc.js") == 1 or vim.fn.filereadable(root .. "/.eslintrc.json") == 1 then
       table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+    elseif vim.fn.filereadable(root .. "/eslint.config.js") == 1 then
+      table.insert(sources, null_ls.builtins.formatting.biome)
+      table.insert(sources, null_ls.builtins.diagnostics.biome)
     end
 
     null_ls.setup({ sources = sources })
