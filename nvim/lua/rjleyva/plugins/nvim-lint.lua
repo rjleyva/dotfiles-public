@@ -1,7 +1,7 @@
 return {
   "mfussenegger/nvim-lint",
-  version = "*",
   event = { "BufReadPre", "BufNewFile" },
+  version = "*",
   opts = {
     linters_by_ft = {
       lua = { "selene" },
@@ -15,14 +15,11 @@ return {
     local lint = require("lint")
     lint.linters_by_ft = opts.linters_by_ft
 
-    local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-      group = lint_augroup,
-      desc = "Run linters on buffer events",
+    vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "BufEnter" }, {
+      group = vim.api.nvim_create_augroup("nvim-lint-autogroup", { clear = true }),
       callback = function()
         local ft = vim.bo.filetype
-        if lint.linters_by_ft[ft] ~= nil then
+        if lint.linters_by_ft[ft] then
           lint.try_lint()
         end
       end,
@@ -30,15 +27,15 @@ return {
 
     vim.keymap.set("n", "<leader>lL", function()
       local ft = vim.bo.filetype
-      if lint.linters_by_ft[ft] ~= nil then
+      if lint.linters_by_ft[ft] then
         lint.try_lint()
       else
-        vim.notify("No linter configured for this filetype: " .. ft, vim.log.levels.WARN)
+        vim.notify("No linter configured for filetype: " .. ft, vim.log.levels.WARN)
       end
-    end, { desc = "Trigger linting for current file" })
+    end, { desc = "Run linter manually" })
 
     vim.keymap.set("n", "<leader>le", function()
       vim.diagnostic.setqflist()
-    end, { desc = "Send lint diagnostics to quickfix list" })
+    end, { desc = "Send diagnostics to quickfix list" })
   end,
 }
