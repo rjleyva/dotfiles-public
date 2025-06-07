@@ -28,9 +28,18 @@ return {
     },
   },
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim",
+    {
+      "nvim-lua/plenary.nvim",
+      lazy = true,
+    },
+    {
+      "nvim-tree/nvim-web-devicons",
+      lazy = true,
+    },
+    {
+      "MunifTanjim/nui.nvim",
+      lazy = true,
+    },
   },
   opts = {
     sources = { "filesystem", "buffers", "git_status" },
