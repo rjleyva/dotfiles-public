@@ -30,10 +30,6 @@ return {
   },
 
   config = function()
-    if vim.bo.filetype == "lua" then
-      require("neodev").setup({})
-    end
-
     local lspconfig = require("lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
 
@@ -42,9 +38,60 @@ return {
     })
 
     local servers = {
-      astro = {},
-      svelte = {},
-      ts_ls = {},
+      astro = {
+        capabilities = capabilities,
+      },
+      svelte = {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePost", {
+            pattern = { "*.js", "*.ts" },
+            callback = function(ctx)
+              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+            end,
+          })
+        end,
+      },
+      vtsls = {
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "astro",
+          "svelte",
+        },
+        root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          completions = {
+            completeFunctionCalls = true,
+          },
+        },
+      },
       jsonls = {
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
@@ -80,7 +127,17 @@ return {
           },
         },
       },
-      graphql = {},
+      graphql = {
+        filetypes = {
+          "graphql",
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+          "astro",
+          "svelte",
+        },
+      },
       lua_ls = {
         settings = {
           Lua = {
