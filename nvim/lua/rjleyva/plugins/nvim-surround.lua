@@ -2,7 +2,6 @@ return {
   "kylechui/nvim-surround",
   version = "v3.1.2",
   event = "InsertEnter",
-  opts = {},
   keys = {
     { "sm", desc = "Add surrounding (manual input)", mode = "n" },
     { "sy", desc = "Add surrounding to current word", mode = "n" },
