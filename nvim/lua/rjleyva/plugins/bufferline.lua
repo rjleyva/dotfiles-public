@@ -1,7 +1,13 @@
 return {
   "akinsho/bufferline.nvim",
   version = "*",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "VeryLazy",
+  dependencies = {
+    {
+      "nvim-tree/nvim-web-devicons",
+      event = "VeryLazy",
+    },
+  },
   opts = function()
     local bufferline = require("bufferline")
     return {
