@@ -5,8 +5,27 @@ return {
   build = ":TSUpdate",
   version = false,
   dependencies = {
-    "nvim-treesitter/nvim-treesitter-context",
-    "windwp/nvim-ts-autotag",
+    {
+      "nvim-treesitter/nvim-treesitter-context",
+      event = { "BufReadPre", "BufNewFile" },
+      lazy = true,
+      config = function()
+        require("treesitter-context").setup({
+          enabled = true,
+          max_lines = 3,
+          trim_scope = "outer",
+          mode = "cursor",
+        })
+      end,
+    },
+    {
+      "windwp/nvim-ts-autotag",
+      event = { "BufReadPre", "BufNewFile" },
+      lazy = true,
+      config = function()
+        require("nvim-ts-autotag").setup()
+      end,
+    },
   },
   keys = {
     { "<C-space>", desc = "Increment Selection" },
