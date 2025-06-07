@@ -33,8 +33,20 @@ vim.opt.path:append({ "**" })
 vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.clipboard:append("unnamedplus")
 
--- vim.opt.shortmess:append("I")
 vim.opt.formatoptions:append({ "r" })
+
+-- disable unused built-in plugins
+vim.opt.shortmess:append("I")
+
+vim.g.loaded_matchparen = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_tutor_mode_plugin = 1
 
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
