@@ -26,7 +26,7 @@ return {
       lualine_a = { "mode" },
       lualine_b = { "branch", "diagnostics" },
       lualine_c = { "filename" },
-      lualine_x = { "diff", "encoding", "fileformat", "filetype" },
+      lualine_x = { "encoding", "fileformat", "filetype" }, -- you can all add "diff"
       lualine_y = { "progress" },
       lualine_z = { "location" },
     },
