@@ -1,12 +1,7 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim",
-  },
-  lazy = false,
+  cmd = { "Neotree" },
   keys = {
     {
       "<leader>ee",
@@ -32,22 +27,22 @@ return {
       desc = "Reveal current file in Neo-tree",
     },
   },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "MunifTanjim/nui.nvim",
+  },
   opts = {
     sources = { "filesystem", "buffers", "git_status" },
+    open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
     filesystem = {
-      window = {
-        position = "right",
-      },
+      window = { position = "right" },
     },
     buffers = {
-      window = {
-        position = "right",
-      },
+      window = { position = "right" },
     },
     git_status = {
-      window = {
-        position = "right",
-      },
+      window = { position = "right" },
     },
   },
 }
