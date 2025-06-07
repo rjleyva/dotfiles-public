@@ -2,96 +2,96 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "saghen/blink.cmp",
-    { "antosha417/nvim-lsp-file-operations", config = true },
     {
       "folke/neodev.nvim",
-      opts = {
-        library = { enabled = true },
-        diagnostics = { enable = true },
-      },
+      lazy = false,
+      priority = 1000,
+      opts = {},
     },
+    "saghen/blink.cmp",
+    { "antosha417/nvim-lsp-file-operations", config = true },
     "ibhagwan/fzf-lua",
     { "b0o/schemastore.nvim", lazy = true },
   },
 
-  opts = function()
+  config = function()
+    require("neodev").setup({})
+
+    local lspconfig = require("lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
     local schemastore = require("schemastore")
 
-    return {
-      capabilities = capabilities,
-      servers = {
-        astro = { filetypes = "astro" },
-        svelte = { filetypes = { "svelte", "javascript", "typescript" } },
-        ts_ls = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    vim.diagnostic.config({
+      float = { border = "rounded" },
+    })
+
+    local servers = {
+      astro = { filetypes = { "astro" } },
+      svelte = { filetypes = { "svelte", "javascript", "typescript" } },
+      ts_ls = {
+        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+      },
+      jsonls = {
+        settings = {
+          json = {
+            schemas = schemastore.json.schemas(),
+            validate = { enable = true },
+          },
         },
-        jsonls = {
-          settings = {
-            json = {
-              schemas = schemastore.json.schemas(),
-              validate = { enable = true },
+      },
+      emmet_ls = {
+        filetypes = {
+          "html",
+          "astro",
+          "svelte",
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+          "css",
+          "scss",
+          "sass",
+          "less",
+        },
+        init_options = {
+          html = {
+            options = { ["bem.enabled"] = true },
+          },
+        },
+      },
+      graphql = {
+        filetypes = {
+          "graphql",
+          "gql",
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+        },
+      },
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+              path = vim.split(package.path, ";"),
             },
-          },
-        },
-        emmet_ls = {
-          filetypes = {
-            "html",
-            "astro",
-            "svelte",
-            "javascript",
-            "typescript",
-            "javascriptreact",
-            "typescriptreact",
-            "css",
-            "scss",
-            "sass",
-            "less",
-          },
-          init_options = {
-            html = {
-              options = {
-                ["bem.enabled"] = true,
-              },
+            diagnostics = {
+              globals = { "vim" },
             },
-          },
-        },
-        graphql = {
-          filetypes = {
-            "graphql",
-            "gql",
-            "javascript",
-            "typescript",
-            "javascriptreact",
-            "typescriptreact",
-          },
-        },
-        lua_ls = {
-          settings = {
-            Lua = {
-              runtime = { version = "LuaJIT" },
-              diagnostics = { globals = { "vim" } },
-              telemetry = { enable = false },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
             },
+            telemetry = { enable = false },
           },
         },
       },
     }
-  end,
 
-  config = function(_, opts)
-    local lspconfig = require("lspconfig")
-
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-      },
-    })
-
-    for name, server_opts in pairs(opts.servers) do
+    for name, server_opts in pairs(servers) do
       lspconfig[name].setup(vim.tbl_deep_extend("force", {
-        capabilities = opts.capabilities,
+        capabilities = capabilities,
       }, server_opts))
     end
   end,
@@ -185,7 +185,7 @@ return {
           vim.cmd("edit")
         end, 100)
       end,
-      desc = "Restart All Active Clients (LSP)",
+      desc = "Restart All Active LSP Clients (safe)",
     },
   },
 }
