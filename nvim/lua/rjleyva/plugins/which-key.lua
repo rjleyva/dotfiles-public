@@ -1,7 +1,7 @@
 return {
   "folke/which-key.nvim",
   version = "*",
-  event = "VeryLazy",
+  keys = { "<leader>", { "<leader>?", desc = "Buffer Local Keymaps" } },
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
@@ -12,6 +12,10 @@ return {
         operators = true,
         motions = true,
         text_objects = true,
+        windows = false,
+        nav = false,
+        z = false,
+        g = false,
       },
     },
     win = {
@@ -19,17 +23,6 @@ return {
     },
     layout = {
       align = "center",
-    },
-  },
-  keys = {
-    {
-      "<leader>?",
-      function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 500
-        require("which-key").show({ global = false })
-      end,
-      desc = "Buffer Local Keymaps",
     },
   },
   config = function(_, opts)
