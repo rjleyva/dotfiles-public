@@ -1,6 +1,7 @@
 return {
   "folke/trouble.nvim",
   version = "v3.7.1",
+  cmd = { "Trouble" },
   dependencies = { "folke/todo-comments.nvim" },
   opts = {
     use_diagnostic_signs = true,
