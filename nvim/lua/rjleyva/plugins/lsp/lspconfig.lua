@@ -2,39 +2,60 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    {
-      "folke/neodev.nvim",
-      lazy = false,
-      priority = 1000,
-      opts = {},
+    "folke/neodev.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      library = vim.api.nvim_get_runtime_file("", true),
+      diagnostics = { enable = true },
     },
-    "saghen/blink.cmp",
-    { "antosha417/nvim-lsp-file-operations", config = true },
-    "ibhagwan/fzf-lua",
-    { "b0o/schemastore.nvim", lazy = true },
+    {
+      "saghen/blink.cmp",
+      lazy = true,
+      config = true,
+    },
+    {
+      "antosha417/nvim-lsp-file-operations",
+      event = "BufReadPre",
+      config = true,
+    },
+    {
+      "b0o/schemastore.nvim",
+      lazy = true,
+    },
+    {
+      "ibhagwan/fzf-lua",
+      cmd = { "FzfLua" },
+    },
   },
 
   config = function()
-    require("neodev").setup({})
+    if vim.bo.filetype == "lua" then
+      require("neodev").setup({})
+    end
 
     local lspconfig = require("lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
-    local schemastore = require("schemastore")
 
     vim.diagnostic.config({
       float = { border = "rounded" },
     })
 
     local servers = {
-      astro = { filetypes = { "astro" } },
-      svelte = { filetypes = { "svelte", "javascript", "typescript" } },
-      ts_ls = {
-        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-      },
+      astro = {},
+      svelte = {},
+      ts_ls = {},
       jsonls = {
+        on_new_config = function(config)
+          local ok, schemastore = pcall(require, "schemastore")
+          if ok then
+            config.settings = config.settings or {}
+            config.settings.json = config.settings.json or {}
+            config.settings.json.schemas = schemastore.json.schemas()
+          end
+        end,
         settings = {
           json = {
-            schemas = schemastore.json.schemas(),
             validate = { enable = true },
           },
         },
@@ -59,16 +80,7 @@ return {
           },
         },
       },
-      graphql = {
-        filetypes = {
-          "graphql",
-          "gql",
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-        },
-      },
+      graphql = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -89,10 +101,10 @@ return {
       },
     }
 
-    for name, server_opts in pairs(servers) do
+    for name, opts in pairs(servers) do
       lspconfig[name].setup(vim.tbl_deep_extend("force", {
         capabilities = capabilities,
-      }, server_opts))
+      }, opts))
     end
   end,
 
@@ -144,8 +156,8 @@ return {
       function()
         vim.lsp.buf.code_action()
       end,
-      desc = "Action (LSP)",
       mode = { "n", "v" },
+      desc = "Action (LSP)",
     },
     {
       "<leader>ln",
