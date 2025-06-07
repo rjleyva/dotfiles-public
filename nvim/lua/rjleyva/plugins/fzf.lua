@@ -3,7 +3,7 @@ return {
   enabled = true,
   cmd = { "FzfLua" },
   dependencies = {
-    { "echasnovski/mini.icons", lazy = true },
+    { "nvim-tree/nvim-web-devicons", lazy = true },
   },
   keys = {
     {
