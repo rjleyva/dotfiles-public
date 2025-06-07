@@ -1,6 +1,6 @@
 return {
   "rcarriga/nvim-notify",
-  event = "VeryLazy",
+  lazy = false,
   opts = {
     timeout = 7000,
     stages = "static",
