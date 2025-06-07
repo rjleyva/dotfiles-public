@@ -1,9 +1,9 @@
 return {
   "ibhagwan/fzf-lua",
   enabled = true,
-  event = "VeryLazy",
+  cmd = "FzfLua",
   dependencies = {
-    "echasnovski/mini.icons",
+    { "echasnovski/mini.icons", lazy = true },
   },
   keys = {
     {
