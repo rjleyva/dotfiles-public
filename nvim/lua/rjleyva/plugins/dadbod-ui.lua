@@ -8,13 +8,6 @@ return {
     "DBUIFindBuffer",
   },
   ft = { "sql", "mysql", "plsql", "graphql" },
-  dependencies = {
-    "tpope/vim-dadbod",
-    {
-      "kristijanhusak/vim-dadbod-completion",
-      ft = { "sql", "mysql", "plsql", "graphql" },
-    },
-  },
   keys = {
     { "<leader>dl", "<cmd>DBUI<cr>", desc = "Launch Database UI Explorer" },
     { "<leader>dt", "<cmd>DBUIToggle<cr>", desc = "Toggle visibility of Database UI" },
@@ -24,4 +17,20 @@ return {
   init = function()
     vim.g.db_ui_use_nerd_fonts = 1
   end,
+  dependencies = {
+    {
+      "tpope/vim-dadbod",
+      cmd = {
+        "DBUI",
+        "DBUIToggle",
+        "DBUIAddConnection",
+        "DBUIFindBuffer",
+      },
+      ft = { "sql", "mysql", "plsql", "graphql" },
+    },
+    {
+      "kristijanhusak/vim-dadbod-completion",
+      ft = { "sql", "mysql", "plsql", "graphql" },
+    },
+  },
 }
