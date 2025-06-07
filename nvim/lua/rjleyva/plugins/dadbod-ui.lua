@@ -1,6 +1,12 @@
 return {
   "kristijanhusak/vim-dadbod-ui",
   version = "*",
+  cmd = {
+    "DBUI",
+    "DBUIToggle",
+    "DBUIAddConnection",
+    "DBUIFindBuffer",
+  },
   ft = { "sql", "mysql", "plsql", "graphql" },
   dependencies = {
     "tpope/vim-dadbod",
