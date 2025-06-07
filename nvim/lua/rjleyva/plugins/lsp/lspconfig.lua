@@ -3,17 +3,8 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "folke/neodev.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      library = vim.api.nvim_get_runtime_file("", true),
-      diagnostics = { enable = true },
-    },
-    {
-      "saghen/blink.cmp",
-      lazy = true,
-      config = true,
-    },
+    "saghen/blink.cmp",
+    "ibhagwan/fzf-lua",
     {
       "antosha417/nvim-lsp-file-operations",
       event = "BufReadPre",
@@ -22,10 +13,6 @@ return {
     {
       "b0o/schemastore.nvim",
       lazy = true,
-    },
-    {
-      "ibhagwan/fzf-lua",
-      cmd = { "FzfLua" },
     },
   },
 
