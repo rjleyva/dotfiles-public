@@ -64,7 +64,7 @@ return {
       "<leader>gr",
       ":Gitsigns reset_hunk<CR>",
       mode = { "n", "v" },
-      desc = "Rest Hunk",
+      desc = "Reset Hunk",
       buffer = true,
       noremap = true,
       silent = true,
