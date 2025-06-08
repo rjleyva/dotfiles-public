@@ -24,13 +24,15 @@ return {
       float = { border = "rounded" },
     })
 
+    local root_pattern = require("lspconfig.util").root_pattern
+
     local servers = {
       astro = {
         capabilities = capabilities,
       },
+
       svelte = {
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
+        on_attach = function(client, _)
           vim.api.nvim_create_autocmd("BufWritePost", {
             pattern = { "*.js", "*.ts" },
             callback = function(ctx)
@@ -39,6 +41,7 @@ return {
           })
         end,
       },
+
       vtsls = {
         filetypes = {
           "javascript",
@@ -48,7 +51,7 @@ return {
           "astro",
           "svelte",
         },
-        root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
+        root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
         settings = {
           typescript = {
             inlayHints = {
@@ -79,6 +82,7 @@ return {
           },
         },
       },
+
       jsonls = {
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
@@ -94,6 +98,7 @@ return {
           },
         },
       },
+
       emmet_ls = {
         filetypes = {
           "html",
@@ -114,6 +119,7 @@ return {
           },
         },
       },
+
       graphql = {
         filetypes = {
           "graphql",
@@ -125,6 +131,7 @@ return {
           "svelte",
         },
       },
+
       lua_ls = {
         settings = {
           Lua = {
@@ -222,17 +229,17 @@ return {
       function()
         vim.diagnostic.goto_prev({ float = true, border = "rounded" })
       end,
-      desc = "Prev Diagnostic (LSP)",
+      desc = "Previous Diagnostic",
     },
     {
       "]d",
       function()
         vim.diagnostic.goto_next({ float = true, border = "rounded" })
       end,
-      desc = "Next Diagnostic (LSP)",
+      desc = "Next Diagnostic",
     },
     {
-      "<leader>rs",
+      "<leader>ls",
       function()
         for _, client in pairs(vim.lsp.get_clients()) do
           client:stop()
@@ -241,7 +248,7 @@ return {
           vim.cmd("edit")
         end, 100)
       end,
-      desc = "Restart All Active LSP Clients (safe)",
+      desc = "Restart All Active LSP Clients (Safe)",
     },
   },
 }
