@@ -1,8 +1,13 @@
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
+
   dependencies = {
-    "folke/neodev.nvim",
+    {
+      "folke/neodev.nvim",
+      lazy = false,
+      priority = 1000,
+    },
     "saghen/blink.cmp",
     "ibhagwan/fzf-lua",
     {
@@ -17,14 +22,24 @@ return {
   },
 
   config = function()
+    require("neodev").setup({
+      library = {
+        enabled = true,
+        runtime = true,
+        types = true,
+        plugins = false,
+      },
+      setup_jsonls = true,
+      diagnostics = { enable = true },
+    })
+
     local lspconfig = require("lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
+    local root_pattern = require("lspconfig.util").root_pattern
 
     vim.diagnostic.config({
       float = { border = "rounded" },
     })
-
-    local root_pattern = require("lspconfig.util").root_pattern
 
     local servers = {
       astro = {
