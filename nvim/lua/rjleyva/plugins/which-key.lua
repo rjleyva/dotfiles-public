@@ -39,6 +39,7 @@ return {
       { "<leader>x", group = "Diagnostics" },
       { "<leader>g", group = "Git" },
       { "<leader>r", group = "Refactoring" },
+      { "<leader>n", group = "Noice" },
     })
   end,
 }
