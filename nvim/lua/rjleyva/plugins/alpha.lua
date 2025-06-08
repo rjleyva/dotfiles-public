@@ -2,6 +2,9 @@ return {
   "goolord/alpha-nvim",
   event = "VimEnter",
   enabled = (vim.fn.argc(-1) == 0),
+  dependencies = {
+    { "folke/neodev.nvim", lazy = false },
+  },
   opts = function()
     local dashboard = require("alpha.themes.dashboard")
 
