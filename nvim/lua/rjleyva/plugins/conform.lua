@@ -1,10 +1,12 @@
 return {
   "stevearc/conform.nvim",
-  version = "v9.0.0",
+  version = "*",
   enabled = true,
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     formatters_by_ft = {
+      astro = { "prettier" },
+      svelte = { "prettier" },
       html = { "prettier" },
       css = { "prettier" },
       javascript = { "prettier" },
@@ -16,6 +18,16 @@ return {
       graphql = { "prettier" },
       markdown = { "prettier" },
       lua = { "stylua" },
+    },
+    formatters = {
+      prettier = {
+        prepend_args = {
+          "--plugin",
+          "prettier-plugin-astro",
+          "--plugin",
+          "prettier-plugin-svelte",
+        },
+      },
     },
     format_on_save = {
       lsp_fallback = true,
