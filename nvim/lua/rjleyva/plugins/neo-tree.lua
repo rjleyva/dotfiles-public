@@ -54,4 +54,8 @@ return {
       window = { position = "right" },
     },
   },
+  config = function(_, opts)
+    require("neo-tree").setup(opts)
+    vim.api.nvim_set_hl(0, "NeoTreeRootName", { bold = true, italic = false })
+  end,
 }
