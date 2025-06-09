@@ -2,10 +2,10 @@
 
 These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
-> ⚠️**Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
+> **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
 > You need to manually install them via the command `:Mason` inside Neovim.
 
-> ⚙️**Performance Note**: I’m still in the process of optimizing the startup time. Currently, it ranges around 43–46ms, and my goal is to bring it down to under 30 or ideally 20ms.
+> **Performance Note**: I’m still in the process of optimizing the startup time. Currently, it ranges around 43–46ms, and my goal is to bring it down to under 30 or ideally 20ms.
 
 ![Neovim](assets/neovim-wk.webp)
 
@@ -39,7 +39,7 @@ Here's a list of the tools I use alongside these dotfiles:
 - **[tldr](https://github.com/tldr-pages/tldr)** – Simplified and community-driven man pages
 - **[ripgrep](https://github.com/BurntSushi/ripgrep)** – Super fast search tool, used for live grep in Neovim
 - **[lazygit](https://github.com/jesseduffield/lazygit)** – A terminal UI for Git, integrated directly into Neovim
-- **[commitizen](https://github.com/commitizen/cz-cli)**
+- **[commitizen](https://github.com/commitizen/cz-cli)** - A tool to help you write consistent and conventional commit messages
 
 ---
 
