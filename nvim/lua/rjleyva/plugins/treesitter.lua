@@ -41,6 +41,7 @@ return {
   },
   opts = {
     ensure_installed = {
+      "astro",
       "bash",
       "css",
       "gitignore",
@@ -55,6 +56,7 @@ return {
       "markdown_inline",
       "toml",
       "tsx",
+      "svelte",
       "typescript",
       "vim",
       "vimdoc",
