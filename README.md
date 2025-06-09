@@ -5,7 +5,7 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 > **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
 > You need to manually install them via the command `:Mason` inside Neovim.
 
-![Neovim](assets/neovim.jpeg)
+![Neovim](assets/neovim.webp)
 
 ---
 
