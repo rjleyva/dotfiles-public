@@ -14,7 +14,7 @@ return {
       comments = { italic = true },
       conditionals = { italic = true },
       functions = { bold = true },
-      keywords = { bold = true },
+      keywords = { bold = true, italic = false },
       loops = { italic = true },
       misc = { italic = true },
       numbers = { bold = true },
