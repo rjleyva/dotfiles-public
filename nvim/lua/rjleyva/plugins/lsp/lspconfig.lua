@@ -1,12 +1,11 @@
 return {
   "neovim/nvim-lspconfig",
-  event = { "BufReadPre", "BufNewFile" },
-
   dependencies = {
     {
       "folke/neodev.nvim",
       lazy = false,
       priority = 1000,
+      opts = {},
     },
     "saghen/blink.cmp",
     "ibhagwan/fzf-lua",
@@ -40,6 +39,8 @@ return {
     vim.diagnostic.config({
       float = { border = "rounded" },
     })
+
+    local function on_attach(_, _) end
 
     local servers = {
       astro = {
@@ -170,6 +171,7 @@ return {
     for name, opts in pairs(servers) do
       lspconfig[name].setup(vim.tbl_deep_extend("force", {
         capabilities = capabilities,
+        on_attach = on_attach,
       }, opts))
     end
   end,
