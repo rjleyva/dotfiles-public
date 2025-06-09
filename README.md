@@ -1,15 +1,9 @@
-# RJ's Dotfiles
+# RJ's dotfiles
 
 These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
----
-
-## Contents
-
-- [Vim](#vim)
-- [Neovim Config](#neovim-config)
-- [Tmux Config](#tmux-config)
-- [Requirements & Tools](#-requirements--tools)
+> **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
+> You need to manually install them via the command `:Mason` inside Neovim.
 
 ---
 
@@ -27,9 +21,6 @@ Custom configuration built to maximize productivity and code comfort. Features i
 
 ## Requirements & Tools
 
-> **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
-> You need to manually install them via the command `:Mason` inside Neovim.
-
 Here's a list of the tools I use alongside these dotfiles:
 
 - **[WezTerm](https://wezfurlong.org/wezterm/)** – GPU-accelerated terminal emulator (cross-platform)
@@ -44,6 +35,7 @@ Here's a list of the tools I use alongside these dotfiles:
 - **[tldr](https://github.com/tldr-pages/tldr)** – Simplified and community-driven man pages
 - **[ripgrep](https://github.com/BurntSushi/ripgrep)** – Super fast search tool, used for live grep in Neovim
 - **[lazygit](https://github.com/jesseduffield/lazygit)** – A terminal UI for Git, integrated directly into Neovim
+- **[commitizen](https://github.com/commitizen/cz-cli)**
 
 ---
 
