@@ -7,7 +7,7 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 
 > ⚙️**Performance Note**: I’m still in the process of optimizing the startup time. Currently, it ranges around 43–46ms, and my goal is to bring it down to under 30 or ideally 20ms.
 
-![Neovim](assets/neovim.webp)
+![Neovim](assets/neovim-wk.webp)
 
 ---
 
