@@ -1,8 +1,50 @@
-# RJ's public dotfiles
+# RJ's Dotfiles
 
-## Current Status
+These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
-- I'm continuously working on optimizing plugin startup times to make Neovim faster and more responsive.
-- Still figuring out the best way to ensure plugins load in the correct order to avoid any issues.
-- One known problem is that sometimes some plugins load before `neodev`, which causes errors such as `vim` being tagged as an undefined global.
-- Fixing this loading order issue is a top priority to maintain stability and smooth operation.
+---
+
+## Contents
+
+- [Vim](#vim)
+- [Neovim Config](#neovim-config)
+- [Tmux Config](#tmux-config)
+- [Requirements & Tools](#-requirements--tools)
+
+---
+
+## Neovim Config
+
+Custom configuration built to maximize productivity and code comfort. Features include:
+
+- LSP support with auto-completion
+- Treesitter syntax highlighting
+- fzf for fuzzy finding
+- LazyGit integration
+- solarized-osaka theme
+
+---
+
+## Requirements & Tools
+
+> **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
+> You need to manually install them via the command `:Mason` inside Neovim.
+
+Here's a list of the tools I use alongside these dotfiles:
+
+- **[WezTerm](https://wezfurlong.org/wezterm/)** – GPU-accelerated terminal emulator (cross-platform)
+- **[eza](https://github.com/eza-community/eza)** – A modern replacement for `ls` with more features
+- **[Nerd Font](https://www.nerdfonts.com/)** – Enables icons and ligatures in your terminal (any patched font will work)
+- **[Neovim](https://neovim.io/)** – The core of this setup
+- **[solarized-osaka](https://github.com/kyoz/palette-osaka)** – My go-to color scheme for both Neovim and Tmux
+- **[fd](https://github.com/sharkdp/fd)** – A simple, fast and user-friendly alternative to `find`
+- **[bat](https://github.com/sharkdp/bat)** – A `cat` clone with syntax highlighting and Git integration
+- **[zoxide](https://github.com/ajeetdsouza/zoxide)** – A smarter `cd` command, inspired by `z` and `autojump`
+- **[delta](https://github.com/dandavison/delta)** – A syntax-highlighting pager for Git and diff output
+- **[tldr](https://github.com/tldr-pages/tldr)** – Simplified and community-driven man pages
+- **[ripgrep](https://github.com/BurntSushi/ripgrep)** – Super fast search tool, used for live grep in Neovim
+- **[lazygit](https://github.com/jesseduffield/lazygit)** – A terminal UI for Git, integrated directly into Neovim
+
+---
+
+Feel free to clone, fork, and customize to your heart’s content!
