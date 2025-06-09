@@ -45,6 +45,16 @@ return {
     local servers = {
       astro = {
         capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePost", {
+            pattern = { "*.js", "*.ts" },
+            callback = function(ctx)
+              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+            end,
+          })
+        end,
+        root_dir = require("lspconfig.util").root_pattern("package.json", "astro.config.mjs", ".git"),
       },
 
       svelte = {
