@@ -5,6 +5,8 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 > **Note:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
 > You need to manually install them via the command `:Mason` inside Neovim.
 
+> **Performance Note**: I’m still in the process of optimizing the startup time. Currently, it ranges around 43–46 seconds, and my goal is to bring it down to under 30 or ideally 20 seconds.
+
 ![Neovim](assets/neovim.webp)
 
 ---
