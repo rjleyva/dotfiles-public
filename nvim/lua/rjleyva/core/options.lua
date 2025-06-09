@@ -36,17 +36,15 @@ vim.opt.clipboard:append("unnamedplus")
 vim.opt.formatoptions:append({ "r" })
 
 -- disable unused built-in plugins
-vim.opt.shortmess:append("I")
+vim.opt.shortmess:append("I") -- skips the “intro” message when you start Neovim
 
-vim.g.loaded_matchparen = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_tutor_mode_plugin = 1
+vim.g.loaded_gzip = 1 -- disables gzip.vim (rarely used)
+vim.g.loaded_tarPlugin = 1 -- disables tar.vim (for tar archives)
+vim.g.loaded_zipPlugin = 1 -- disables zip.vim (for zip archives)
+vim.g.loaded_2html_plugin = 1 -- disables 2html.vim (for HTML export)
+vim.g.loaded_tutor_mode_plugin = 1 -- disables tutor plugin (learning Vim)
+vim.g.loaded_netrw = 1 -- disables netrw file explorer
+vim.g.loaded_netrwPlugin = 1 -- disables netrw plugin
 
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
