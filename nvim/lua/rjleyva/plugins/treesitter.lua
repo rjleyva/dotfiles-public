@@ -54,6 +54,7 @@ return {
       "lua",
       "markdown",
       "markdown_inline",
+      "svelte",
       "toml",
       "tsx",
       "typescript",
