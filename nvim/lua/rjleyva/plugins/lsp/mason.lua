@@ -24,12 +24,10 @@ return {
       },
       mason_lspconfig = {
         ensure_installed = {
-          "astro",
           "ts_ls",
           "html",
           "cssls",
           "tailwindcss",
-          "svelte",
           "lua_ls",
           "graphql",
           "jsonls",
