@@ -23,12 +23,13 @@ return {
           filter = {
             event = "msg_show",
             any = {
+              { find = "written" },
               { find = "%d+L, %d+B" },
               { find = "; after #%d+" },
               { find = "; before #%d+" },
             },
           },
-          view = "mini",
+          view = "notify",
         },
       },
 
