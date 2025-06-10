@@ -22,6 +22,11 @@ return {
         trigger = {
           show_on_keyword = true,
         },
+        menu = {
+          draw = {
+            treesitter = { "lsp" },
+          },
+        },
       },
 
       cmdline = {
