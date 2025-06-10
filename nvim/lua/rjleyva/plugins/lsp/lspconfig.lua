@@ -43,6 +43,12 @@ return {
     local function on_attach(_, _) end
 
     local servers = {
+
+      astro = {
+        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
+        filetypes = { "astro" },
+      },
+
       vtsls = {
         filetypes = {
           "javascript",
