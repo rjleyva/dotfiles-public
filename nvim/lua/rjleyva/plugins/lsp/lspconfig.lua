@@ -10,7 +10,7 @@ return {
     "saghen/blink.cmp",
     "ibhagwan/fzf-lua",
     {
-      "antosha417/nvim-lsp-file-operations",
+      "rjleyva/nvim-lsp-file-operations",
       event = "BufReadPre",
       config = true,
     },
