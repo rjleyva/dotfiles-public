@@ -1,5 +1,5 @@
 return {
-  "goolord/alpha-nvim",
+  "rjleyva/alpha-nvim",
   event = "VimEnter",
   enabled = (vim.fn.argc(-1) == 0),
   dependencies = {
