@@ -24,6 +24,8 @@ return {
       },
       mason_lspconfig = {
         ensure_installed = {
+          "astro",
+          "svelte",
           "ts_ls",
           "html",
           "cssls",
