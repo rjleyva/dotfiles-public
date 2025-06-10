@@ -43,41 +43,12 @@ return {
     local function on_attach(_, _) end
 
     local servers = {
-      astro = {
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePost", {
-            pattern = { "*.js", "*.ts" },
-            callback = function(ctx)
-              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-            end,
-          })
-        end,
-        root_dir = require("lspconfig.util").root_pattern("package.json", "astro.config.mjs", ".git"),
-      },
-
-      svelte = {
-        capabilities = capabilities,
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePost", {
-            pattern = { "*.js", "*.ts" },
-            callback = function(ctx)
-              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-            end,
-          })
-        end,
-      },
-
       vtsls = {
         filetypes = {
           "javascript",
           "javascriptreact",
           "typescript",
           "typescriptreact",
-          "astro",
-          "svelte",
         },
         root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
         settings = {
@@ -130,8 +101,6 @@ return {
       emmet_ls = {
         filetypes = {
           "html",
-          "astro",
-          "svelte",
           "javascript",
           "typescript",
           "javascriptreact",
@@ -155,8 +124,6 @@ return {
           "typescript",
           "javascriptreact",
           "typescriptreact",
-          "astro",
-          "svelte",
         },
       },
 
