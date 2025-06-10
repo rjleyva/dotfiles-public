@@ -49,6 +49,11 @@ return {
         filetypes = { "astro" },
       },
 
+      svelte = {
+        filetypes = { "svelte" },
+        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.cjs", "svelte.config.ts", ".git"),
+      },
+
       vtsls = {
         filetypes = {
           "javascript",
