@@ -41,6 +41,7 @@ return {
   },
   opts = {
     ensure_installed = {
+      "astro",
       "bash",
       "css",
       "gitignore",
@@ -107,18 +108,12 @@ return {
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
 
-    require("nvim-ts-autotag").setup()
-
-    require("treesitter-context").setup({
-      enabled = true,
-      max_lines = 3,
-      trim_scope = "outer",
-      mode = "cursor",
-    })
-
     vim.filetype.add({
-      extension = { mdx = "mdx" },
+      extension = {
+        mdx = "mdx",
+      },
     })
+
     vim.treesitter.language.register("markdown", "mdx")
   end,
 }
