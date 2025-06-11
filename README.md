@@ -5,7 +5,7 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 > **IMPORTANT:** To optimize startup time, tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
 > You need to manually install them via the command `:Mason` inside Neovim.
 
-**Performance Note:** After several rounds of refinement, my Neovim startup time now averages around 32ms, measured using actual CPU time until UIEnter. **NOTE:** As we all know, [`neodev.lua`](https://github.com/folke/neodev.nvim) has been archived by [folke](https://github.com/folke), but I'm still using it for now as it continues to work well in my setup. That said, I'm gradually transitioning to a more modular and manual LSP configuration as I deepen my understanding of `nvim-lspconfig`, with the goal of improving both maintainability and startup performance. I’ll continue exploring subtle improvements — the stretch goal is to eventually push below 30ms, or even sub-25ms, without sacrificing usability or features.
+**Performance Note:** After several rounds of refinement, my Neovim startup time now averages around **32-33ms**, measured using actual CPU time until UIEnter. I’ll continue exploring subtle improvements, the stretch goal is to eventually push below 30ms, or even sub-25ms, without sacrificing usability or features.
 
 ![Neovim](assets/neovim-wk.webp)
 
