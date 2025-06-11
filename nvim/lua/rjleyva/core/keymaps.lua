@@ -19,3 +19,14 @@ keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" 
 keymap.set("n", "<leader>t]", "<cmd>tabn<CR>", { desc = "Go to next tab" })
 keymap.set("n", "<leader>t[", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 keymap.set("n", "<leader>tb", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
+
+keymap.set("n", "<leader>cc", function()
+  local commentstring = vim.bo.commentstring:match("^(.*)%%s")
+  local line = vim.api.nvim_get_current_line()
+  if line:match("^%s*" .. vim.pesc(commentstring)) then
+    line = line:gsub("^(%s*)" .. vim.pesc(commentstring) .. "%s*", "%1")
+  else
+    line = commentstring .. " " .. line
+  end
+  vim.api.nvim_set_current_line(line)
+end, { desc = "Toggle line comment" })
