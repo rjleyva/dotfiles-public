@@ -36,12 +36,33 @@ return {
 
     local servers = {
       astro = {
-        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
         filetypes = { "astro" },
+        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
+        settings = {
+          astro = {
+            format = {
+              enable = true,
+            },
+            diagnostics = {
+              enabled = true,
+            },
+          },
+        },
       },
       svelte = {
         filetypes = { "svelte" },
         root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.cjs", "svelte.config.ts", ".git"),
+        settings = {
+          svelte = {
+            plugin = {
+              typescript = {
+                diagnostics = {
+                  enable = true,
+                },
+              },
+            },
+          },
+        },
       },
       vtsls = {
         filetypes = {
@@ -73,6 +94,41 @@ return {
             },
           },
           completions = { completeFunctionCalls = true },
+        },
+      },
+      tailwindcss = {
+        filetypes = {
+          "html",
+          "css",
+          "scss",
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "svelte",
+          "astro",
+        },
+        root_dir = root_pattern(
+          "tailwind.config.js",
+          "tailwind.config.ts",
+          "postcss.config.js",
+          "package.json",
+          ".git"
+        ),
+        settings = {
+          tailwindCSS = {
+            lint = {
+              cssConflict = "warning",
+              invalidApply = "error",
+              invalidScreen = "error",
+            },
+            experimental = {
+              classRegex = {
+                "tw`([^`]*)",
+                'tw="([^"]*)',
+              },
+            },
+          },
         },
       },
       jsonls = {
@@ -116,10 +172,20 @@ return {
       lua_ls = {
         settings = {
           Lua = {
-            runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-            diagnostics = { globals = { "vim" } },
+            runtime = {
+              version = "LuaJIT",
+              path = vim.split(package.path, ";"),
+            },
+            diagnostics = {
+              globals = { "vim" },
+              disable = {},
+            },
             workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
+              library = {
+                vim.env.VIMRUNTIME,
+                "${3rd}/luv/library",
+                "${3rd}/busted/library",
+              },
               checkThirdParty = false,
             },
             telemetry = { enable = false },
