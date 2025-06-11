@@ -1,7 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
-  dependencies = { { "nvim-tree/nvim-web-devicons", lazy = true } },
+  event = "UIEnter",
+  dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
   opts = {
     options = {
       icons_enabled = true,
@@ -26,7 +26,7 @@ return {
       lualine_a = { "mode" },
       lualine_b = { "branch", "diagnostics" },
       lualine_c = { "filename" },
-      lualine_x = { "encoding", "fileformat", "filetype" }, -- you can all add "diff"
+      lualine_x = { "encoding", "fileformat", "filetype" },
       lualine_y = { "progress" },
       lualine_z = { "location" },
     },
