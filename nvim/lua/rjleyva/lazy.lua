@@ -11,12 +11,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = {
+require("lazy").setup({
   { import = "rjleyva.plugins" },
   { import = "rjleyva.plugins.lsp" },
-}
-
-local opts = {
+}, {
   defaults = {
     lazy = true,
   },
@@ -25,13 +23,7 @@ local opts = {
     notify = false,
   },
   change_detection = {
+    enabled = true,
     notify = false,
   },
-  performance = {
-    cache = {
-      enabled = true,
-    },
-  },
-}
-
-require("lazy").setup(plugins, opts)
+})
