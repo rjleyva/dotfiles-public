@@ -4,14 +4,23 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     {
-      "rafamadriz/friendly-snippets",
+      "L3MON4D3/LuaSnip",
       event = "InsertEnter",
-      dependencies = {
-        "L3MON4D3/LuaSnip",
-      },
+      build = "make install_jsregexp",
       config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
+        require("luasnip").config.set_config({
+          history = true,
+          updateevents = "TextChanged,TextChangedI",
+        })
+        require("luasnip.loaders.from_vscode").lazy_load({
+          paths = { "./snippets" },
+        })
       end,
+    },
+    {
+      "rafamadriz/friendly-snippets",
+      lazy = true,
+      config = function() end,
     },
     {
       "saghen/blink.compat",
@@ -25,19 +34,11 @@ return {
       appearance = { nerd_font_variant = "mono" },
       signature = { enabled = true },
       fuzzy = { implementation = "prefer_rust_with_warning" },
-
       completion = {
         ghost_text = { enabled = true },
-        trigger = {
-          show_on_keyword = true,
-        },
-        menu = {
-          draw = {
-            treesitter = { "lsp" },
-          },
-        },
+        trigger = { show_on_keyword = true },
+        menu = { draw = { treesitter = { "lsp" } } },
       },
-
       cmdline = {
         keymap = { preset = "inherit" },
         completion = {
