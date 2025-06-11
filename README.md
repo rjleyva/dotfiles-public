@@ -7,19 +7,10 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 
 > **Performance Note**: I’m still in the process of optimizing the startup time. Currently, it ranges around 43–46ms, and my goal is to bring it down to under 30 or ideally 20ms.
 
+> ⚠️ **Heads-up on `neodev.lua`:**  
+> I’m aware that [`neodev.lua`](https://github.com/folke/neodev.nvim) has been archived by its maintainer, [folke](https://github.com/folke), but I'm still using it for now as it continues to work well in my setup. That said, I'm gradually transitioning to a more modular and manual LSP configuration as I deepen my understanding of `nvim-lspconfig`, with the goal of improving both maintainability and startup performance.
+
 ![Neovim](assets/neovim-wk.webp)
-
----
-
-## Neovim Config
-
-Custom configuration built to maximize productivity and code comfort. Features include:
-
-- LSP support with auto-completion
-- Treesitter syntax highlighting
-- fzf for fuzzy finding
-- LazyGit integration
-- solarized-osaka theme
 
 ---
 
