@@ -46,6 +46,16 @@ return {
             diagnostics = {
               enabled = true,
             },
+            plugin = {
+              typescript = {
+                diagnostics = {
+                  enabled = true,
+                },
+              },
+              eslint = {
+                enabled = true,
+              },
+            },
           },
         },
       },
@@ -57,7 +67,7 @@ return {
             plugin = {
               typescript = {
                 diagnostics = {
-                  enable = true,
+                  enabled = true,
                 },
               },
             },
@@ -140,7 +150,7 @@ return {
             config.settings.json.schemas = schemastore.json.schemas()
           end
         end,
-        settings = { json = { validate = { enable = true } } },
+        settings = { json = { validate = { enabled = true } } },
       },
       emmet_ls = {
         filetypes = {
