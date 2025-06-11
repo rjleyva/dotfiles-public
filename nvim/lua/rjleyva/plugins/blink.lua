@@ -4,25 +4,6 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     {
-      "L3MON4D3/LuaSnip",
-      event = "InsertEnter",
-      build = "make install_jsregexp",
-      config = function()
-        require("luasnip").config.set_config({
-          history = true,
-          updateevents = "TextChanged,TextChangedI",
-        })
-        require("luasnip.loaders.from_vscode").lazy_load({
-          paths = { "./snippets" },
-        })
-      end,
-    },
-    {
-      "rafamadriz/friendly-snippets",
-      lazy = true,
-      config = function() end,
-    },
-    {
       "saghen/blink.compat",
       optional = true,
       version = vim.g.lazyvim_blink_main and "*" or "1.*",
