@@ -3,9 +3,12 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     {
-      "folke/neodev.nvim",
-      priority = 1000,
-      opts = {},
+      "mason-org/mason.nvim",
+      version = "^1.0.0",
+    },
+    {
+      "mason-org/mason-lspconfig.nvim",
+      version = "^1.0.0",
     },
     "saghen/blink.cmp",
     "ibhagwan/fzf-lua",
@@ -21,39 +24,25 @@ return {
   },
 
   config = function()
-    require("neodev").setup({
-      library = {
-        enabled = true,
-        runtime = true,
-        types = true,
-        plugins = false,
-      },
-      setup_jsonls = true,
-      diagnostics = { enable = true },
-    })
-
     local lspconfig = require("lspconfig")
+    local mason = require("mason")
+    local mason_lspconfig = require("mason-lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
     local root_pattern = require("lspconfig.util").root_pattern
 
-    vim.diagnostic.config({
-      float = { border = "rounded" },
-    })
+    vim.diagnostic.config({ float = { border = "rounded" } })
 
-    local function on_attach(_, _) end
+    local on_attach = function(_, _) end
 
     local servers = {
-
       astro = {
         root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
         filetypes = { "astro" },
       },
-
       svelte = {
         filetypes = { "svelte" },
         root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.cjs", "svelte.config.ts", ".git"),
       },
-
       vtsls = {
         filetypes = {
           "javascript",
@@ -66,10 +55,8 @@ return {
           typescript = {
             inlayHints = {
               includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
               includeInlayFunctionParameterTypeHints = true,
               includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
               includeInlayPropertyDeclarationTypeHints = true,
               includeInlayFunctionLikeReturnTypeHints = true,
               includeInlayEnumMemberValueHints = true,
@@ -78,21 +65,16 @@ return {
           javascript = {
             inlayHints = {
               includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
               includeInlayFunctionParameterTypeHints = true,
               includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
               includeInlayPropertyDeclarationTypeHints = true,
               includeInlayFunctionLikeReturnTypeHints = true,
               includeInlayEnumMemberValueHints = true,
             },
           },
-          completions = {
-            completeFunctionCalls = true,
-          },
+          completions = { completeFunctionCalls = true },
         },
       },
-
       jsonls = {
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
@@ -102,13 +84,8 @@ return {
             config.settings.json.schemas = schemastore.json.schemas()
           end
         end,
-        settings = {
-          json = {
-            validate = { enable = true },
-          },
-        },
+        settings = { json = { validate = { enable = true } } },
       },
-
       emmet_ls = {
         filetypes = {
           "html",
@@ -127,7 +104,6 @@ return {
           },
         },
       },
-
       graphql = {
         filetypes = {
           "graphql",
@@ -137,17 +113,11 @@ return {
           "typescriptreact",
         },
       },
-
       lua_ls = {
         settings = {
           Lua = {
-            runtime = {
-              version = "LuaJIT",
-              path = vim.split(package.path, ";"),
-            },
-            diagnostics = {
-              globals = { "vim" },
-            },
+            runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+            diagnostics = { globals = { "vim" } },
             workspace = {
               library = vim.api.nvim_get_runtime_file("", true),
               checkThirdParty = false,
@@ -158,11 +128,17 @@ return {
       },
     }
 
-    for name, opts in pairs(servers) do
-      lspconfig[name].setup(vim.tbl_deep_extend("force", {
+    mason.setup()
+    mason_lspconfig.setup({
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = false,
+    })
+
+    for server_name, config in pairs(servers) do
+      lspconfig[server_name].setup(vim.tbl_deep_extend("force", {
         capabilities = capabilities,
         on_attach = on_attach,
-      }, opts))
+      }, config))
     end
   end,
 
