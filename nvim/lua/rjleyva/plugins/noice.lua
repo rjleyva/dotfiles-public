@@ -3,7 +3,6 @@ return {
   version = "*",
   event = "VeryLazy",
   dependencies = {
-    "ibhagwan/fzf-lua",
     "rcarriga/nvim-notify",
     { "MunifTanjim/nui.nvim", lazy = true },
   },
@@ -90,13 +89,13 @@ return {
       end,
       desc = "Dismiss All",
     },
-    {
-      "<leader>np",
-      function()
-        require("noice").cmd("pick")
-      end,
-      desc = "Noice Picker (FzfLua)",
-    },
+    -- {
+    --   "<leader>np",
+    --   function()
+    --     require("noice").cmd("pick")
+    --   end,
+    --   desc = "Noice Picker (FzfLua)",
+    -- },
     {
       "<C-f>",
       function()
