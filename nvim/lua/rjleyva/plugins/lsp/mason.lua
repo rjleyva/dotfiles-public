@@ -15,22 +15,6 @@ return {
       },
     },
     log_level = vim.log.levels.WARN,
-    lspconfig = {
-      ensure_installed = {
-        "astro",
-        "svelte",
-        "ts_ls",
-        "html",
-        "cssls",
-        "tailwindcss",
-        "lua_ls",
-        "graphql",
-        "jsonls",
-        "emmet_ls",
-        "vtsls",
-      },
-      automatic_installation = true,
-    },
     tools = {
       ensure_installed = {
         "selene",
@@ -44,7 +28,6 @@ return {
   },
   config = function(_, opts)
     require("mason").setup(opts)
-    require("mason-lspconfig").setup(opts.lspconfig)
     require("mason-tool-installer").setup(opts.tools)
   end,
 }
