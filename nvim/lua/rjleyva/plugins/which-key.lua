@@ -2,6 +2,15 @@ return {
   "folke/which-key.nvim",
   version = "*",
   event = "VeryLazy",
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
+    },
+  },
   opts = {
     plugins = {
       spelling = { enabled = false },
@@ -40,9 +49,5 @@ return {
       { "<leader>n", group = "Noice" },
       { "<leader>?", group = "Buffer Local Keymaps" },
     })
-
-    vim.keymap.set("n", "<leader>?", function()
-      vim.cmd("verbose map <buffer>")
-    end, { desc = "Buffer Local Keymaps" })
   end,
 }
