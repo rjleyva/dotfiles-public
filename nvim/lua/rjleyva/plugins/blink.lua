@@ -3,7 +3,16 @@ return {
   version = "1.*",
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
-    { "rafamadriz/friendly-snippets", event = "InsertEnter" },
+    {
+      "rafamadriz/friendly-snippets",
+      event = "InsertEnter",
+      dependencies = {
+        "L3MON4D3/LuaSnip",
+      },
+      config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end,
+    },
     {
       "saghen/blink.compat",
       optional = true,
