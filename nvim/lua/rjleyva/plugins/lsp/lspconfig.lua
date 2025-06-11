@@ -35,6 +35,23 @@ return {
     local on_attach = function(_, _) end
 
     local servers = {
+      html = {
+        filetypes = { "html" },
+        root_dir = root_pattern("index.html", "package.json", ".git"),
+        settings = {
+          html = {
+            format = {
+              wrapLineLength = 120,
+              unformatted = "pre,code,textarea",
+            },
+            hover = {
+              documentation = true,
+              references = true,
+            },
+          },
+        },
+      },
+
       astro = {
         filetypes = { "astro" },
         root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
@@ -92,6 +109,19 @@ return {
             },
           },
           completions = { completeFunctionCalls = true },
+        },
+      },
+
+      cssls = {
+        filetypes = { "css", "scss", "less" },
+        root_dir = root_pattern("package.json", ".git"),
+        settings = {
+          css = {
+            validate = true,
+            lint = {
+              unknownAtRules = "warning",
+            },
+          },
         },
       },
 
