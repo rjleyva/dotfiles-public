@@ -40,40 +40,28 @@ return {
         root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
         settings = {
           astro = {
-            format = {
-              enable = true,
-            },
-            diagnostics = {
-              enabled = true,
-            },
+            format = { enable = true },
+            diagnostics = { enabled = true },
             plugin = {
-              typescript = {
-                diagnostics = {
-                  enabled = true,
-                },
-              },
-              eslint = {
-                enabled = true,
-              },
+              typescript = { diagnostics = { enabled = true } },
+              eslint = { enabled = true },
             },
           },
         },
       },
+
       svelte = {
         filetypes = { "svelte" },
         root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.cjs", "svelte.config.ts", ".git"),
         settings = {
           svelte = {
             plugin = {
-              typescript = {
-                diagnostics = {
-                  enabled = true,
-                },
-              },
+              typescript = { diagnostics = { enabled = true } },
             },
           },
         },
       },
+
       vtsls = {
         filetypes = {
           "javascript",
@@ -106,6 +94,7 @@ return {
           completions = { completeFunctionCalls = true },
         },
       },
+
       tailwindcss = {
         filetypes = {
           "html",
@@ -141,6 +130,7 @@ return {
           },
         },
       },
+
       jsonls = {
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
@@ -152,6 +142,7 @@ return {
         end,
         settings = { json = { validate = { enabled = true } } },
       },
+
       emmet_ls = {
         filetypes = {
           "html",
@@ -170,6 +161,7 @@ return {
           },
         },
       },
+
       graphql = {
         filetypes = {
           "graphql",
@@ -179,6 +171,7 @@ return {
           "typescriptreact",
         },
       },
+
       lua_ls = {
         root_dir = require("lspconfig.util").root_pattern(".git", "init.lua"),
         settings = {
@@ -207,17 +200,20 @@ return {
     }
 
     mason.setup()
+
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
       automatic_installation = false,
+      handlers = {
+        function(server_name)
+          local config = servers[server_name] or {}
+          lspconfig[server_name].setup(vim.tbl_deep_extend("force", {
+            capabilities = capabilities,
+            on_attach = on_attach,
+          }, config))
+        end,
+      },
     })
-
-    for server_name, config in pairs(servers) do
-      lspconfig[server_name].setup(vim.tbl_deep_extend("force", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      }, config))
-    end
   end,
 
   keys = {
