@@ -1,10 +1,7 @@
 return {
   "folke/which-key.nvim",
   version = "*",
-  keys = { "<leader>", { "<leader>?", desc = "Buffer Local Keymaps" } },
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
+  event = "VeryLazy",
   opts = {
     plugins = {
       spelling = { enabled = false },
@@ -28,6 +25,7 @@ return {
   config = function(_, opts)
     local wk = require("which-key")
     wk.setup(opts)
+
     wk.add({
       { "<leader>w", group = "Window Managment" },
       { "<leader>t", group = "Tab Management" },
@@ -40,6 +38,11 @@ return {
       { "<leader>g", group = "Git" },
       { "<leader>r", group = "Refactoring" },
       { "<leader>n", group = "Noice" },
+      { "<leader>?", group = "Buffer Local Keymaps" },
     })
+
+    vim.keymap.set("n", "<leader>?", function()
+      vim.cmd("verbose map <buffer>")
+    end, { desc = "Buffer Local Keymaps" })
   end,
 }
