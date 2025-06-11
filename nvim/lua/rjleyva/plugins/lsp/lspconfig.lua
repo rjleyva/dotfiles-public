@@ -180,6 +180,7 @@ return {
         },
       },
       lua_ls = {
+        root_dir = require("lspconfig.util").root_pattern(".git", "init.lua"),
         settings = {
           Lua = {
             runtime = {
@@ -193,8 +194,9 @@ return {
             workspace = {
               library = {
                 vim.env.VIMRUNTIME,
-                "${3rd}/luv/library",
-                "${3rd}/busted/library",
+                vim.fn.stdpath("data") .. "/mason/packages/lua-language-server/extension/server/meta/3rd/luv/library",
+                vim.fn.stdpath("data")
+                  .. "/mason/packages/lua-language-server/extension/server/meta/3rd/busted/library",
               },
               checkThirdParty = false,
             },
