@@ -2,7 +2,6 @@ return {
   "williamboman/mason.nvim",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "folke/neodev.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
@@ -44,7 +43,6 @@ return {
     },
   },
   config = function(_, opts)
-    require("neodev").setup({})
     require("mason").setup(opts)
     require("mason-lspconfig").setup(opts.lspconfig)
     require("mason-tool-installer").setup(opts.tools)
