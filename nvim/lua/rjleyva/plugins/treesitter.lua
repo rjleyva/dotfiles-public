@@ -27,18 +27,7 @@ return {
       end,
     },
   },
-  keys = {
-    { "<C-space>", desc = "Increment Selection" },
-    { "<BS>", desc = "Decrement Selection", mode = "x" },
-    { "]f", desc = "Next Function Start" },
-    { "]F", desc = "Next Function End" },
-    { "]a", desc = "Next Parameter Start" },
-    { "]A", desc = "Next Parameter End" },
-    { "[f", desc = "Prev Function Start" },
-    { "[F", desc = "Prev Function End" },
-    { "[a", desc = "Prev Parameter Start" },
-    { "[A", desc = "Prev Parameter End" },
-  },
+
   opts = {
     ensure_installed = {
       "astro",
@@ -106,6 +95,37 @@ return {
       },
     },
   },
+
+  keys = {
+    {
+      "<leader>ci",
+      function()
+        if vim.fn.mode() == "n" then
+          vim.cmd("normal! v")
+        end
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-space>", true, false, true), "")
+      end,
+      desc = "Increment Selection",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>cd",
+      function()
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<BS>", true, false, true), "")
+      end,
+      desc = "Decrement Selection",
+      mode = { "v" },
+    },
+    { "]f", desc = "Next Function Start" },
+    { "]F", desc = "Next Function End" },
+    { "]a", desc = "Next Parameter Start" },
+    { "]A", desc = "Next Parameter End" },
+    { "[f", desc = "Prev Function Start" },
+    { "[F", desc = "Prev Function End" },
+    { "[a", desc = "Prev Parameter Start" },
+    { "[A", desc = "Prev Parameter End" },
+  },
+
   config = function(_, opts)
     require("nvim-treesitter.configs").setup(opts)
 
