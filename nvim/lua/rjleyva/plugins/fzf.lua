@@ -6,6 +6,24 @@ return {
   dependencies = {
     { "nvim-tree/nvim-web-devicons", lazy = true },
   },
+  opts = {
+    file_icon_padding = "",
+    keymap = {
+      fzf = {
+        ["CTRL-Q"] = "select-all+accept",
+      },
+    },
+    fzf_opts = {
+      ["--wrap"] = true,
+    },
+    winopts = {
+      preview = {
+        wrap = "wrap",
+      },
+      formatter = "path.filename_first",
+    },
+  },
+
   keys = {
     {
       "<leader>fs",
@@ -120,23 +138,7 @@ return {
       desc = "Document Diagnostics (LSP)",
     },
   },
-  opts = {
-    file_icon_padding = "",
-    keymap = {
-      fzf = {
-        ["CTRL-Q"] = "select-all+accept",
-      },
-    },
-    fzf_opts = {
-      ["--wrap"] = true,
-    },
-    winopts = {
-      preview = {
-        wrap = "wrap",
-      },
-      formatter = "path.filename_first",
-    },
-  },
+
   config = function(_, opts)
     local fzf = require("fzf-lua")
     fzf.setup(opts)
