@@ -12,6 +12,7 @@ return {
       "<leader>ec",
       function()
         local reveal_file = vim.fn.expand("%:p")
+        ---@diagnostic disable-next-line: undefined-field
         if reveal_file == "" or vim.uv.fs_stat(reveal_file) == nil then
           reveal_file = vim.fn.getcwd()
         end
