@@ -89,13 +89,13 @@ return {
       end,
       desc = "Dismiss All",
     },
-    -- {
-    --   "<leader>np",
-    --   function()
-    --     require("noice").cmd("pick")
-    --   end,
-    --   desc = "Noice Picker (FzfLua)",
-    -- },
+    {
+      "<leader>np",
+      function()
+        require("noice").cmd("pick")
+      end,
+      desc = "Noice Picker (FzfLua)",
+    },
     {
       "<C-f>",
       function()
