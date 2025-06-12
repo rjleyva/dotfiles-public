@@ -10,8 +10,8 @@ return {
       "mason-org/mason-lspconfig.nvim",
       version = "^1.0.0",
     },
-    "saghen/blink.cmp",
-    "ibhagwan/fzf-lua",
+    { "saghen/blink.cmp" },
+    { "ibhagwan/fzf-lua" },
     {
       "rjleyva/nvim-lsp-file-operations",
       event = "BufReadPre",
@@ -21,9 +21,24 @@ return {
       "b0o/schemastore.nvim",
       lazy = true,
     },
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+        library = {
+          path = "${3rd}/luv/library",
+          words = { "vim%.uv" },
+        },
+        enabled = function(root_dir)
+          return not vim.loop.fs_stat(root_dir .. "/.luarc.json")
+        end,
+      },
+    },
   },
 
   config = function()
+    require("lazydev").setup()
+
     local lspconfig = require("lspconfig")
     local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
@@ -203,7 +218,7 @@ return {
       },
 
       lua_ls = {
-        root_dir = require("lspconfig.util").root_pattern(".git", "init.lua"),
+        root_dir = root_pattern(".git", "init.lua"),
         settings = {
           Lua = {
             runtime = {
@@ -213,15 +228,25 @@ return {
             diagnostics = {
               globals = { "vim" },
               disable = {},
-            },
-            workspace = {
-              library = {
-                vim.env.VIMRUNTIME,
-                vim.fn.stdpath("data") .. "/mason/packages/lua-language-server/extension/server/meta/3rd/luv/library",
-                vim.fn.stdpath("data")
-                  .. "/mason/packages/lua-language-server/extension/server/meta/3rd/busted/library",
+              groupFileStatus = {
+                library = "Any",
+                typedef = "Any",
               },
+              neededFileStatus = {
+                ["missing-fields"] = "Warning",
+              },
+            },
+            type = {
+              enable = true,
+              checkTableShape = true,
+              strictUnionCheck = true,
+              strongNilCheck = true,
+            },
+            hint = { enable = true },
+            completion = { callSnippet = "Replace" },
+            workspace = {
               checkThirdParty = false,
+              library = vim.api.nvim_get_runtime_file("", true),
             },
             telemetry = { enable = false },
           },
