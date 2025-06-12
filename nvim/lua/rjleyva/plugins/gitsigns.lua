@@ -2,6 +2,33 @@ return {
   "lewis6991/gitsigns.nvim",
   version = "*",
   event = { "BufReadPre", "BufNewFile" },
+  opts = {
+    signs = {
+      add = { text = "┃" },
+      change = { text = "┃" },
+      delete = { text = "_" },
+      topdelete = { text = "‾" },
+      changedelete = { text = "~" },
+      untracked = { text = "┆" },
+    },
+    signs_staged = {
+      add = { text = "┃" },
+      change = { text = "┃" },
+      delete = { text = "_" },
+      topdelete = { text = "‾" },
+      changedelete = { text = "~" },
+      untracked = { text = "┆" },
+    },
+    signs_staged_enable = true,
+    signcolumn = true,
+    numhl = false,
+    linehl = false,
+    word_diff = true,
+    watch_gitdir = {
+      follow_files = true,
+    },
+  },
+
   keys = {
     {
       "g]h",
@@ -199,32 +226,6 @@ return {
       buffer = true,
       noremap = true,
       silent = true,
-    },
-  },
-  opts = {
-    signs = {
-      add = { text = "┃" },
-      change = { text = "┃" },
-      delete = { text = "_" },
-      topdelete = { text = "‾" },
-      changedelete = { text = "~" },
-      untracked = { text = "┆" },
-    },
-    signs_staged = {
-      add = { text = "┃" },
-      change = { text = "┃" },
-      delete = { text = "_" },
-      topdelete = { text = "‾" },
-      changedelete = { text = "~" },
-      untracked = { text = "┆" },
-    },
-    signs_staged_enable = true,
-    signcolumn = true,
-    numhl = false,
-    linehl = false,
-    word_diff = true,
-    watch_gitdir = {
-      follow_files = true,
     },
   },
 }
