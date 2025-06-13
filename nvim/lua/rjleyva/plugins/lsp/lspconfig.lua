@@ -43,6 +43,7 @@ return {
     local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
+    local util = require("lspconfig.util")
     local root_pattern = require("lspconfig.util").root_pattern
 
     vim.diagnostic.config({ float = { border = "rounded" } })
@@ -223,10 +224,37 @@ return {
         filetypes = ts_filetypes,
         root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
         settings = {
-          typescript = { inlayHints = ts_inlay_hints },
-          javascript = { inlayHints = ts_inlay_hints },
-          completions = { completeFunctionCalls = true },
+          typescript = {
+            inlayHints = ts_inlay_hints,
+            updateImportsOnFileMove = { enabled = "always" },
+            completions = {
+              completeFunctionCalls = true,
+            },
+          },
+          javascript = {
+            inlayHints = ts_inlay_hints,
+            completions = {
+              completeFunctionCalls = true,
+            },
+          },
+          vtsls = {
+            autoUseWorkspaceTsdk = true,
+            experimental = {
+              completion = {
+                enableServerSideFuzzyMatch = true,
+              },
+            },
+          },
         },
+        on_new_config = function(new_config, new_root_dir)
+          local tsdk = util.path.join(new_root_dir, "node_modules", "typescript", "lib")
+          if vim.fn.isdirectory(tsdk) == 1 then
+            new_config.init_options = new_config.init_options or {}
+            new_config.init_options.typescript = {
+              tsdk = tsdk,
+            }
+          end
+        end,
       },
 
       -- Tooling / Infra
@@ -254,6 +282,50 @@ return {
       -- Backend / API / Data Layer
       graphql = {
         filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
+      },
+
+      pyright = {
+        root_dir = root_pattern("pyproject.toml", "setup.py", "requirements.txt", ".git"),
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "basic", -- change to "strict" for experience dev
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace", -- analyze all files, not just open ones
+              autoImportCompletions = true,
+              stubPath = "typings", -- useful for custom stubs if needed
+            },
+          },
+        },
+      },
+
+      gopls = {
+        root_dir = root_pattern("go.work", "go.mod", ".git"),
+        settings = {
+          gopls = {
+            usePlaceholders = true, -- auto-fill function parameters
+            completeUnimported = true, -- auto-import packages
+            analyses = {
+              unusedparams = true,
+              unreachable = true,
+              fieldalignment = true,
+              nilness = true,
+              unusedwrite = true,
+              shadow = true,
+            },
+            staticcheck = true, -- enable static analysis (like go vet + more)
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
       },
     }
 
