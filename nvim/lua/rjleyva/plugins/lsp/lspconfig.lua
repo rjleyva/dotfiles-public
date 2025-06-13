@@ -3,12 +3,12 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     {
-      "mason-org/mason.nvim",
-      version = "^1.0.0",
+      "williamboman/mason.nvim",
+      -- version = "^1.0.0",
     },
     {
       "mason-org/mason-lspconfig.nvim",
-      version = "^1.0.0",
+      -- version = "^1.0.0",
     },
     { "saghen/blink.cmp" },
     { "ibhagwan/fzf-lua" },
