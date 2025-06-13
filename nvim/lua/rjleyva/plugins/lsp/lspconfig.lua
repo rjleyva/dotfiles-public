@@ -61,8 +61,8 @@ return {
 
     local ts_filetypes = {
       "javascript",
-      "javascriptreact",
       "typescript",
+      "javascriptreact",
       "typescriptreact",
     }
 
@@ -72,9 +72,9 @@ return {
       "scss",
       "sass",
       "less",
-      unpack(ts_filetypes),
       "svelte",
       "astro",
+      unpack(ts_filetypes),
     }
 
     local servers = {
@@ -102,6 +102,7 @@ return {
               checkTableShape = true,
               strictUnionCheck = true,
               strongNilCheck = true,
+              allowDefinedTypes = true, -- optional
             },
             hint = { enable = true },
             completion = { callSnippet = "Replace" },
@@ -115,7 +116,7 @@ return {
 
         on_attach = function(_, _)
           vim.diagnostic.config({
-            virtual_text = true,
+            virtual_text = false,
             underline = true,
             update_in_insert = false,
             severity_sort = true,
@@ -138,17 +139,18 @@ return {
       },
 
       -- Frontend markup and styles
+      marksman = {
+        filetypes = { "markdown" },
+        root_dir = function(fname)
+          return root_pattern(".git", ".marksman.toml", ".marksman.json")(fname) or vim.fn.getcwd()
+        end,
+        single_file_support = true,
+      },
+
       html = {
         filetypes = { "html" },
         root_dir = root_pattern("index.html", "package.json", ".git"),
-        settings = {
-          html = {
-            hover = {
-              documentation = true,
-              references = true,
-            },
-          },
-        },
+        single_file_support = true,
       },
 
       cssls = {
@@ -156,6 +158,18 @@ return {
         root_dir = root_pattern("package.json", ".git"),
         settings = {
           css = {
+            validate = true,
+            lint = {
+              unknownAtRules = "warning",
+            },
+          },
+          scss = {
+            validate = true,
+            lint = {
+              unknownAtRules = "warning",
+            },
+          },
+          less = {
             validate = true,
             lint = {
               unknownAtRules = "warning",
@@ -179,12 +193,16 @@ return {
               cssConflict = "warning",
               invalidApply = "error",
               invalidScreen = "error",
+              recommendedVariantOrder = "error", -- optional
             },
             experimental = {
               classRegex = {
                 "tw`([^`]*)",
                 'tw="([^"]*)',
-                "tw\\(([^)]*)\\)",
+                "tw$begin:math:text$([^)]*)\\$end:math:text$",
+                -- optional:
+                'className="([^"]*)"',
+                "className={`([^`]*)`}",
               },
             },
           },
@@ -194,35 +212,47 @@ return {
       -- Frontend frameworks
       astro = {
         filetypes = { "astro" },
-        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
+        root_dir = root_pattern("astro.config.mjs", "astro.config.ts", "package.json", ".git"),
         settings = {
           astro = {
-            diagnostics = { enabled = true },
+            diagnostics = {
+              enabled = true,
+            },
             plugin = {
-              typescript = { diagnostics = { enabled = true } },
-              eslint = { enabled = false }, -- handled by conform
+              typescript = {
+                diagnostics = { enabled = true },
+              },
+              eslint = {
+                enabled = false, -- handled by conform
+              },
             },
           },
         },
+        single_file_support = true,
       },
 
       svelte = {
         filetypes = { "svelte" },
-        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.ts", ".git"),
+        root_dir = root_pattern("svelte.config.js", "svelte.config.ts", "package.json", ".git"),
         settings = {
           svelte = {
             plugin = {
-              typescript = { diagnostics = { enabled = true } },
-              eslint = { enabled = false }, -- handled by conform
+              typescript = {
+                diagnostics = { enabled = true },
+              },
+              eslint = {
+                enabled = false, -- handled by conform
+              },
             },
           },
         },
+        single_file_support = true,
       },
 
       -- JavaScript/TypeScript
       vtsls = {
         filetypes = ts_filetypes,
-        root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
+        root_dir = root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
         settings = {
           typescript = {
             inlayHints = ts_inlay_hints,
@@ -259,22 +289,85 @@ return {
 
       -- Tooling / Infra
       jsonls = {
+        filetypes = { "json", "jsonc" },
+        root_dir = root_pattern(".git", "package.json"),
+        settings = {
+          json = {
+            validate = { enable = true },
+          },
+        },
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
           if ok then
             config.settings = config.settings or {}
             config.settings.json = config.settings.json or {}
+
             config.settings.json.schemas = schemastore.json.schemas()
-            config.settings.json.validate = { enabled = true }
           end
         end,
       },
 
+      yamlls = {
+        filetypes = { "yaml", "yml" },
+        root_dir = root_pattern(".git", ".github", ".yaml"),
+        settings = {
+          yaml = {
+            validate = true,
+            format = {
+              enable = false, -- formatting is handled by conform
+            },
+            keyOrdering = false, -- allow flexible ordering (useful for GitHub Actions, k8s)
+            schemaStore = {
+              enable = false, -- we override this manually
+              url = "",
+            },
+            schemas = require("schemastore").yaml.schemas(),
+          },
+        },
+      },
+
       emmet_ls = {
-        filetypes = web_filetypes,
+        filetypes = {
+          "html",
+          "css",
+          "scss",
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+          "svelte",
+          "astro",
+        },
         init_options = {
           html = {
-            options = { ["bem.enabled"] = true },
+            options = {
+              ["bem.enabled"] = true,
+              ["output.selfClosingTag"] = true,
+            },
+          },
+          javascriptreact = {
+            options = {
+              ["bem.enabled"] = false,
+              ["output.selfClosingTag"] = false,
+            },
+          },
+          typescriptreact = {
+            options = {
+              ["bem.enabled"] = false,
+              ["output.selfClosingTag"] = false,
+            },
+          },
+          svelte = {
+            options = {
+              ["bem.enabled"] = true,
+              ["output.selfClosingTag"] = true,
+            },
+          },
+          astro = {
+            options = {
+              ["bem.enabled"] = true,
+              ["output.selfClosingTag"] = true,
+            },
           },
         },
       },
@@ -282,6 +375,23 @@ return {
       -- Backend / API / Data Layer
       graphql = {
         filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
+        root_dir = root_pattern(
+          ".graphqlrc",
+          ".graphqlrc.json",
+          ".graphqlrc.yaml",
+          ".graphqlrc.yml",
+          ".graphqlrc.js",
+          ".graphqlrc.ts",
+          "graphql.config.json",
+          "graphql.config.js",
+          "graphql.config.ts",
+          "package.json",
+          ".git"
+        ),
+        single_file_support = true,
+        settings = {
+          graphql = {},
+        },
       },
 
       pyright = {
@@ -289,7 +399,7 @@ return {
         settings = {
           python = {
             analysis = {
-              typeCheckingMode = "basic", -- change to "strict" for experience dev
+              typeCheckingMode = "strict", -- or "basic"
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
               diagnosticMode = "workspace", -- analyze all files, not just open ones
@@ -304,8 +414,12 @@ return {
         root_dir = root_pattern("go.work", "go.mod", ".git"),
         settings = {
           gopls = {
-            usePlaceholders = true, -- auto-fill function parameters
-            completeUnimported = true, -- auto-import packages
+            usePlaceholders = true,
+            completeUnimported = true,
+            staticcheck = true,
+            semanticTokens = true,
+            matcher = "Fuzzy",
+            directoryFilters = { "-.git", "-node_modules", "-vendor" },
             analyses = {
               unusedparams = true,
               unreachable = true,
@@ -314,7 +428,6 @@ return {
               unusedwrite = true,
               shadow = true,
             },
-            staticcheck = true, -- enable static analysis (like go vet + more)
             hints = {
               assignVariableTypes = true,
               compositeLiteralFields = true,
