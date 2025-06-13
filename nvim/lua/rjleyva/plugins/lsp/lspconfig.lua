@@ -223,7 +223,7 @@ return {
                 diagnostics = { enabled = true },
               },
               eslint = {
-                enabled = false, -- handled by conform
+                enabled = false,
               },
             },
           },
@@ -241,7 +241,7 @@ return {
                 diagnostics = { enabled = true },
               },
               eslint = {
-                enabled = false, -- handled by conform
+                enabled = false,
               },
             },
           },
@@ -314,11 +314,11 @@ return {
           yaml = {
             validate = true,
             format = {
-              enable = false, -- formatting is handled by conform
+              enable = false,
             },
-            keyOrdering = false, -- allow flexible ordering (useful for GitHub Actions, k8s)
+            keyOrdering = false,
             schemaStore = {
-              enable = false, -- we override this manually
+              enable = false,
               url = "",
             },
             schemas = require("schemastore").yaml.schemas(),
@@ -402,9 +402,9 @@ return {
               typeCheckingMode = "strict", -- or "basic"
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace", -- analyze all files, not just open ones
+              diagnosticMode = "workspace",
               autoImportCompletions = true,
-              stubPath = "typings", -- useful for custom stubs if needed
+              stubPath = "typings",
             },
           },
         },
