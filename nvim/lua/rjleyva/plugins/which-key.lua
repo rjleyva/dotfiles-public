@@ -49,7 +49,7 @@ return {
       { "<leader>g", group = "Git" },
       { "<leader>r", group = "Refactoring" },
       { "<leader>n", group = "Noice" },
-      -- { "<leader>t", group = "Testing (Neotest)" },
+      { "<leader>t", group = "Test Runner (Neotest)" },
       { "<leader>?", group = "Buffer Local Keymaps" },
     })
   end,
