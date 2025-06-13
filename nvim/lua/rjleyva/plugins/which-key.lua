@@ -39,7 +39,7 @@ return {
 
     wk.add({
       { "<leader>w", group = "Window Managment" },
-      { "<leader>t", group = "Tab Management" },
+      { "<leader>/", group = "Tab Management" },
       { "<leader>e", group = "Neo Tree Explorer" },
       { "<leader>f", group = "Fuzzy Finder" },
       { "<leader>c", group = "Code" },
@@ -49,6 +49,7 @@ return {
       { "<leader>g", group = "Git" },
       { "<leader>r", group = "Refactoring" },
       { "<leader>n", group = "Noice" },
+      -- { "<leader>t", group = "Testing (Neotest)" },
       { "<leader>?", group = "Buffer Local Keymaps" },
     })
   end,
