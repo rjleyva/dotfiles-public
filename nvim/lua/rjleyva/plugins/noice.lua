@@ -10,11 +10,11 @@ return {
   opts = function()
     return {
       lsp = {
-        progress = {
-          enabled = true,
-          format = "detailed",
-          view = "notify",
-        },
+        -- progress = {
+        --   enabled = true,
+        --   format = "detailed",
+        --   view = "notify",
+        -- },
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
