@@ -77,6 +77,66 @@ return {
     }
 
     local servers = {
+      -- Neovim / Lua
+      lua_ls = {
+        root_dir = root_pattern(".git", "init.lua"),
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+              path = vim.split(package.path, ";"),
+            },
+            diagnostics = {
+              globals = { "vim" },
+              groupFileStatus = {
+                library = "Any",
+                typedef = "Any",
+              },
+              neededFileStatus = {
+                ["missing-fields"] = "Warning",
+              },
+            },
+            type = {
+              enable = true,
+              checkTableShape = true,
+              strictUnionCheck = true,
+              strongNilCheck = true,
+            },
+            hint = { enable = true },
+            completion = { callSnippet = "Replace" },
+            workspace = {
+              checkThirdParty = false,
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = { enable = false },
+          },
+        },
+
+        on_attach = function(_, _)
+          vim.diagnostic.config({
+            virtual_text = true,
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            signs = {
+              text = {
+                [vim.diagnostic.severity.ERROR] = "",
+                [vim.diagnostic.severity.WARN] = "",
+                [vim.diagnostic.severity.INFO] = "",
+                [vim.diagnostic.severity.HINT] = "",
+              },
+              numhl = {
+                [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+                [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+                [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+                [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+              },
+            },
+          })
+        end,
+      },
+
+      -- Frontend markup and styles
       html = {
         filetypes = { "html" },
         root_dir = root_pattern("index.html", "package.json", ".git"),
@@ -87,43 +147,6 @@ return {
               references = true,
             },
           },
-        },
-      },
-
-      astro = {
-        filetypes = { "astro" },
-        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
-        settings = {
-          astro = {
-            diagnostics = { enabled = true },
-            plugin = {
-              typescript = { diagnostics = { enabled = true } },
-              eslint = { enabled = false }, -- handled by conform
-            },
-          },
-        },
-      },
-
-      svelte = {
-        filetypes = { "svelte" },
-        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.ts", ".git"),
-        settings = {
-          svelte = {
-            plugin = {
-              typescript = { diagnostics = { enabled = true } },
-              eslint = { enabled = false }, -- handled by conform
-            },
-          },
-        },
-      },
-
-      vtsls = {
-        filetypes = ts_filetypes,
-        root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
-        settings = {
-          typescript = { inlayHints = ts_inlay_hints },
-          javascript = { inlayHints = ts_inlay_hints },
-          completions = { completeFunctionCalls = true },
         },
       },
 
@@ -167,6 +190,46 @@ return {
         },
       },
 
+      -- Frontend frameworks
+      astro = {
+        filetypes = { "astro" },
+        root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
+        settings = {
+          astro = {
+            diagnostics = { enabled = true },
+            plugin = {
+              typescript = { diagnostics = { enabled = true } },
+              eslint = { enabled = false }, -- handled by conform
+            },
+          },
+        },
+      },
+
+      svelte = {
+        filetypes = { "svelte" },
+        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.ts", ".git"),
+        settings = {
+          svelte = {
+            plugin = {
+              typescript = { diagnostics = { enabled = true } },
+              eslint = { enabled = false }, -- handled by conform
+            },
+          },
+        },
+      },
+
+      -- JavaScript/TypeScript
+      vtsls = {
+        filetypes = ts_filetypes,
+        root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
+        settings = {
+          typescript = { inlayHints = ts_inlay_hints },
+          javascript = { inlayHints = ts_inlay_hints },
+          completions = { completeFunctionCalls = true },
+        },
+      },
+
+      -- Tooling / Infra
       jsonls = {
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
@@ -188,43 +251,9 @@ return {
         },
       },
 
+      -- Backend / API / Data Layer
       graphql = {
         filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
-      },
-
-      lua_ls = {
-        root_dir = root_pattern(".git", "init.lua"),
-        settings = {
-          Lua = {
-            runtime = {
-              version = "LuaJIT",
-              path = vim.split(package.path, ";"),
-            },
-            diagnostics = {
-              globals = { "vim" },
-              groupFileStatus = {
-                library = "Any",
-                typedef = "Any",
-              },
-              neededFileStatus = {
-                ["missing-fields"] = "Warning",
-              },
-            },
-            type = {
-              enable = true,
-              checkTableShape = true,
-              strictUnionCheck = true,
-              strongNilCheck = true,
-            },
-            hint = { enable = true },
-            completion = { callSnippet = "Replace" },
-            workspace = {
-              checkThirdParty = false,
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-            telemetry = { enable = false },
-          },
-        },
       },
     }
 
