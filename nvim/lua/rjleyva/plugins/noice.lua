@@ -10,6 +10,7 @@ return {
   opts = function()
     return {
       lsp = {
+        -- disable detailed progress view in notify, prefer subtle loading message
         -- progress = {
         --   enabled = true,
         --   format = "detailed",
