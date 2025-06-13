@@ -6,7 +6,7 @@ return {
     {
       "saghen/blink.compat",
       optional = true,
-      version = vim.g.lazyvim_blink_main and "*" or "1.*",
+      version = (vim.g.lazyvim_blink_main == true) and "*" or "1.*",
     },
   },
   opts = {
@@ -20,6 +20,7 @@ return {
         },
       },
     },
+
     keymap = { preset = "default" },
     appearance = { nerd_font_variant = "mono" },
     signature = { enabled = true },
@@ -29,6 +30,7 @@ return {
       trigger = { show_on_keyword = true },
       menu = { draw = { treesitter = { "lsp" } } },
     },
+
     cmdline = {
       keymap = { preset = "inherit" },
       completion = {
@@ -37,6 +39,7 @@ return {
       },
     },
   },
+
   config = function(_, opts)
     require("blink.cmp").setup(opts)
   end,
