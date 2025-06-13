@@ -49,16 +49,39 @@ return {
 
     local on_attach = function(_, _) end
 
+    local ts_inlay_hints = {
+      includeInlayParameterNameHints = "all",
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
+    }
+
+    local ts_filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+    }
+
+    local web_filetypes = {
+      "html",
+      "css",
+      "scss",
+      "sass",
+      "less",
+      unpack(ts_filetypes),
+      "svelte",
+      "astro",
+    }
+
     local servers = {
       html = {
         filetypes = { "html" },
         root_dir = root_pattern("index.html", "package.json", ".git"),
         settings = {
           html = {
-            format = {
-              wrapLineLength = 120,
-              unformatted = "pre,code,textarea",
-            },
             hover = {
               documentation = true,
               references = true,
@@ -72,11 +95,10 @@ return {
         root_dir = root_pattern("package.json", "astro.config.mjs", ".git"),
         settings = {
           astro = {
-            format = { enable = true },
             diagnostics = { enabled = true },
             plugin = {
               typescript = { diagnostics = { enabled = true } },
-              eslint = { enabled = true },
+              eslint = { enabled = false }, -- handled by conform
             },
           },
         },
@@ -84,45 +106,23 @@ return {
 
       svelte = {
         filetypes = { "svelte" },
-        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.cjs", "svelte.config.ts", ".git"),
+        root_dir = root_pattern("package.json", "svelte.config.js", "svelte.config.ts", ".git"),
         settings = {
           svelte = {
             plugin = {
               typescript = { diagnostics = { enabled = true } },
+              eslint = { enabled = false }, -- handled by conform
             },
           },
         },
       },
 
       vtsls = {
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
+        filetypes = ts_filetypes,
         root_dir = root_pattern("package.json", "tsconfig.json", ".git"),
         settings = {
-          typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-          javascript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
+          typescript = { inlayHints = ts_inlay_hints },
+          javascript = { inlayHints = ts_inlay_hints },
           completions = { completeFunctionCalls = true },
         },
       },
@@ -141,17 +141,7 @@ return {
       },
 
       tailwindcss = {
-        filetypes = {
-          "html",
-          "css",
-          "scss",
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-          "svelte",
-          "astro",
-        },
+        filetypes = web_filetypes,
         root_dir = root_pattern(
           "tailwind.config.js",
           "tailwind.config.ts",
@@ -170,6 +160,7 @@ return {
               classRegex = {
                 "tw`([^`]*)",
                 'tw="([^"]*)',
+                "tw\\(([^)]*)\\)",
               },
             },
           },
@@ -183,23 +174,13 @@ return {
             config.settings = config.settings or {}
             config.settings.json = config.settings.json or {}
             config.settings.json.schemas = schemastore.json.schemas()
+            config.settings.json.validate = { enabled = true }
           end
         end,
-        settings = { json = { validate = { enabled = true } } },
       },
 
       emmet_ls = {
-        filetypes = {
-          "html",
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-          "css",
-          "scss",
-          "sass",
-          "less",
-        },
+        filetypes = web_filetypes,
         init_options = {
           html = {
             options = { ["bem.enabled"] = true },
@@ -208,13 +189,7 @@ return {
       },
 
       graphql = {
-        filetypes = {
-          "graphql",
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-        },
+        filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
       },
 
       lua_ls = {
@@ -227,7 +202,6 @@ return {
             },
             diagnostics = {
               globals = { "vim" },
-              disable = {},
               groupFileStatus = {
                 library = "Any",
                 typedef = "Any",
