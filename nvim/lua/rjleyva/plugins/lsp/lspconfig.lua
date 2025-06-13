@@ -40,7 +40,6 @@ return {
     require("lazydev").setup()
 
     local lspconfig = require("lspconfig")
-    local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
     local util = require("lspconfig.util")
@@ -441,8 +440,6 @@ return {
         },
       },
     }
-
-    mason.setup()
 
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
