@@ -67,42 +67,29 @@ return {
     },
   },
   opts = function()
-    local jest_config = {
-      jestConfigFile = function()
-        local file = vim.fn.expand("%:p")
-        if file:find("/packages/") then
-          return file:match("(.-/[^/]+/)src") .. "jest.config.ts"
-        end
-        return vim.fn.getcwd() .. "/jest.config.ts"
-      end,
-      cwd = function()
-        local file = vim.fn.expand("%:p")
-        if file:find("/packages/") then
-          return file:match("(.-/[^/]+/)src")
-        end
-        return vim.fn.getcwd()
-      end,
-    }
+    local get_jest_config = function()
+      local file = vim.fn.expand("%:p")
+      if file:find("/packages/") then
+        return file:match("(.-/[^/]+/)src") .. "jest.config.ts"
+      end
+      return vim.fn.getcwd() .. "/jest.config.ts"
+    end
+
+    local get_cwd = function()
+      local file = vim.fn.expand("%:p")
+      if file:find("/packages/") then
+        return file:match("(.-/[^/]+/)src")
+      end
+      return vim.fn.getcwd()
+    end
 
     return {
       adapters = {
         require("neotest-plenary"),
 
         require("neotest-jest")({
-          jestConfigFile = function()
-            local file = vim.fn.expand("%:p")
-            if file:find("/packages/") then
-              return file:match("(.-/[^/]+/)src") .. "jest.config.ts"
-            end
-            return vim.fn.getcwd() .. "/jest.config.ts"
-          end,
-          cwd = function()
-            local file = vim.fn.expand("%:p")
-            if file:find("/packages/") then
-              return file:match("(.-/[^/]+/)src")
-            end
-            return vim.fn.getcwd()
-          end,
+          jestConfigFile = get_jest_config,
+          cwd = get_cwd,
         }),
       },
       status = { virtual_text = true },
