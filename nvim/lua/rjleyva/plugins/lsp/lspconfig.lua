@@ -100,7 +100,7 @@ return {
     }
 
     local servers = {
-      -- Neovim / Lua
+      -- Lua
       lua_ls = {
         root_dir = root_pattern(".git", "init.lua"),
         settings = {
@@ -493,9 +493,8 @@ return {
 
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
+      automatic_enable = true,
       automatic_installation = false,
-      -- NOTE: `automatic_enable` is intentionally omitted to trigger a Lua LS warning
-      -- as a reminder for future config decisions.
       handlers = {
         function(server_name)
           local config = servers[server_name] or {}
