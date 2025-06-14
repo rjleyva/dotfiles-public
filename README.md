@@ -17,6 +17,7 @@ Here's a list of the tools I use alongside these dotfiles:
 
 - **[WezTerm](https://wezfurlong.org/wezterm/)** – A GPU‑accelerated, cross‑platform terminal emulator and multiplexer written in Rust
 - **[Neovim](https://neovim.io/)** – The core extensible Vim-based editor powering this setup
+- **[lazy.nvim](https://github.com/folke/lazy.nvim)** – A fast, modern plugin manager for Neovim by folke, used to load and manage all plugins in this configuration.
 - **[Nerd Font](https://www.nerdfonts.com/)** – Patches developer fonts with hundreds of extra glyphs/icons (e.g., Font Awesome, Devicons)
 - **[solarized-osaka](https://github.com/craftzdog/solarized-osaka.nvim)** – A clean, dark Neovim (and Tmux) theme written in Lua, with LSP and Treesitter support
 - **[commitizen](https://github.com/commitizen/cz-cli)** – Helps enforce conventional commit message formatting for a cleaner commit history
@@ -50,11 +51,17 @@ These language servers are configured with `nvim-lspconfig` and optimized for we
 
 Formatting is handled by external tools (like `conform.nvim`) to maintain speed and flexibility.
 
-## Root Detection
-
-Project roots are intelligently detected using patterns like `package.json`, `tsconfig.json`, `tailwind.config.js`, and `.git` for reliable behavior across monorepos and single-project structures.
-
 ---
+
+## Development Tooling
+
+This configuration includes tightly integrated tools for HTTP requests, debugging, and test running:
+
+| Tool            | Plugin(s)                      | Description                                                                |
+| --------------- | ------------------------------ | -------------------------------------------------------------------------- |
+| **REST Client** | [`rest.nvim`]                  | Send HTTP requests from `.http` files, view responses in split or floating |
+| **Debugger**    | [`nvim-dap`] + [`nvim-dap-ui`] | JavaScript/TypeScript debugging via `js-debug-adapter`, UI integration     |
+| **Test Runner** | [`neotest`] + [`neotest-jest`] | Run tests in Jest, view results inline or in floating output               |
 
 ## WIP
 
