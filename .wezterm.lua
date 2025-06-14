@@ -7,12 +7,12 @@ return {
 	macos_window_background_blur = 10,
 	color_scheme = "Solarized Dark - Patched",
 	max_fps = 60,
-	font = wezterm.font("FiraCode Nerd Font"),
+	font = wezterm.font("Hack Nerd Font"),
 	font_size = 18,
 	font_rules = {
 		{
 			intensity = "Normal",
-			font = wezterm.font("FiraCode Nerd Font", { weight = "Light", stretch = "Normal", style = "Normal" }),
+			font = wezterm.font("Hack Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" }),
 		},
 	},
 }
