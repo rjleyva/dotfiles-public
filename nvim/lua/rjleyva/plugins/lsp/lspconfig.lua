@@ -2,6 +2,9 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+    -- NOTE: Testing latest Mason versions.
+    -- The version fields are commented out to allow testing the latest release.
+    -- This makes it easy to revert to the stable versions if any breaking changes occur.
     {
       "williamboman/mason.nvim",
       -- version = "^1.0.0",
