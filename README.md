@@ -48,6 +48,8 @@ These language servers are configured with `nvim-lspconfig` and optimized for we
 | **JSON**          | `jsonls`      | Auto schemas from `schemastore`, validation enabled                 |
 | **Emmet**         | `emmet_ls`    | HTML/CSS snippets, BEM support                                      |
 | **Lua**           | `lua_ls`      | Strict type checking, Neovim plugin development                     |
+| **Go**            | `gopls`       | IntelliSense, diagnostics, formatting, go-to definition             |
+| **Python**        | `pyright`     | Type checking, IntelliSense, linting, formatting                    |
 
 Formatting is handled by external tools (like `conform.nvim`) to maintain speed and flexibility.
 
