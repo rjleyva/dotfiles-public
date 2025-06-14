@@ -45,6 +45,27 @@ return {
     local util = require("lspconfig.util")
     local root_pattern = require("lspconfig.util").root_pattern
 
+    vim.fn.mkdir(vim.fn.stdpath("config") .. "/schemas", "p")
+
+    local function cache_schemas()
+      local schema_dir = vim.fn.stdpath("config") .. "/schemas"
+      local schemas = {
+        ["prettierrc.json"] = "https://json.schemastore.org/prettierrc.json",
+        ["tsconfig.json"] = "https://json.schemastore.org/tsconfig.json",
+        ["eslintrc.json"] = "https://json.schemastore.org/eslintrc.json",
+      }
+
+      for name, url in pairs(schemas) do
+        local path = schema_dir .. "/" .. name
+        if vim.fn.filereadable(path) == 0 then
+          vim.notify("Caching schema: " .. name, vim.log.levels.INFO)
+          vim.fn.system({ "curl", "-fsSL", "-o", path, url })
+        end
+      end
+    end
+
+    cache_schemas()
+
     vim.diagnostic.config({ float = { border = "rounded" } })
 
     local on_attach = function(_, _) end
@@ -293,15 +314,42 @@ return {
         settings = {
           json = {
             validate = { enable = true },
+            schemaStore = {
+              enable = true,
+              url = "https://www.schemastore.org/api/json/catalog.json",
+            },
           },
         },
         on_new_config = function(config)
           local ok, schemastore = pcall(require, "schemastore")
-          if ok then
-            config.settings = config.settings or {}
-            config.settings.json = config.settings.json or {}
 
-            config.settings.json.schemas = schemastore.json.schemas()
+          config.settings = config.settings or {}
+          config.settings.json = config.settings.json or {}
+          config.settings.json.schemas = {}
+
+          if ok then
+            local success, result = pcall(schemastore.json.schemas)
+            if success then
+              config.settings.json.schemas = result
+            else
+              local function schema_path(name)
+                return vim.fn.stdpath("config") .. "/schemas/" .. name
+              end
+              config.settings.json.schemas = {
+                {
+                  fileMatch = { ".prettierrc", ".prettierrc.json" },
+                  url = schema_path("prettierrc.json"),
+                },
+                {
+                  fileMatch = { "tsconfig.json" },
+                  url = schema_path("tsconfig.json"),
+                },
+                {
+                  fileMatch = { ".eslintrc", ".eslintrc.json" },
+                  url = schema_path("eslintrc.json"),
+                },
+              }
+            end
           end
         end,
       },
