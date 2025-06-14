@@ -80,9 +80,10 @@ Contributions are welcome!
 If you spot something that could be improved—whether it’s a typo, a broken config, or a better way to handle a plugin—feel free to open an issue or submit a PR.
 
 No contribution is too small:
-• Fix typos or clarify documentation
-• Suggest performance or usability improvements
-• Recommend new tools or plugins that align with this setup
+
+- Fix typos or clarify documentation
+- Suggest performance or usability improvements
+- Recommend new tools or plugins that align with this setup
 
 This is a personal setup, but I’m always open to ideas that make it better for others too.
 
