@@ -56,6 +56,10 @@ Project roots are intelligently detected using patterns like `package.json`, `ts
 
 ---
 
+## WIP
+
+- Auto-suggestion of JSON schemas using `jsonls`
+
 ## Contributing
 
 Contributions are welcome!
