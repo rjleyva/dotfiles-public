@@ -297,7 +297,7 @@ return {
           },
         },
         on_new_config = function(new_config, new_root_dir)
-          local tsdk = util.path.join(new_root_dir, "node_modules", "typescript", "lib")
+          local tsdk = vim.fs.joinpath(new_root_dir, "node_modules", "typescript", "lib")
           if vim.fn.isdirectory(tsdk) == 1 then
             new_config.init_options = new_config.init_options or {}
             new_config.init_options.typescript = {
