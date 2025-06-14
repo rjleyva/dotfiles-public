@@ -576,14 +576,14 @@ return {
     {
       "[d",
       function()
-        vim.diagnostic.goto_prev({ float = true, border = "rounded" })
+        vim.diagnostic.jump({ count = -1, float = true })
       end,
       desc = "Previous Diagnostic",
     },
     {
       "]d",
       function()
-        vim.diagnostic.goto_next({ float = true, border = "rounded" })
+        vim.diagnostic.jump({ count = 1, float = true })
       end,
       desc = "Next Diagnostic",
     },
