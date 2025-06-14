@@ -5,9 +5,11 @@ These dotfiles reflect my current development setup, tailored for daily use. I r
 > **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
 > You need to manually install them via the command `:Mason` inside Neovim.
 
-**Performance Note:** After several rounds of refinement, my Neovim startup time now averages around **27-30ms**, measured using actual CPU time until UIEnter. I’ll continue exploring subtle improvements — the stretch goal is to eventually push below 30ms, or even sub-25ms, without sacrificing usability or features.
+This config is optimized for speed, with a cold startup time of under 30ms on a modern machine.
 
-![Neovim](assets/neovim-wk.webp)
+> Measured with lazy.nvim’s built-in profiler.
+
+![benchmark](assets/benchmark.webp)
 
 ---
 
@@ -58,6 +60,8 @@ Formatting is handled by external tools (like `conform.nvim`) to maintain speed 
 ## Development Tooling
 
 This configuration includes tightly integrated tools for HTTP requests, debugging, and test running:
+
+![neotest-debug-sample](assets/neotest-debug-sample.webp)
 
 | Tool            | Plugin(s)                      | Description                                                                |
 | --------------- | ------------------------------ | -------------------------------------------------------------------------- |
