@@ -42,7 +42,6 @@ return {
     local lspconfig = require("lspconfig")
     local mason_lspconfig = require("mason-lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
-    local util = require("lspconfig.util")
     local root_pattern = require("lspconfig.util").root_pattern
 
     vim.fn.mkdir(vim.fn.stdpath("config") .. "/schemas", "p")
