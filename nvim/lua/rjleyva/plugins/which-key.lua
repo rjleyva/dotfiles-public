@@ -50,6 +50,7 @@ return {
       { "<leader>r", group = "Refactoring" },
       { "<leader>n", group = "Noice" },
       { "<leader>t", group = "Test Runner (Neotest)" },
+      { "<leader>;", group = "Debug (DAP)" },
       { "<leader>?", group = "Buffer Local Keymaps" },
     })
   end,
