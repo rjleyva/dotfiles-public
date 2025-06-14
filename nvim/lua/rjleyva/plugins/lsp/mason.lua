@@ -21,6 +21,7 @@ return {
         "prettier",
         "stylua",
         "eslint_d",
+        "js-debug-adapter",
       },
       auto_update = false,
       run_on_start = true,
