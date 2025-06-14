@@ -1,0 +1,55 @@
+[user]
+    name = your_name
+    email = your_name@email.com
+[core]
+    pager = delta
+    excludesfile = .gitignore_global
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    side-by-side = true
+
+    # delta detects terminal colors automatically; set one of these to disable auto-detection
+    # dark = true
+    # light = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+[init]
+	defaultBranch = master
+[pull]
+	rebase = false
+[alias]
+  st = status
+  a = add
+  aa = add .
+  ra = remote add
+  ca = commit --amend
+  l = log
+  hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+  d = diff
+  df = diff --staged      
+  b = branch
+  p = push
+  pu = push -u
+  mv = mv -f
+  co = checkout
+  cb = checkout -b
+  cm = commit -m
+  stl = stash list
+  sv = stash save 
+  pop = stash pop
+  rb = rebase
+  rbc = rebase --continue
+  rbs = rebase --skip  
+  ustg = reset HEAD --  
+  cln = clean -fd    
+  ud = reset --soft HEAD^
+  fxp = commit --fixup
+  csq = commit --squash
+  sw = show
+  tl = tag --list
