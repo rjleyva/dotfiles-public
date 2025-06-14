@@ -76,7 +76,7 @@ return {
   },
 
   config = function(_, opts)
-    -- NOTE:
+    -- WIP:
     -- Intentionally using deprecated setup.
     -- Switching to `vim.g.rest_nvim` causes a module not found error.
     -- Keeping the deprecation warning visible as a reminder — still working on a proper fix.
