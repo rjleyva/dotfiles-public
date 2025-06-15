@@ -2,15 +2,8 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    -- NOTE: Testing latest Mason versions.
-    -- The version fields are commented out to allow testing the latest release.
-    -- This makes it easy to revert to the stable versions if any breaking changes occur.
     {
       "williamboman/mason.nvim",
-      -- version = "^1.0.0",
-    },
-    {
-      "mason-org/mason-lspconfig.nvim",
       -- version = "^1.0.0",
     },
     { "saghen/blink.cmp" },
@@ -23,6 +16,28 @@ return {
     {
       "b0o/schemastore.nvim",
       lazy = true,
+    },
+    {
+      "nvimtools/none-ls.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      config = function()
+        local null_ls = require("null-ls")
+
+        null_ls.setup({
+          sources = {
+            null_ls.builtins.diagnostics.selene.with({
+              filetypes = { "lua" },
+              extra_args = {
+                "--config",
+                vim.fn.stdpath("config") .. "/selene.toml",
+              },
+              condition = function(utils)
+                return utils.root_has_file({ "selene.toml" }) and vim.bo.filetype == "lua"
+              end,
+            }),
+          },
+        })
+      end,
     },
     {
       "folke/lazydev.nvim",
@@ -41,36 +56,34 @@ return {
 
   config = function()
     require("lazydev").setup()
+    require("mason").setup()
+    require("mason-lspconfig").setup()
 
-    local lspconfig = require("lspconfig")
-    local mason_lspconfig = require("mason-lspconfig")
     local capabilities = require("blink-cmp").get_lsp_capabilities()
+    local lspconfig = require("lspconfig")
     local root_pattern = require("lspconfig.util").root_pattern
 
-    vim.fn.mkdir(vim.fn.stdpath("config") .. "/schemas", "p")
-
-    local function cache_schemas()
-      local schema_dir = vim.fn.stdpath("config") .. "/schemas"
-      local schemas = {
-        ["prettierrc.json"] = "https://json.schemastore.org/prettierrc.json",
-        ["tsconfig.json"] = "https://json.schemastore.org/tsconfig.json",
-        ["eslintrc.json"] = "https://json.schemastore.org/eslintrc.json",
-      }
-
-      for name, url in pairs(schemas) do
-        local path = schema_dir .. "/" .. name
-        if vim.fn.filereadable(path) == 0 then
-          vim.notify("Caching schema: " .. name, vim.log.levels.INFO)
-          vim.fn.system({ "curl", "-fsSL", "-o", path, url })
-        end
-      end
-    end
-
-    cache_schemas()
-
-    vim.diagnostic.config({ float = { border = "rounded" } })
-
-    local on_attach = function(_, _) end
+    vim.diagnostic.config({
+      float = { border = "rounded" },
+      virtual_text = false,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.INFO] = "",
+          [vim.diagnostic.severity.HINT] = "",
+        },
+        numhl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+          [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+          [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+        },
+      },
+    })
 
     local ts_inlay_hints = {
       includeInlayParameterNameHints = "all",
@@ -99,504 +112,455 @@ return {
       unpack(ts_filetypes),
     }
 
-    local servers = {
-      -- Lua
-      lua_ls = {
-        root_dir = root_pattern(".git", "init.lua"),
-        settings = {
-          Lua = {
-            runtime = {
-              version = "LuaJIT",
-              path = vim.split(package.path, ";"),
-            },
-            diagnostics = {
-              globals = { "vim" },
-              groupFileStatus = {
-                library = "Any",
-                typedef = "Any",
-              },
-              neededFileStatus = {
-                ["missing-fields"] = "Warning",
-              },
-            },
-            type = {
-              enable = true,
-              checkTableShape = true,
-              strictUnionCheck = true,
-              strongNilCheck = true,
-              allowDefinedTypes = true, -- optional
-            },
-            hint = { enable = true },
-            completion = { callSnippet = "Replace" },
-            workspace = {
-              checkThirdParty = false,
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-            telemetry = { enable = false },
-          },
-        },
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+      callback = function(event)
+        local bufnr = event.buf
+        -- NOTE: Notify when an LSP client attaches to the buffer (for debugging purposes)
+        -- Uncomment the next 2 lines to display a notification with the attached LSP client name
+        -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+        -- vim.notify("LSP attached: " .. (client and client.name or "Unknown"), vim.log.levels.INFO)
 
-        on_attach = function(_, _)
-          vim.diagnostic.config({
-            virtual_text = false,
-            underline = true,
-            update_in_insert = false,
-            severity_sort = true,
-            signs = {
-              text = {
-                [vim.diagnostic.severity.ERROR] = "",
-                [vim.diagnostic.severity.WARN] = "",
-                [vim.diagnostic.severity.INFO] = "",
-                [vim.diagnostic.severity.HINT] = "",
-              },
-              numhl = {
-                [vim.diagnostic.severity.ERROR] = "DiagnosticError",
-                [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
-                [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
-                [vim.diagnostic.severity.HINT] = "DiagnosticHint",
-              },
-            },
-          })
-        end,
-      },
+        local keys = vim.keymap.set
+        local opts = { buffer = bufnr, silent = true }
 
-      -- Frontend markup and styles
-      marksman = {
-        filetypes = { "markdown" },
-        root_dir = function(fname)
-          return root_pattern(".git", ".marksman.toml", ".marksman.json")(fname) or vim.fn.getcwd()
-        end,
-        single_file_support = true,
-      },
-
-      html = {
-        filetypes = { "html" },
-        root_dir = root_pattern("index.html", "package.json", ".git"),
-        single_file_support = true,
-      },
-
-      cssls = {
-        filetypes = { "css", "scss", "less" },
-        root_dir = root_pattern("package.json", ".git"),
-        settings = {
-          css = {
-            validate = true,
-            lint = {
-              unknownAtRules = "warning",
-            },
-          },
-          scss = {
-            validate = true,
-            lint = {
-              unknownAtRules = "warning",
-            },
-          },
-          less = {
-            validate = true,
-            lint = {
-              unknownAtRules = "warning",
-            },
-          },
-        },
-      },
-
-      tailwindcss = {
-        filetypes = web_filetypes,
-        root_dir = root_pattern(
-          "tailwind.config.js",
-          "tailwind.config.ts",
-          "postcss.config.js",
-          "package.json",
-          ".git"
-        ),
-        settings = {
-          tailwindCSS = {
-            lint = {
-              cssConflict = "warning",
-              invalidApply = "error",
-              invalidScreen = "error",
-              recommendedVariantOrder = "error", -- optional
-            },
-            experimental = {
-              classRegex = {
-                "tw`([^`]*)",
-                'tw="([^"]*)',
-                "tw$begin:math:text$([^)]*)\\$end:math:text$",
-                -- optional:
-                'className="([^"]*)"',
-                "className={`([^`]*)`}",
-              },
-            },
-          },
-        },
-      },
-
-      -- Frontend frameworks
-      astro = {
-        filetypes = { "astro" },
-        root_dir = root_pattern("astro.config.mjs", "astro.config.ts", "package.json", ".git"),
-        settings = {
-          astro = {
-            diagnostics = {
-              enabled = true,
-            },
-            plugin = {
-              typescript = {
-                diagnostics = { enabled = true },
-              },
-              eslint = {
-                enabled = false,
-              },
-            },
-          },
-        },
-        single_file_support = true,
-      },
-
-      svelte = {
-        filetypes = { "svelte" },
-        root_dir = root_pattern("svelte.config.js", "svelte.config.ts", "package.json", ".git"),
-        settings = {
-          svelte = {
-            plugin = {
-              typescript = {
-                diagnostics = { enabled = true },
-              },
-              eslint = {
-                enabled = false,
-              },
-            },
-          },
-        },
-        single_file_support = true,
-      },
-
-      -- JavaScript/TypeScript
-      vtsls = {
-        filetypes = ts_filetypes,
-        root_dir = root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
-        settings = {
-          typescript = {
-            inlayHints = ts_inlay_hints,
-            updateImportsOnFileMove = { enabled = "always" },
-            completions = {
-              completeFunctionCalls = true,
-            },
-          },
-          javascript = {
-            inlayHints = ts_inlay_hints,
-            completions = {
-              completeFunctionCalls = true,
-            },
-          },
-          vtsls = {
-            autoUseWorkspaceTsdk = true,
-            experimental = {
-              completion = {
-                enableServerSideFuzzyMatch = true,
-              },
-            },
-          },
-        },
-        on_new_config = function(new_config, new_root_dir)
-          local tsdk = vim.fs.joinpath(new_root_dir, "node_modules", "typescript", "lib")
-          if vim.fn.isdirectory(tsdk) == 1 then
-            new_config.init_options = new_config.init_options or {}
-            new_config.init_options.typescript = {
-              tsdk = tsdk,
-            }
+        keys(
+          "n",
+          "<leader>lr",
+          require("fzf-lua").lsp_references,
+          vim.tbl_extend("force", opts, { desc = "References (LSP)" })
+        )
+        keys(
+          "n",
+          "<leader>ld",
+          require("fzf-lua").lsp_definitions,
+          vim.tbl_extend("force", opts, { desc = "Definitions (LSP)" })
+        )
+        keys(
+          "n",
+          "<leader>li",
+          require("fzf-lua").lsp_implementations,
+          vim.tbl_extend("force", opts, { desc = "Implementations (LSP)" })
+        )
+        keys(
+          "n",
+          "<leader>lt",
+          require("fzf-lua").lsp_typedefs,
+          vim.tbl_extend("force", opts, { desc = "Type Definitions (LSP)" })
+        )
+        keys(
+          "n",
+          "<leader>lx",
+          require("fzf-lua").lsp_document_diagnostics,
+          vim.tbl_extend("force", opts, { desc = "Document Diagnostics (LSP)" })
+        )
+        keys("n", "<leader>lh", function()
+          vim.lsp.buf.hover({ border = "rounded" })
+        end, vim.tbl_extend("force", opts, { desc = "Hover (LSP)" }))
+        keys(
+          { "n", "v" },
+          "<leader>lc",
+          vim.lsp.buf.code_action,
+          vim.tbl_extend("force", opts, { desc = "Action (LSP)" })
+        )
+        keys("n", "<leader>ln", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename (LSP)" }))
+        keys("n", "<leader>ll", function()
+          vim.diagnostic.open_float(nil, { focusable = true, border = "rounded" })
+        end, vim.tbl_extend("force", opts, { desc = "Line Diagnostics" }))
+        keys("n", "[d", function()
+          vim.diagnostic.jump({ count = -1, float = true })
+        end, vim.tbl_extend("force", opts, { desc = "Previous Diagnostic" }))
+        keys("n", "]d", function()
+          vim.diagnostic.jump({ count = 1, float = true })
+        end, vim.tbl_extend("force", opts, { desc = "Next Diagnostic" }))
+        keys("n", "<leader>ls", function()
+          for _, c in pairs(vim.lsp.get_clients()) do
+            c:stop()
           end
-        end,
-      },
+          vim.defer_fn(function()
+            vim.cmd("edit")
+          end, 100)
+        end, vim.tbl_extend("force", opts, { desc = "Restart All Active LSP Clients (Safe)" }))
+      end,
+    })
 
-      -- Tooling / Infra
-      jsonls = {
-        filetypes = { "json", "jsonc" },
-        root_dir = root_pattern(".git", "package.json"),
-        settings = {
-          json = {
-            validate = { enable = true },
-            schemaStore = {
-              enable = true,
-              url = "https://www.schemastore.org/api/json/catalog.json",
+    -- LSP server configurations
+    lspconfig.marksman.setup({
+      capabilities = capabilities,
+      filetypes = { "markdown" },
+      root_dir = function(fname)
+        return root_pattern(".git", ".marksman.toml", ".marksman.json")(fname) or vim.fn.getcwd()
+      end,
+      single_file_support = true,
+    })
+
+    lspconfig.html.setup({
+      capabilities = capabilities,
+      filetypes = { "html" },
+      root_dir = root_pattern("index.html", "package.json", ".git"),
+      single_file_support = true,
+    })
+
+    lspconfig.cssls.setup({
+      capabilities = capabilities,
+      filetypes = { "css", "scss", "less" },
+      root_dir = root_pattern("package.json", ".git"),
+      settings = {
+        css = {
+          validate = true,
+          lint = {
+            unknownAtRules = "warning",
+          },
+        },
+        scss = {
+          validate = true,
+          lint = {
+            unknownAtRules = "warning",
+          },
+        },
+        less = {
+          validate = true,
+          lint = {
+            unknownAtRules = "warning",
+          },
+        },
+      },
+    })
+
+    lspconfig.tailwindcss.setup({
+      capabilities = capabilities,
+      filetypes = web_filetypes,
+      root_dir = root_pattern("tailwind.config.js", "tailwind.config.ts", "postcss.config.js", "package.json", ".git"),
+      settings = {
+        tailwindCSS = {
+          lint = {
+            cssConflict = "warning",
+            invalidApply = "error",
+            invalidScreen = "error",
+            recommendedVariantOrder = "error",
+          },
+          experimental = {
+            classRegex = {
+              "tw`([^`]*)",
+              'tw="([^"]*)',
+              "tw$begin:math:text$([^)]*)\\$end:math:text$",
+              'className="([^"]*)"',
+              "className={`([^`]*)`}",
             },
           },
         },
-        on_new_config = function(config)
-          local ok, schemastore = pcall(require, "schemastore")
+      },
+    })
 
-          config.settings = config.settings or {}
-          config.settings.json = config.settings.json or {}
-          config.settings.json.schemas = {}
+    lspconfig.astro.setup({
+      capabilities = capabilities,
+      filetypes = { "astro" },
+      root_dir = root_pattern("astro.config.mjs", "astro.config.ts", "package.json", ".git"),
+      settings = {
+        astro = {
+          diagnostics = {
+            enabled = true,
+          },
+          plugin = {
+            typescript = {
+              diagnostics = { enabled = true },
+            },
+            eslint = {
+              enabled = false,
+            },
+          },
+        },
+      },
+      single_file_support = true,
+    })
 
-          if ok then
-            local success, result = pcall(schemastore.json.schemas)
-            if success then
-              config.settings.json.schemas = result
-            else
-              local function schema_path(name)
-                return vim.fn.stdpath("config") .. "/schemas/" .. name
-              end
-              config.settings.json.schemas = {
-                {
-                  fileMatch = { ".prettierrc", ".prettierrc.json" },
-                  url = schema_path("prettierrc.json"),
-                },
-                {
-                  fileMatch = { "tsconfig.json" },
-                  url = schema_path("tsconfig.json"),
-                },
-                {
-                  fileMatch = { ".eslintrc", ".eslintrc.json" },
-                  url = schema_path("eslintrc.json"),
-                },
-              }
-            end
+    lspconfig.svelte.setup({
+      capabilities = capabilities,
+      filetypes = { "svelte" },
+      root_dir = root_pattern("svelte.config.js", "svelte.config.ts", "package.json", ".git"),
+      settings = {
+        svelte = {
+          plugin = {
+            typescript = {
+              diagnostics = { enabled = true },
+            },
+            eslint = {
+              enabled = false,
+            },
+          },
+        },
+      },
+      single_file_support = true,
+    })
+
+    lspconfig.vtsls.setup({
+      capabilities = capabilities,
+      filetypes = ts_filetypes,
+      root_dir = root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
+      settings = {
+        typescript = {
+          inlayHints = ts_inlay_hints,
+          updateImportsOnFileMove = { enabled = "always" },
+          completions = {
+            completeFunctionCalls = true,
+          },
+        },
+        javascript = {
+          inlayHints = ts_inlay_hints,
+          completions = {
+            completeFunctionCalls = true,
+          },
+        },
+        vtsls = {
+          autoUseWorkspaceTsdk = true,
+          experimental = {
+            completion = {
+              enableServerSideFuzzyMatch = true,
+            },
+          },
+        },
+      },
+      on_new_config = function(new_config, new_root_dir)
+        local tsdk = vim.fs.joinpath(new_root_dir, "node_modules", "typescript", "lib")
+        if vim.fn.isdirectory(tsdk) == 1 then
+          new_config.init_options = new_config.init_options or {}
+          new_config.init_options.typescript = {
+            tsdk = tsdk,
+          }
+        end
+      end,
+    })
+
+    lspconfig.jsonls.setup({
+      capabilities = capabilities,
+      filetypes = { "json", "jsonc" },
+      root_dir = root_pattern(".git", "package.json"),
+      settings = {
+        json = {
+          validate = { enable = true },
+          schemaStore = {
+            enable = true,
+            url = "https://www.schemastore.org/api/json/catalog.json",
+          },
+          schemas = {},
+        },
+      },
+      on_new_config = function(config)
+        config.settings = config.settings or {}
+        config.settings.json = config.settings.json or {}
+
+        local ok, schemastore = pcall(require, "schemastore")
+        if ok then
+          local schemas = schemastore.json.schemas()
+          config.settings.json.schemas = schemas
+        else
+          local function schema_path(name)
+            return vim.fn.stdpath("config") .. "/schemas/" .. name
           end
-        end,
-      },
+          config.settings.json.schemas = {
+            {
+              fileMatch = { ".prettierrc", ".prettierrc.json" },
+              url = schema_path("prettierrc.json"),
+            },
+            {
+              fileMatch = { "tsconfig.json" },
+              url = schema_path("tsconfig.json"),
+            },
+            {
+              fileMatch = { ".eslintrc", ".eslintrc.json" },
+              url = schema_path("eslintrc.json"),
+            },
+          }
+        end
+      end,
+    })
 
-      yamlls = {
-        filetypes = { "yaml", "yml" },
-        root_dir = root_pattern(".git", ".github", ".yaml"),
-        settings = {
-          yaml = {
-            validate = true,
-            format = {
-              enable = false,
+    lspconfig.yamlls.setup({
+      capabilities = capabilities,
+      filetypes = { "yaml", "yml" },
+      root_dir = root_pattern(".git", ".github", ".yaml"),
+      settings = {
+        yaml = {
+          validate = true,
+          format = {
+            enable = false,
+          },
+          keyOrdering = false,
+          schemaStore = {
+            enable = false,
+            url = "",
+          },
+          schemas = {},
+        },
+      },
+      on_new_config = function(config)
+        config.settings = config.settings or {}
+        config.settings.yaml = config.settings.yaml or {}
+
+        local ok, schemastore = pcall(require, "schemastore")
+        if ok then
+          local schemas = schemastore.yaml.schemas()
+          config.settings.yaml.schemas = schemas
+        else
+          local function schema_path(name)
+            return vim.fn.stdpath("config") .. "/schemas/" .. name
+          end
+          config.settings.yaml.schemas = {
+            {
+              description = "GitHub Actions workflow",
+              fileMatch = { ".github/workflows/*" },
+              url = "https://json.schemastore.org/github-workflow.json",
             },
-            keyOrdering = false,
-            schemaStore = {
-              enable = false,
-              url = "",
+            {
+              description = "YAML Lint configuration",
+              fileMatch = { ".yamllint" },
+              url = schema_path("yamllint.json"),
             },
-            schemas = require("schemastore").yaml.schemas(),
+          }
+        end
+      end,
+    })
+
+    lspconfig.emmet_ls.setup({
+      capabilities = capabilities,
+      filetypes = {
+        "html",
+        "css",
+        "scss",
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "astro",
+      },
+      init_options = {
+        html = {
+          options = {
+            ["bem.enabled"] = true,
+            ["output.selfClosingTag"] = true,
+          },
+        },
+        css = {
+          options = {
+            ["output.selfClosingTag"] = true,
+          },
+        },
+        scss = {
+          options = {
+            ["output.selfClosingTag"] = true,
+          },
+        },
+        javascript = {
+          options = {
+            ["output.selfClosingTag"] = false,
+          },
+        },
+        javascriptreact = {
+          options = {
+            ["bem.enabled"] = false,
+            ["output.selfClosingTag"] = false,
+          },
+        },
+        typescript = {
+          options = {
+            ["output.selfClosingTag"] = false,
+          },
+        },
+        typescriptreact = {
+          options = {
+            ["bem.enabled"] = false,
+            ["output.selfClosingTag"] = false,
+          },
+        },
+        svelte = {
+          options = {
+            ["bem.enabled"] = true,
+            ["output.selfClosingTag"] = true,
+          },
+        },
+        astro = {
+          options = {
+            ["bem.enabled"] = true,
+            ["output.selfClosingTag"] = true,
           },
         },
       },
+    })
 
-      emmet_ls = {
-        filetypes = {
-          "html",
-          "css",
-          "scss",
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-          "svelte",
-          "astro",
+    lspconfig.graphql.setup({
+      capabilities = capabilities,
+      filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
+      root_dir = root_pattern(
+        ".graphqlrc",
+        ".graphqlrc.json",
+        ".graphqlrc.yaml",
+        ".graphqlrc.yml",
+        ".graphqlrc.js",
+        ".graphqlrc.ts",
+        "graphql.config.json",
+        "graphql.config.js",
+        "graphql.config.ts",
+        "package.json",
+        ".git"
+      ),
+      single_file_support = true,
+      settings = {
+        graphql = {
+          -- Placeholder for future options, like:
+          -- schema = "<your-schema-path>",
+          -- projects = { ... }
         },
-        init_options = {
-          html = {
-            options = {
-              ["bem.enabled"] = true,
-              ["output.selfClosingTag"] = true,
-            },
-          },
-          javascriptreact = {
-            options = {
-              ["bem.enabled"] = false,
-              ["output.selfClosingTag"] = false,
-            },
-          },
-          typescriptreact = {
-            options = {
-              ["bem.enabled"] = false,
-              ["output.selfClosingTag"] = false,
-            },
-          },
-          svelte = {
-            options = {
-              ["bem.enabled"] = true,
-              ["output.selfClosingTag"] = true,
-            },
-          },
-          astro = {
-            options = {
-              ["bem.enabled"] = true,
-              ["output.selfClosingTag"] = true,
-            },
+      },
+    })
+
+    lspconfig.pyright.setup({
+      capabilities = capabilities,
+      root_dir = root_pattern("pyproject.toml", "setup.py", "requirements.txt", ".git"),
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "strict", -- Options: "off", "basic", "strict"
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+            autoImportCompletions = true,
+            stubPath = "typings",
           },
         },
       },
+    })
 
-      -- Backend / API / Data Layer
-      graphql = {
-        filetypes = vim.tbl_extend("force", ts_filetypes, { "graphql" }),
-        root_dir = root_pattern(
-          ".graphqlrc",
-          ".graphqlrc.json",
-          ".graphqlrc.yaml",
-          ".graphqlrc.yml",
-          ".graphqlrc.js",
-          ".graphqlrc.ts",
-          "graphql.config.json",
-          "graphql.config.js",
-          "graphql.config.ts",
-          "package.json",
-          ".git"
-        ),
-        single_file_support = true,
-        settings = {
-          graphql = {},
-        },
-      },
-
-      pyright = {
-        root_dir = root_pattern("pyproject.toml", "setup.py", "requirements.txt", ".git"),
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "strict", -- or "basic"
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
-              autoImportCompletions = true,
-              stubPath = "typings",
-            },
+    lspconfig.gopls.setup({
+      capabilities = capabilities,
+      root_dir = root_pattern("go.work", "go.mod", ".git"),
+      settings = {
+        gopls = {
+          usePlaceholders = true,
+          completeUnimported = true,
+          staticcheck = true,
+          semanticTokens = true,
+          matcher = "Fuzzy", --  Options: "Fuzzy", "CaseSensitive", or "CaseInsensitive"
+          directoryFilters = { "-.git", "-node_modules", "-vendor" },
+          analyses = {
+            unusedparams = true,
+            unreachable = true,
+            fieldalignment = true,
+            nilness = true,
+            unusedwrite = true,
+            shadow = true,
+          },
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
           },
         },
-      },
-
-      gopls = {
-        root_dir = root_pattern("go.work", "go.mod", ".git"),
-        settings = {
-          gopls = {
-            usePlaceholders = true,
-            completeUnimported = true,
-            staticcheck = true,
-            semanticTokens = true,
-            matcher = "Fuzzy",
-            directoryFilters = { "-.git", "-node_modules", "-vendor" },
-            analyses = {
-              unusedparams = true,
-              unreachable = true,
-              fieldalignment = true,
-              nilness = true,
-              unusedwrite = true,
-              shadow = true,
-            },
-            hints = {
-              assignVariableTypes = true,
-              compositeLiteralFields = true,
-              compositeLiteralTypes = true,
-              constantValues = true,
-              functionTypeParameters = true,
-              parameterNames = true,
-              rangeVariableTypes = true,
-            },
-          },
-        },
-      },
-    }
-
-    mason_lspconfig.setup({
-      ensure_installed = vim.tbl_keys(servers),
-      automatic_enable = true,
-      automatic_installation = false,
-      handlers = {
-        function(server_name)
-          local config = servers[server_name] or {}
-          lspconfig[server_name].setup(vim.tbl_deep_extend("force", {
-            capabilities = capabilities,
-            on_attach = on_attach,
-          }, config))
-        end,
       },
     })
   end,
-
-  keys = {
-    {
-      "<leader>lr",
-      function()
-        require("fzf-lua").lsp_references()
-      end,
-      desc = "References (LSP)",
-    },
-    {
-      "<leader>ld",
-      function()
-        require("fzf-lua").lsp_definitions()
-      end,
-      desc = "Definitions (LSP)",
-    },
-    {
-      "<leader>li",
-      function()
-        require("fzf-lua").lsp_implementations()
-      end,
-      desc = "Implementations (LSP)",
-    },
-    {
-      "<leader>lt",
-      function()
-        require("fzf-lua").lsp_typedefs()
-      end,
-      desc = "Type Definitions (LSP)",
-    },
-    {
-      "<leader>lx",
-      function()
-        require("fzf-lua").lsp_document_diagnostics()
-      end,
-      desc = "Document Diagnostics (LSP)",
-    },
-    {
-      "<leader>lh",
-      function()
-        vim.lsp.buf.hover({ border = "rounded" })
-      end,
-      desc = "Hover (LSP)",
-    },
-    {
-      "<leader>lc",
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      mode = { "n", "v" },
-      desc = "Action (LSP)",
-    },
-    {
-      "<leader>ln",
-      function()
-        vim.lsp.buf.rename()
-      end,
-      desc = "Rename (LSP)",
-    },
-    {
-      "<leader>ll",
-      function()
-        vim.diagnostic.open_float(nil, { focusable = true, border = "rounded" })
-      end,
-      desc = "Line Diagnostics",
-    },
-    {
-      "[d",
-      function()
-        vim.diagnostic.jump({ count = -1, float = true })
-      end,
-      desc = "Previous Diagnostic",
-    },
-    {
-      "]d",
-      function()
-        vim.diagnostic.jump({ count = 1, float = true })
-      end,
-      desc = "Next Diagnostic",
-    },
-    {
-      "<leader>ls",
-      function()
-        for _, client in pairs(vim.lsp.get_clients()) do
-          client:stop()
-        end
-        vim.defer_fn(function()
-          vim.cmd("edit")
-        end, 100)
-      end,
-      desc = "Restart All Active LSP Clients (Safe)",
-    },
-  },
 }
