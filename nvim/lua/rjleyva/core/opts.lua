@@ -10,7 +10,7 @@ vim.opt.laststatus = 0
 vim.opt.number = true
 vim.opt.numberwidth = 3
 vim.opt.relativenumber = true
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 8
 vim.opt.showcmd = false
 vim.opt.showmode = false
 vim.opt.signcolumn = "yes:1"
@@ -69,8 +69,8 @@ vim.g.loaded_tarPlugin = 1
 vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_zipPlugin = 1
 
+-- Copied from craftzdog GitHub repository
 -- Terminal styling tweaks (italics, underlinea)
--- I got this from craftzdog
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
 vim.cmd("set t_ZH=[3m")
