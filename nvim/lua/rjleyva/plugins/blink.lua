@@ -12,6 +12,9 @@ return {
   opts = {
     snippets = {
       preset = 'luasnip',
+      expand = function(body)
+        require('luasnip').lsp_expand(body)
+      end,
     },
     sources = {
       default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
