@@ -22,6 +22,8 @@ keys.set("n", "<leader>/n", "<cmd>tabn<CR>", { desc = "Go to next tab" })
 keys.set("n", "<leader>/p", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 keys.set("n", "<leader>/b", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 
+keys.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason tool manager" })
+
 -- Inspired by folke/LazyVim
 -- I use it as a reference to improve and build my own config with folke/lazy.nvim plugin manager.
 keys.set("n", "<leader>ch", "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", {
@@ -29,7 +31,7 @@ keys.set("n", "<leader>ch", "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR
 })
 
 -- Launch lazy.nvim
-keys.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim plugin manager" })
+keys.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Open lazy.nvim plugin manager" })
 
 -- Exit
 keys.set("n", "<leader>X", "<cmd>qa<cr>", { desc = "Quit all windows and exit" })
