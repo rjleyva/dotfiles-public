@@ -331,6 +331,50 @@ return {
       end,
     })
 
+    lspconfig.eslint.setup({
+      capabilities = capabilities,
+      root_dir = root_pattern(
+        -- legacy config files
+        ".eslintrc",
+        ".eslintrc.js",
+        ".eslintrc.cjs",
+        ".eslintrc.json",
+
+        -- flat config (ESLint v8+)
+        "eslint.config.js",
+        "eslint.config.cjs",
+        "eslint.config.mjs",
+        "eslint.config.ts",
+
+        -- other common roots
+        "package.json",
+        ".git"
+      ),
+      filetypes = {
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "vue",
+        "astro",
+        "svelte",
+      },
+      settings = {
+        format = true,
+        codeAction = {
+          disableRuleComment = {
+            enable = true,
+            location = "separateLine",
+          },
+          showDocumentation = { enable = true },
+        },
+        lint = { run = "onSave" },
+      },
+      on_attach = function(client, _)
+        client.server_capabilities.documentFormattingProvider = false
+      end,
+    })
+
     lspconfig.jsonls.setup({
       capabilities = capabilities,
       filetypes = { "json", "jsonc" },
