@@ -1,2 +1,2 @@
-require("rjleyva.core.opts")
-require("rjleyva.core.keys")
+require 'rjleyva.core.opts'
+require 'rjleyva.core.keys'

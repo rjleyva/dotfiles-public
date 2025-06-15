@@ -1,18 +1,18 @@
 return {
-  "rest-nvim/rest.nvim",
-  ft = { "http" },
+  'rest-nvim/rest.nvim',
+  ft = { 'http' },
 
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
   },
 
   init = function()
-    vim.filetype.add({
+    vim.filetype.add {
       extension = {
-        http = "http",
+        http = 'http',
       },
-    })
+    }
   end,
 
   opts = {
@@ -21,7 +21,7 @@ return {
       skip_ssl_verification = true,
       hooks = {
         encode_url = true,
-        user_agent = "rest.nvim",
+        user_agent = 'rest.nvim',
         set_content_type = true,
       },
     },
@@ -34,8 +34,8 @@ return {
     clients = {
       curl = {
         statistics = {
-          { id = "time_total", title = "Time taken" },
-          { id = "size_download", title = "Download size" },
+          { id = 'time_total', title = 'Time taken' },
+          { id = 'size_download', title = 'Download size' },
         },
         opts = {
           set_compressed = false,
@@ -45,18 +45,18 @@ return {
     },
     cookies = {
       enable = true,
-      path = vim.fs.joinpath(vim.fn.stdpath("data"), "rest-nvim.cookies"),
+      path = vim.fs.joinpath(vim.fn.stdpath 'data', 'rest-nvim.cookies'),
     },
     env = {
       enable = true,
-      pattern = ".*%.env.*",
+      pattern = '.*%.env.*',
       find = function()
-        local config = require("rest-nvim.config")
+        local config = require 'rest-nvim.config'
         return vim.fs.find(function(name, _)
           return name:match(config.env.pattern)
         end, {
           path = vim.fn.getcwd(),
-          type = "file",
+          type = 'file',
           limit = math.huge,
         })
       end,
@@ -64,8 +64,8 @@ return {
     ui = {
       winbar = true,
       keybinds = {
-        prev = "H",
-        next = "L",
+        prev = 'H',
+        next = 'L',
       },
     },
     highlight = {
@@ -80,7 +80,12 @@ return {
     -- Intentionally using deprecated setup.
     -- Switching to `vim.g.rest_nvim` causes a module not found error.
     -- Keeping the deprecation warning visible as a reminder — still working on a proper fix.
-    require("rest-nvim").setup(opts)
-    vim.keymap.set("n", "\\r", "<cmd>Rest run<CR>", { desc = "Run HTTP request" })
+    require('rest-nvim').setup(opts)
+    vim.keymap.set(
+      'n',
+      '\\r',
+      '<cmd>Rest run<CR>',
+      { desc = 'Run HTTP request' }
+    )
   end,
 }

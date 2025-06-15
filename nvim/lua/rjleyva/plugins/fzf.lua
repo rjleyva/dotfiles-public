@@ -1,150 +1,150 @@
 return {
-  "ibhagwan/fzf-lua",
+  'ibhagwan/fzf-lua',
   enabled = true,
   lazy = true,
-  cmd = { "FzfLua" },
+  cmd = { 'FzfLua' },
   dependencies = {
-    { "nvim-tree/nvim-web-devicons", lazy = true },
+    { 'nvim-tree/nvim-web-devicons', lazy = true },
   },
   opts = {
-    file_icon_padding = "",
+    file_icon_padding = '',
     keymap = {
       fzf = {
-        ["CTRL-Q"] = "select-all+accept",
+        ['CTRL-Q'] = 'select-all+accept',
       },
     },
     fzf_opts = {
-      ["--wrap"] = true,
+      ['--wrap'] = true,
     },
     winopts = {
       preview = {
-        wrap = "wrap",
+        wrap = 'wrap',
       },
-      formatter = "path.filename_first",
+      formatter = 'path.filename_first',
     },
   },
 
   keys = {
     {
-      "<leader>fs",
+      '<leader>fs',
       function()
-        require("fzf-lua").commands()
+        require('fzf-lua').commands()
       end,
-      desc = "Search Neovim commands",
+      desc = 'Search Neovim commands',
     },
     {
-      "<leader>ff",
+      '<leader>ff',
       function()
-        require("fzf-lua").files()
+        require('fzf-lua').files()
       end,
-      desc = "Find files",
+      desc = 'Find files',
     },
     {
-      "<leader>fh",
+      '<leader>fh',
       function()
-        require("fzf-lua").highlights()
+        require('fzf-lua').highlights()
       end,
-      desc = "Search highlights groups",
+      desc = 'Search highlights groups',
     },
     {
-      "<leader>fm",
+      '<leader>fm',
       function()
-        require("fzf-lua").marks()
+        require('fzf-lua').marks()
       end,
-      desc = "Search marks in buffer",
+      desc = 'Search marks in buffer',
     },
     {
-      "<leader>fk",
+      '<leader>fk',
       function()
-        require("fzf-lua").keymaps()
+        require('fzf-lua').keymaps()
       end,
-      desc = "Search defined keymaps",
+      desc = 'Search defined keymaps',
     },
     {
-      "<leader>fl",
+      '<leader>fl',
       function()
-        require("fzf-lua").live_grep()
+        require('fzf-lua').live_grep()
       end,
-      desc = "Live grep across files",
+      desc = 'Live grep across files',
     },
     {
-      "<leader>fg",
+      '<leader>fg',
       function()
-        require("fzf-lua").git_files()
+        require('fzf-lua').git_files()
       end,
-      desc = "Search tracked Git files",
+      desc = 'Search tracked Git files',
     },
     {
-      "<leader>fb",
+      '<leader>fb',
       function()
-        require("fzf-lua").git_branches()
+        require('fzf-lua').git_branches()
       end,
-      desc = "Search Git branches",
+      desc = 'Search Git branches',
     },
     {
-      "<leader>fc",
+      '<leader>fc',
       function()
-        require("fzf-lua").git_commits()
+        require('fzf-lua').git_commits()
       end,
-      desc = "Search Git commits",
+      desc = 'Search Git commits',
     },
     {
-      "<leader>fB",
+      '<leader>fB',
       function()
-        require("fzf-lua").git_bcommits()
+        require('fzf-lua').git_bcommits()
       end,
-      desc = "Search buffer Git commits",
+      desc = 'Search buffer Git commits',
     },
     {
-      "<leader>fr",
+      '<leader>fr',
       function()
-        require("fzf-lua").resume()
+        require('fzf-lua').resume()
       end,
-      desc = "Resume last search session",
+      desc = 'Resume last search session',
     },
     {
-      "<leader>fR",
+      '<leader>fR',
       function()
-        require("fzf-lua").lsp_references()
+        require('fzf-lua').lsp_references()
       end,
-      desc = "References (LSP)",
+      desc = 'References (LSP)',
     },
     {
-      "<leader>fD",
+      '<leader>fD',
       function()
-        require("fzf-lua").lsp_definitions()
+        require('fzf-lua').lsp_definitions()
       end,
-      desc = "Definitions (LSP)",
+      desc = 'Definitions (LSP)',
     },
     {
-      "<leader>fi",
+      '<leader>fi',
       function()
-        require("fzf-lua").lsp_implementations()
+        require('fzf-lua').lsp_implementations()
       end,
-      desc = "Implementations (LSP)",
+      desc = 'Implementations (LSP)',
     },
     {
-      "<leader>ft",
+      '<leader>ft',
       function()
-        require("fzf-lua").lsp_typedefs()
+        require('fzf-lua').lsp_typedefs()
       end,
-      desc = "Type Definitions (LSP)",
+      desc = 'Type Definitions (LSP)',
     },
     {
-      "<leader>fN",
+      '<leader>fN',
       function()
-        require("fzf-lua").lsp_document_diagnostics()
+        require('fzf-lua').lsp_document_diagnostics()
       end,
-      desc = "Document Diagnostics (LSP)",
+      desc = 'Document Diagnostics (LSP)',
     },
   },
 
   config = function(_, opts)
-    local fzf = require("fzf-lua")
+    local fzf = require 'fzf-lua'
     fzf.setup(opts)
 
-    vim.api.nvim_create_user_command("FzfGitFiles", function()
-      fzf.fzf_exec("git ls-files", { prompt = "Git Files > " })
+    vim.api.nvim_create_user_command('FzfGitFiles', function()
+      fzf.fzf_exec('git ls-files', { prompt = 'Git Files > ' })
     end, {})
   end,
 }

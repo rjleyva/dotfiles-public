@@ -1,13 +1,13 @@
 return {
-  "craftzdog/solarized-osaka.nvim",
+  'craftzdog/solarized-osaka.nvim',
   lazy = true,
   priority = 1000,
-  event = "VeryLazy",
+  event = 'VeryLazy',
   opts = {
-    use_background = "dark",
-    border = "rounded",
+    use_background = 'dark',
+    border = 'rounded',
     enable_italics = true,
-    style = "dark",
+    style = 'dark',
     transparent = true,
     terminal_colors = true,
     styles = {
@@ -29,10 +29,10 @@ return {
     },
   },
   config = function(_, opts)
-    require("solarized-osaka").setup(opts)
-    vim.cmd.colorscheme("solarized-osaka")
+    require('solarized-osaka').setup(opts)
+    vim.cmd.colorscheme 'solarized-osaka'
     vim.schedule(function()
-      vim.api.nvim_set_hl(0, "Visual", { reverse = true })
+      vim.api.nvim_set_hl(0, 'Visual', { reverse = true })
     end)
   end,
 }

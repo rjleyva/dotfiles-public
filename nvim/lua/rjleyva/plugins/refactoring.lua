@@ -1,37 +1,37 @@
 return {
-  "ThePrimeagen/refactoring.nvim",
-  version = "*",
+  'ThePrimeagen/refactoring.nvim',
+  version = '*',
   ft = {
-    "lua",
-    "astro",
-    "svelte",
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
+    'lua',
+    'astro',
+    'svelte',
+    'javascript',
+    'typescript',
+    'javascriptreact',
+    'typescriptreact',
   },
 
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
   },
 
   opts = {},
 
   config = function(_, opts)
-    require("refactoring").setup(opts)
+    require('refactoring').setup(opts)
   end,
 
   keys = {
     {
-      "<leader>r",
+      '<leader>r',
       function()
-        require("refactoring").select_refactor({
+        require('refactoring').select_refactor {
           show_success_message = true,
-        })
+        }
       end,
-      mode = "v",
-      desc = "Refactor",
+      mode = 'v',
+      desc = 'Refactor',
     },
   },
 }

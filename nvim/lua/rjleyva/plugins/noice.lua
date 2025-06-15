@@ -1,10 +1,10 @@
 return {
-  "folke/noice.nvim",
-  version = "*",
-  event = "VeryLazy",
+  'folke/noice.nvim',
+  version = '*',
+  event = 'VeryLazy',
   dependencies = {
-    "rcarriga/nvim-notify",
-    { "MunifTanjim/nui.nvim", lazy = true },
+    'rcarriga/nvim-notify',
+    { 'MunifTanjim/nui.nvim', lazy = true },
   },
 
   opts = function()
@@ -17,24 +17,24 @@ return {
         --   view = "notify",
         -- },
         override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true,
         },
       },
 
       routes = {
         {
           filter = {
-            event = "msg_show",
+            event = 'msg_show',
             any = {
-              { find = "written" },
-              { find = "%d+L, %d+B" },
-              { find = "; after #%d+" },
-              { find = "; before #%d+" },
+              { find = 'written' },
+              { find = '%d+L, %d+B' },
+              { find = '; after #%d+' },
+              { find = '; before #%d+' },
             },
           },
-          view = "notify",
+          view = 'notify',
         },
       },
 
@@ -49,73 +49,73 @@ return {
   end,
 
   config = function(_, opts)
-    require("noice").setup(opts)
+    require('noice').setup(opts)
   end,
 
   keys = {
-    { "<leader>nn", "", desc = "+noice" },
+    { '<leader>nn', '', desc = '+noice' },
     {
-      "<S-Enter>",
+      '<S-Enter>',
       function()
-        require("noice").redirect(vim.fn.getcmdline())
+        require('noice').redirect(vim.fn.getcmdline())
       end,
-      mode = "c",
-      desc = "Redirect Cmdline",
+      mode = 'c',
+      desc = 'Redirect Cmdline',
     },
     {
-      "<leader>nl",
+      '<leader>nl',
       function()
-        require("noice").cmd("last")
+        require('noice').cmd 'last'
       end,
-      desc = "Noice Last Message",
+      desc = 'Noice Last Message',
     },
     {
-      "<leader>nh",
+      '<leader>nh',
       function()
-        require("noice").cmd("history")
+        require('noice').cmd 'history'
       end,
-      desc = "Noice History",
+      desc = 'Noice History',
     },
     {
-      "<leader>na",
+      '<leader>na',
       function()
-        require("noice").cmd("all")
+        require('noice').cmd 'all'
       end,
-      desc = "Noice All",
+      desc = 'Noice All',
     },
     {
-      "<leader>nd",
+      '<leader>nd',
       function()
-        require("noice").cmd("dismiss")
+        require('noice').cmd 'dismiss'
       end,
-      desc = "Dismiss All",
+      desc = 'Dismiss All',
     },
     {
-      "<leader>np",
+      '<leader>np',
       function()
-        require("noice").cmd("pick")
+        require('noice').cmd 'pick'
       end,
-      desc = "Noice Picker (FzfLua)",
+      desc = 'Noice Picker (FzfLua)',
     },
     {
-      "<C-f>",
+      '<C-f>',
       function()
-        return require("noice.lsp").scroll(4) or "<C-f>"
+        return require('noice.lsp').scroll(4) or '<C-f>'
       end,
-      mode = { "i", "n", "s" },
+      mode = { 'i', 'n', 's' },
       expr = true,
       silent = true,
-      desc = "Scroll Forward",
+      desc = 'Scroll Forward',
     },
     {
-      "<C-b>",
+      '<C-b>',
       function()
-        return require("noice.lsp").scroll(-4) or "<C-b>"
+        return require('noice.lsp').scroll(-4) or '<C-b>'
       end,
-      mode = { "i", "n", "s" },
+      mode = { 'i', 'n', 's' },
       expr = true,
       silent = true,
-      desc = "Scroll Backward",
+      desc = 'Scroll Backward',
     },
   },
 }

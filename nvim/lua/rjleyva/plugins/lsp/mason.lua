@@ -1,23 +1,23 @@
 return {
-  "williamboman/mason.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  'williamboman/mason.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    "williamboman/mason-lspconfig.nvim",
+    'williamboman/mason-lspconfig.nvim',
     {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-      cmd = { "MasonToolsInstall", "MasonToolsUpdate" },
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
       opts = {
         ensure_installed = {
-          "selene",
-          "eslint_d",
-          "pylint",
-          "golangci-lint",
-          "shfmt",
-          "stylua",
-          "prettier",
-          "black",
-          "isort",
-          "goimports",
+          'selene',
+          'eslint_d',
+          'pylint',
+          'golangci-lint',
+          'shfmt',
+          'stylua',
+          'prettier',
+          'black',
+          'isort',
+          'goimports',
         },
         auto_update = false,
         run_on_start = true,
@@ -27,42 +27,42 @@ return {
     },
   },
   config = function()
-    require("mason").setup({
+    require('mason').setup {
       ui = {
-        border = "none",
+        border = 'none',
         icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
+          package_installed = '✓',
+          package_pending = '➜',
+          package_uninstalled = '✗',
         },
       },
-    })
+    }
 
-    require("mason-lspconfig").setup({
+    require('mason-lspconfig').setup {
       ensure_installed = {
-        "lua_ls",
-        "marksman",
-        "html",
-        "cssls",
-        "tailwindcss",
-        "astro",
-        "svelte",
-        "vtsls",
-        "eslint",
-        "jsonls",
-        "yamlls",
-        "emmet_language_server",
-        "pyright",
-        "gopls",
+        'lua_ls',
+        'marksman',
+        'html',
+        'cssls',
+        'tailwindcss',
+        'astro',
+        'svelte',
+        'vtsls',
+        'eslint',
+        'jsonls',
+        'yamlls',
+        'emmet_language_server',
+        'pyright',
+        'gopls',
       },
       automatic_enable = true,
       automatic_installation = false,
-    })
+    }
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "VeryLazy",
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
       callback = function()
-        local has_installer, installer = pcall(require, "mason-tool-installer")
+        local has_installer, installer = pcall(require, 'mason-tool-installer')
         if has_installer then
           installer.run_on_start()
         end

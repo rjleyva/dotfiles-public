@@ -1,2 +1,2 @@
-require("rjleyva.core")
-require("rjleyva.lazy")
+require 'rjleyva.core'
+require 'rjleyva.lazy'

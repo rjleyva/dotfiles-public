@@ -1,106 +1,106 @@
 return {
-  "nvim-neotest/neotest",
+  'nvim-neotest/neotest',
   dependencies = {
-    { "nvim-lua/plenary.nvim", lazy = true },
-    { "antoinemadec/FixCursorHold.nvim", lazy = true },
-    { "nvim-treesitter/nvim-treesitter", lazy = true },
-    { "nvim-neotest/neotest-jest", lazy = true },
-    { "nvim-neotest/neotest-plenary", lazy = true },
-    { "nvim-neotest/nvim-nio", lazy = true },
+    { 'nvim-lua/plenary.nvim', lazy = true },
+    { 'antoinemadec/FixCursorHold.nvim', lazy = true },
+    { 'nvim-treesitter/nvim-treesitter', lazy = true },
+    { 'nvim-neotest/neotest-jest', lazy = true },
+    { 'nvim-neotest/neotest-plenary', lazy = true },
+    { 'nvim-neotest/nvim-nio', lazy = true },
   },
   keys = {
     {
-      "<leader>tf",
+      '<leader>tf',
       function()
-        require("neotest").run.run(vim.fn.expand("%"))
+        require('neotest').run.run(vim.fn.expand '%')
       end,
-      desc = "Run File",
+      desc = 'Run File',
     },
     {
-      "<leader>tr",
+      '<leader>tr',
       function()
-        require("neotest").run.run()
+        require('neotest').run.run()
       end,
-      desc = "Run Nearest",
+      desc = 'Run Nearest',
     },
     {
-      "<leader>ta",
+      '<leader>ta',
       function()
-        require("neotest").run.run(vim.loop.cwd())
+        require('neotest').run.run(vim.loop.cwd())
       end,
-      desc = "Run All Tests",
+      desc = 'Run All Tests',
     },
     {
-      "<leader>tl",
+      '<leader>tl',
       function()
-        require("neotest").run.run_last()
+        require('neotest').run.run_last()
       end,
-      desc = "Run Last",
+      desc = 'Run Last',
     },
     {
-      "<leader>tt",
+      '<leader>tt',
       function()
-        require("neotest").summary.toggle()
+        require('neotest').summary.toggle()
       end,
-      desc = "Toggle Summary",
+      desc = 'Toggle Summary',
     },
     {
-      "<leader>to",
+      '<leader>to',
       function()
-        require("neotest").output.open({ enter = true, auto_close = true })
+        require('neotest').output.open { enter = true, auto_close = true }
       end,
-      desc = "Show Output",
+      desc = 'Show Output',
     },
     {
-      "<leader>tp",
+      '<leader>tp',
       function()
-        require("neotest").output_panel.toggle()
+        require('neotest').output_panel.toggle()
       end,
-      desc = "Toggle Output Panel",
+      desc = 'Toggle Output Panel',
     },
     {
-      "<leader>ts",
+      '<leader>ts',
       function()
-        require("neotest").run.stop()
+        require('neotest').run.stop()
       end,
-      desc = "Stop Tests",
+      desc = 'Stop Tests',
     },
   },
   opts = function()
     local get_jest_config = function()
-      local file = vim.fn.expand("%:p")
-      if file:find("/packages/") then
-        return file:match("(.-/[^/]+/)src") .. "jest.config.ts"
+      local file = vim.fn.expand '%:p'
+      if file:find '/packages/' then
+        return file:match '(.-/[^/]+/)src' .. 'jest.config.ts'
       end
-      return vim.fn.getcwd() .. "/jest.config.ts"
+      return vim.fn.getcwd() .. '/jest.config.ts'
     end
 
     local get_cwd = function()
-      local file = vim.fn.expand("%:p")
-      if file:find("/packages/") then
-        return file:match("(.-/[^/]+/)src")
+      local file = vim.fn.expand '%:p'
+      if file:find '/packages/' then
+        return file:match '(.-/[^/]+/)src'
       end
       return vim.fn.getcwd()
     end
 
     return {
       adapters = {
-        require("neotest-plenary"),
+        require 'neotest-plenary',
 
-        require("neotest-jest")({
+        require 'neotest-jest' {
           jestConfigFile = get_jest_config,
           cwd = get_cwd,
-        }),
+        },
       },
       status = { virtual_text = true },
       output = { open_on_run = true },
       quickfix = {
         open = function()
-          local has_trouble, trouble = pcall(require, "trouble")
+          local has_trouble, trouble = pcall(require, 'trouble')
           if has_trouble then
-            trouble.open({ mode = "quickfix", focus = false })
+            trouble.open { mode = 'quickfix', focus = false }
           else
-            vim.cmd("copen")
+            vim.cmd 'copen'
           end
         end,
       },
@@ -108,13 +108,19 @@ return {
   end,
 
   config = function(_, opts)
-    require("neotest").setup(opts)
+    require('neotest').setup(opts)
 
-    local ns = vim.api.nvim_create_namespace("neotest")
+    local ns = vim.api.nvim_create_namespace 'neotest'
     vim.diagnostic.config({
       virtual_text = {
         format = function(diagnostic)
-          return (diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", ""))
+          return (
+            diagnostic.message
+              :gsub('\n', ' ')
+              :gsub('\t', ' ')
+              :gsub('%s+', ' ')
+              :gsub('^%s+', '')
+          )
         end,
       },
     }, ns)

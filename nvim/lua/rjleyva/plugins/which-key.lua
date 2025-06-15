@@ -1,7 +1,7 @@
 return {
-  "folke/which-key.nvim",
-  version = "*",
-  event = "VeryLazy",
+  'folke/which-key.nvim',
+  version = '*',
+  event = 'VeryLazy',
   opts = {
     plugins = {
       spelling = { enabled = false },
@@ -16,42 +16,42 @@ return {
       },
     },
     win = {
-      border = "rounded",
+      border = 'rounded',
     },
     layout = {
-      align = "center",
+      align = 'center',
     },
   },
 
   keys = {
     {
-      "<leader>?",
+      '<leader>?',
       function()
-        require("which-key").show({ global = false })
+        require('which-key').show { global = false }
       end,
-      desc = "Buffer Local Keymaps (which-key)",
+      desc = 'Buffer Local Keymaps (which-key)',
     },
   },
 
   config = function(_, opts)
-    local wk = require("which-key")
+    local wk = require 'which-key'
     wk.setup(opts)
 
-    wk.add({
-      { "<leader>w", group = "Window Managment" },
-      { "<leader>/", group = "Tab Management" },
-      { "<leader>e", group = "Neo Tree Explorer" },
-      { "<leader>f", group = "Fuzzy Finder" },
-      { "<leader>c", group = "Code" },
-      { "<leader>d", group = "Dadbod" },
-      { "<leader>l", group = "LSP Actions" },
-      { "<leader>x", group = "Diagnostics" },
-      { "<leader>g", group = "Git" },
-      { "<leader>r", group = "Refactoring" },
-      { "<leader>n", group = "Noice" },
-      { "<leader>t", group = "Test Runner (Neotest)" },
-      { "<leader>;", group = "Debug (DAP)" },
-      { "<leader>?", group = "Buffer Local Keys" },
-    })
+    wk.add {
+      { '<leader>w', group = 'Window Managment' },
+      { '<leader>/', group = 'Tab Management' },
+      { '<leader>e', group = 'Neo Tree Explorer' },
+      { '<leader>f', group = 'Fuzzy Finder' },
+      { '<leader>c', group = 'Code' },
+      { '<leader>d', group = 'Dadbod' },
+      { '<leader>l', group = 'LSP Actions' },
+      { '<leader>x', group = 'Diagnostics' },
+      { '<leader>g', group = 'Git' },
+      { '<leader>r', group = 'Refactoring' },
+      { '<leader>n', group = 'Noice' },
+      { '<leader>t', group = 'Test Runner (Neotest)' },
+      { '<leader>;', group = 'Debug (DAP)' },
+      { '<leader>?', group = 'Buffer Local Keys' },
+    }
   end,
 }

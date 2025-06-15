@@ -1,14 +1,14 @@
 return {
-  "kdheepak/lazygit.nvim",
+  'kdheepak/lazygit.nvim',
   dependencies = {
-    "nvim-lua/plenary.nvim",
+    'nvim-lua/plenary.nvim',
   },
-  cmd = { "LazyGit" },
+  cmd = { 'LazyGit' },
   keys = {
     {
-      "<leader>gg",
-      "<cmd>LazyGit<cr>",
-      desc = "Open LazyGit",
+      '<leader>gg',
+      '<cmd>LazyGit<cr>',
+      desc = 'Open LazyGit',
     },
   },
 }
