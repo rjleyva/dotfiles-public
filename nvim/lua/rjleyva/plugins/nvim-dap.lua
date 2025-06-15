@@ -99,11 +99,12 @@ return {
     {
       "jay-babu/mason-nvim-dap.nvim",
       opts = {
-        automatic_installation = true,
         ensure_installed = {
+          "js",
           "debugpy",
           "delve",
         },
+        automatic_installation = true,
         handlers = {
           function(config)
             require("mason-nvim-dap").default_setup(config)
