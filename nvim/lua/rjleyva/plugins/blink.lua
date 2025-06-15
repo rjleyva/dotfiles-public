@@ -10,6 +10,9 @@ return {
     },
   },
   opts = {
+    snippets = {
+      preset = "luasnip",
+    },
     sources = {
       default = { "lazydev", "lsp", "path", "snippets", "buffer" },
       providers = {
