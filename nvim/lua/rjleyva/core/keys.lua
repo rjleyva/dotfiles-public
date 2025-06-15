@@ -3,7 +3,7 @@ local keys = vim.keymap
 -- Exit Insert Mode
 keys.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 
--- (inspired by Josean Martinez's Neovim config) including Neovim structure
+-- Inspired by Josean Martinez's Neovim config including Neovim structure
 -- Navigation & Editing
 keys.set("n", "x", '"_x', { desc = "Delete char without copying to register" })
 keys.set("n", "<leader>+", "<C-a>", { desc = "Increment number under cursor" })
@@ -38,6 +38,17 @@ keys.set("n", "<leader>X", "<cmd>qa<cr>", { desc = "Quit all windows and exit" }
 -- NOTE: This opens a new unnamed buffer.
 --       to save it, run `:w filename.ext` (e.g., :w notes.txt).
 keys.set("n", "<leader>N", "<cmd>enew<cr>", { desc = "New File" })
+
+-- Inspection tools
+-- NOTE: Useful for inspecting syntax nodes and highlighting info under cursor.
+-- Show highlight groups and extmarks at the cursor position
+keys.set("n", "<leader>i", vim.show_pos, { desc = "Inspect highlight groups under cursor" })
+
+-- Open Treesitter syntax tree inspector and enter insert mode
+keys.set("n", "<leader>I", function()
+  vim.treesitter.inspect_tree()
+  vim.api.nvim_input("I")
+end, { desc = "Open Treesitter Inspector + Insert Mode" })
 
 -- Commenting
 keys.set("n", "<leader>co", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Insert line below with comment" })
