@@ -21,19 +21,39 @@ return {
       'nvimtools/none-ls.nvim',
       dependencies = { 'nvim-lua/plenary.nvim' },
       config = function()
+        vim.env.PATH = vim.fn.stdpath 'data' .. '/mason/bin:' .. vim.env.PATH
+
         local null_ls = require 'null-ls'
 
         null_ls.setup {
           sources = {
             null_ls.builtins.diagnostics.selene.with {
               filetypes = { 'lua' },
-              extra_args = {
-                '--config',
-                vim.fn.stdpath 'config' .. '/selene.toml',
-              },
+              extra_args = function()
+                local config_path = vim.fn.stdpath 'config' .. '/selene.toml'
+                if vim.fn.filereadable(config_path) == 1 then
+                  return { '--config', config_path }
+                end
+                return {}
+              end,
               condition = function(utils)
-                return utils.root_has_file { 'selene.toml' }
-                  and vim.bo.filetype == 'lua'
+                local has_config = utils.root_has_file { 'selene.toml' }
+
+                local bufname = vim.api.nvim_buf_get_name(0)
+                local cwd = vim.fn.getcwd()
+
+                local function normalize(path)
+                  return vim.loop.fs_realpath(path) or path
+                end
+
+                local normalized_buf = normalize(bufname)
+                local normalized_cwd = normalize(cwd)
+
+                local is_inside_root = normalized_buf
+                  and normalized_cwd
+                  and normalized_buf:sub(1, #normalized_cwd) == normalized_cwd
+
+                return has_config and is_inside_root
               end,
             },
           },
