@@ -26,7 +26,7 @@ return {
     },
     formatters = {
       stylua = {
-        prepend_args = { "--search-parent-directories" },
+        prepend_args = {},
       },
       eslint_d = {
         condition = function(ctx)
