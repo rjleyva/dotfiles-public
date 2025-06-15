@@ -1,3 +1,8 @@
+-- WIP: This configuration builds on the solid foundation of kickstart.nvim.
+-- https://github.com/nvim-lua/kickstart.nvim/blob/master/lua/kickstart/plugins/debug.lua
+-- I regularly explore both kickstart and LazyVim to learn from their best practices,
+-- and gradually adapt those ideas into my own setup.
+-- Some parts of the Go adapter config are still under development
 return {
   "mfussenegger/nvim-dap",
   lazy = true,
@@ -17,14 +22,14 @@ return {
       desc = "Debug: Step Into",
     },
     {
-      "<leader>;o",
+      "<leader>;S",
       function()
         require("dap").step_over()
       end,
       desc = "Debug: Step Over",
     },
     {
-      "<leader>;t",
+      "<leader>;s",
       function()
         require("dap").step_out()
       end,
@@ -45,7 +50,7 @@ return {
       desc = "Debug: Set Breakpoint",
     },
     {
-      "<leader>;u",
+      "<leader>;t",
       function()
         require("dapui").toggle()
       end,
@@ -90,20 +95,63 @@ return {
     { "nvim-neotest/nvim-nio" },
     {
       "mason-org/mason.nvim",
-      cmd = { "Mason", "MasonInstall", "MasonLog" },
     },
     {
       "jay-babu/mason-nvim-dap.nvim",
       opts = {
         automatic_installation = true,
-        handlers = {},
-        ensure_installed = {},
+        ensure_installed = {
+          "debugpy",
+          "delve",
+        },
+        handlers = {
+          function(config)
+            require("mason-nvim-dap").default_setup(config)
+          end,
+        },
       },
     },
+    {
+      "leoluz/nvim-dap-go",
+      config = function()
+        require("dap-go").setup({
+          delve = {
+            detached = vim.fn.has("win32") == 0,
+          },
+          dap_configurations = {
+            {
+              type = "go",
+              name = "Debug current file",
+              request = "launch",
+              program = "${file}",
+            },
+            {
+              type = "go",
+              name = "Debug file with arguments",
+              request = "launch",
+              program = "${file}",
+              args = function()
+                local input = vim.fn.input("Args: ")
+                return vim.fn.split(input, " ", true)
+              end,
+            },
+            {
+              type = "go",
+              name = "Attach to running process (port 3000)",
+              mode = "remote",
+              request = "attach",
+              connect = { host = "127.0.0.1", port = 3000 },
+            },
+          },
+        })
+      end,
+    },
   },
+
   config = function()
     local dap = require("dap")
 
+    -- JavaScript/TypeScript (pwa-node)
     dap.adapters["pwa-node"] = {
       type = "server",
       host = "localhost",
@@ -137,5 +185,25 @@ return {
 
     dap.configurations.typescript = dap.configurations.javascript
     dap.configurations.typescriptreact = dap.configurations.javascript
+
+    -- Python (debugpy)
+    dap.adapters.python = {
+      type = "executable",
+      command = "python",
+      args = { "-m", "debugpy.adapter" },
+    }
+
+    dap.configurations.python = {
+      {
+        type = "python",
+        request = "launch",
+        name = "Launch file",
+        program = "${file}",
+        pythonPath = function()
+          local venv_path = os.getenv("VIRTUAL_ENV")
+          return venv_path and (venv_path .. "/bin/python") or "python"
+        end,
+      },
+    }
   end,
 }
