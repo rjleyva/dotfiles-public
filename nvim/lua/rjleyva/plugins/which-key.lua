@@ -51,7 +51,7 @@ return {
       { "<leader>n", group = "Noice" },
       { "<leader>t", group = "Test Runner (Neotest)" },
       { "<leader>;", group = "Debug (DAP)" },
-      { "<leader>?", group = "Buffer Local Keymaps" },
+      { "<leader>?", group = "Buffer Local Keys" },
     })
   end,
 }
