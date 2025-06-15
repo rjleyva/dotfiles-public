@@ -1,2 +1,2 @@
-require("rjleyva.core.options")
-require("rjleyva.core.keymaps")
+require("rjleyva.core.opts")
+require("rjleyva.core.keys")
