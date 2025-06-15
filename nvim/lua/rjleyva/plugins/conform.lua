@@ -18,11 +18,36 @@ return {
       yaml = { "prettier" },
       graphql = { "prettier" },
       python = { "isort", "black" },
-      gopls = { "goimports" },
+      go = { "goimports", "gofmt" },
     },
     format_on_save = {
       lsp_fallback = true,
       timeout_ms = 500,
+    },
+    formatters = {
+      stylua = {
+        prepend_args = { "--search-parent-directories" },
+      },
+      eslint_d = {
+        condition = function(ctx)
+          return vim.fs.find({
+            -- Legacy configs
+            ".eslintrc",
+            ".eslintrc.js",
+            ".eslintrc.cjs",
+            ".eslintrc.json",
+
+            -- Flat config (ESLint v8+)
+            "eslint.config.js",
+            "eslint.config.cjs",
+            "eslint.config.mjs",
+            "eslint.config.ts",
+
+            -- Fallback/project indicators
+            "package.json",
+          }, { upward = true, path = ctx.filename })[1] ~= nil
+        end,
+      },
     },
   },
 
