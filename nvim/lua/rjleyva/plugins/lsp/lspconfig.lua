@@ -421,7 +421,7 @@ return {
       end,
     })
 
-    lspconfig.emmet_ls.setup({
+    lspconfig.emmet_language_server.setup({
       capabilities = capabilities,
       filetypes = {
         "html",
@@ -435,6 +435,12 @@ return {
         "astro",
       },
       init_options = {
+        options = {
+          ["bem.enabled"] = true,
+          ["output.selfClosingTag"] = true,
+        },
+      },
+      settings = {
         html = {
           options = {
             ["bem.enabled"] = true,
