@@ -29,7 +29,7 @@ return {
       function()
         require('which-key').show { global = false }
       end,
-      desc = 'Buffer Local Keymaps (which-key)',
+      desc = 'Buffer Local Keymaps (Which-Key)',
     },
   },
 
@@ -51,7 +51,6 @@ return {
       { '<leader>n', group = 'Noice' },
       { '<leader>t', group = 'Test Runner (Neotest)' },
       { '<leader>;', group = 'Debug (DAP)' },
-      { '<leader>?', group = 'Buffer Local Keys' },
     }
   end,
 }
