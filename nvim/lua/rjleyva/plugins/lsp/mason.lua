@@ -1,33 +1,8 @@
 return {
-  'williamboman/mason.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-  dependencies = {
-    'williamboman/mason-lspconfig.nvim',
-    {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
-      opts = {
-        ensure_installed = {
-          'selene',
-          'eslint_d',
-          'pylint',
-          'golangci-lint',
-          'shfmt',
-          'stylua',
-          'prettier',
-          'black',
-          'isort',
-          'goimports',
-        },
-        auto_update = false,
-        run_on_start = true,
-        start_delay = 3000,
-        debounce_hours = 24,
-      },
-    },
-  },
-  config = function()
-    require('mason').setup {
+  {
+    'williamboman/mason.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {
       ui = {
         border = 'none',
         icons = {
@@ -36,9 +11,13 @@ return {
           package_uninstalled = '✗',
         },
       },
-    }
+    },
+  },
 
-    require('mason-lspconfig').setup {
+  {
+    'williamboman/mason-lspconfig.nvim',
+    dependencies = { 'williamboman/mason.nvim' },
+    opts = {
       ensure_installed = {
         'lua_ls',
         'marksman',
@@ -55,18 +34,45 @@ return {
         'pyright',
         'gopls',
       },
-      automatic_enable = true,
+      automatic_enable = false,
       automatic_installation = false,
-    }
+    },
+  },
 
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'VeryLazy',
-      callback = function()
-        local has_installer, installer = pcall(require, 'mason-tool-installer')
-        if has_installer then
-          installer.run_on_start()
-        end
-      end,
-    })
-  end,
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
+    opts = {
+      ensure_installed = {
+        'selene',
+        'eslint_d',
+        'pylint',
+        'golangci-lint',
+        'shfmt',
+        'stylua',
+        'prettier',
+        'black',
+        'isort',
+        'goimports',
+      },
+      auto_update = false,
+      run_on_start = true,
+      start_delay = 3000,
+      debounce_hours = 24,
+    },
+    config = function(_, opts)
+      require('mason-tool-installer').setup(opts)
+
+      -- NOTE: Optional: Delay running on start until VeryLazy to reduce startup cost
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        callback = function()
+          local ok, installer = pcall(require, 'mason-tool-installer')
+          if ok then
+            installer.run_on_start()
+          end
+        end,
+      })
+    end,
+  },
 }
