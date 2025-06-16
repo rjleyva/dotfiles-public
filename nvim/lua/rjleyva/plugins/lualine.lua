@@ -1,46 +1,57 @@
+-- TODO: lualine.nvim is currently disabled while I troubleshoot its behavior.
+-- It loads aggressively as soon as Neovim starts, even with a lazy 'UIEnter' event.
+-- Not sure if it's due to a misconfiguration or another plugin triggering it early.
 return {
   -- 'nvim-lualine/lualine.nvim',
   -- event = 'UIEnter',
-  -- dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
-  -- opts = {
-  --   options = {
-  --     icons_enabled = true,
-  --     theme = 'solarized-osaka',
-  --     component_separators = { left = '', right = '' },
-  --     section_separators = { left = '', right = '' },
-  --     disabled_filetypes = {
-  --       statusline = {},
-  --       winbar = {},
-  --     },
-  --     ignore_focus = {},
-  --     always_divide_middle = true,
-  --     always_show_tabline = true,
-  --     globalstatus = false,
-  --     refresh = {
-  --       statusline = 100,
-  --       tabline = 100,
-  --       winbar = 100,
-  --     },
+  -- dependencies = {
+  --   'nvim-tree/nvim-web-devicons',
+  --   lazy = true,
+  --   opts = {
+  --     default = true,
   --   },
-  --   sections = {
-  --     lualine_a = { 'mode' },
-  --     lualine_b = { 'branch', 'diagnostics' },
-  --     lualine_c = { 'filename' },
-  --     lualine_x = { 'encoding', 'fileformat', 'filetype' },
-  --     lualine_y = { 'progress' },
-  --     lualine_z = { 'location' },
-  --   },
-  --   inactive_sections = {
-  --     lualine_a = {},
-  --     lualine_b = {},
-  --     lualine_c = { 'filename' },
-  --     lualine_x = { 'location' },
-  --     lualine_y = {},
-  --     lualine_z = {},
-  --   },
-  --   tabline = {},
-  --   winbar = {},
-  --   inactive_winbar = {},
-  --   extensions = {},
   -- },
+  -- config = function()
+  --   require('lualine').setup {
+  --     options = {
+  --       icons_enabled = true,
+  --       theme = 'solarized-osaka',
+  --       component_separators = { left = '', right = '' },
+  --       section_separators = { left = '', right = '' },
+  --       disabled_filetypes = {
+  --         statusline = {},
+  --         winbar = {},
+  --       },
+  --       ignore_focus = {},
+  --       always_divide_middle = true,
+  --       always_show_tabline = true,
+  --       globalstatus = false,
+  --       refresh = {
+  --         statusline = 100,
+  --         tabline = 100,
+  --         winbar = 100,
+  --       },
+  --     },
+  --     sections = {
+  --       lualine_a = { 'mode' },
+  --       lualine_b = { 'branch', 'diagnostics' },
+  --       lualine_c = { 'filename' },
+  --       lualine_x = { 'encoding', 'fileformat', 'filetype' },
+  --       lualine_y = { 'progress' },
+  --       lualine_z = { 'location' },
+  --     },
+  --     inactive_sections = {
+  --       lualine_a = {},
+  --       lualine_b = {},
+  --       lualine_c = { 'filename' },
+  --       lualine_x = { 'location' },
+  --       lualine_y = {},
+  --       lualine_z = {},
+  --     },
+  --     tabline = {},
+  --     winbar = {},
+  --     inactive_winbar = {},
+  --     extensions = {},
+  --   }
+  -- end,
 }
