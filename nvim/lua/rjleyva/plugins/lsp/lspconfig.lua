@@ -68,8 +68,8 @@ return {
           path = '${3rd}/luv/library',
           words = { 'vim%.uv' },
         },
-        enabled = function(root_dir)
-          return not vim.loop.fs_stat(root_dir .. '/.luarc.json')
+        enabled = function()
+          return true
         end,
       },
     },
@@ -79,6 +79,7 @@ return {
     require('lazydev').setup()
     require('mason').setup()
     require('mason-lspconfig').setup()
+    local util = require 'lspconfig.util'
 
     local capabilities = require('blink-cmp').get_lsp_capabilities()
     local lspconfig = require 'lspconfig'
@@ -231,6 +232,28 @@ return {
     })
 
     -- LSP server configurations
+    lspconfig.lua_ls.setup {
+      capabilities = capabilities,
+      filetypes = { 'lua' },
+      root_dir = util.root_pattern('.luarc.json', '.git', 'init.lua'),
+      settings = {
+        Lua = {
+          completion = { callSnippet = 'Replace' },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+              '${3rd}/luv/library',
+            },
+          },
+          telemetry = { enable = false },
+        },
+      },
+    }
+
     lspconfig.marksman.setup {
       capabilities = capabilities,
       filetypes = { 'markdown' },
@@ -626,9 +649,13 @@ return {
       single_file_support = true,
       settings = {
         graphql = {
-          -- Placeholder for future options, like:
-          -- schema = "<your-schema-path>",
-          -- projects = { ... }
+          -- schema = "schema.graphql", -- Example of Local schema Files
+          -- schema = "http://localhost:4000/graphql", -- Example of Remote Introspection
+          --- projects = { -- Example of Multiple Projects
+          -- app = {
+          --   schema = "src/schema.graphql",
+          --   documents = "src/**/*.graphql",
+          -- },
         },
       },
     }
