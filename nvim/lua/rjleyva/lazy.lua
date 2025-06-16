@@ -17,7 +17,11 @@ require('lazy').setup({
 }, {
   defaults = {
     lazy = true,
+    version = false,
   },
+  -- ui = {
+  --   border = 'rounded',
+  -- },
   checker = {
     enabled = true,
     notify = false,
@@ -25,5 +29,10 @@ require('lazy').setup({
   change_detection = {
     enabled = true,
     notify = false,
+  },
+  performance = {
+    cache = {
+      enabled = true,
+    },
   },
 })
