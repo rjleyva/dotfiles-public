@@ -31,7 +31,7 @@ return {
 
   keys = {
     {
-      'g]h',
+      '<leader>g]',
       function()
         if vim.wo.diff then
           vim.cmd.normal { ']c', bang = true }
@@ -45,7 +45,7 @@ return {
       silent = true,
     },
     {
-      'g[h',
+      '<leader>g[',
       function()
         if vim.wo.diff then
           vim.cmd.normal { '[c', bang = true }
@@ -59,7 +59,7 @@ return {
       silent = true,
     },
     {
-      'g]H',
+      '<ledaer>gL',
       function()
         require('gitsigns').nav_hunk 'last'
       end,
@@ -69,7 +69,7 @@ return {
       silent = true,
     },
     {
-      'g[H',
+      '<leader>gF',
       function()
         require('gitsigns').nav_hunk 'first'
       end,
@@ -97,7 +97,7 @@ return {
       silent = true,
     },
     {
-      '<leader>gS',
+      '<leader>gt',
       function()
         require('gitsigns').stage_buffer()
       end,
@@ -179,7 +179,7 @@ return {
       silent = true,
     },
     {
-      '<leader>gt',
+      '<leader>g$',
       function()
         require('gitsigns').toggle_signs()
       end,
@@ -209,7 +209,7 @@ return {
       silent = true,
     },
     {
-      '<leader>gl',
+      '<leader>gb',
       function()
         require('gitsigns').toggle_current_line_blame()
       end,
@@ -219,7 +219,7 @@ return {
       silent = true,
     },
     {
-      'ih',
+      '<leader>gS',
       ':<C-U>Gitsigns select_hunk<CR>',
       mode = { 'o', 'x' },
       desc = 'Select Hunk',
