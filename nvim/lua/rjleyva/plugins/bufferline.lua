@@ -1,3 +1,5 @@
+-- NOTE: Currently using incline.nvim for statusline/tabline.
+-- Keeping bufferline.nvim commented out for potential future workflow adjustments or UI needs.
 return {
   -- 'akinsho/bufferline.nvim',
   -- version = '*',
