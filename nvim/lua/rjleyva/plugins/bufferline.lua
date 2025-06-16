@@ -1,29 +1,29 @@
 -- NOTE: Currently using incline.nvim for statusline/tabline.
 -- Keeping bufferline.nvim commented out for potential future workflow adjustments or UI needs.
 return {
-  -- 'akinsho/bufferline.nvim',
-  -- version = '*',
-  -- event = { 'BufReadPre' },
-  -- dependencies = {
-  --   {
-  --     'nvim-tree/nvim-web-devicons',
-  --     event = 'VeryLazy',
-  --   },
-  -- },
-  -- opts = function()
-  --   local bufferline = require 'bufferline'
-  --   return {
-  --     options = {
-  --       mode = 'tabs',
-  --       style_preset = {
-  --         bufferline.style_preset.no_italic,
-  --         bufferline.style_preset.no_bold,
-  --       },
-  --       diagnostics_indicator = function(count, level)
-  --         local icon = level:match 'error' and ' ' or ' '
-  --         return ' ' .. icon .. count
-  --       end,
-  --     },
-  --   }
-  -- end,
+  'akinsho/bufferline.nvim',
+  version = '*',
+  event = { 'BufReadPre' },
+  dependencies = {
+    {
+      'nvim-tree/nvim-web-devicons',
+      event = 'VeryLazy',
+    },
+  },
+  opts = function()
+    local bufferline = require 'bufferline'
+    return {
+      options = {
+        mode = 'tabs',
+        style_preset = {
+          bufferline.style_preset.no_italic,
+          bufferline.style_preset.no_bold,
+        },
+        diagnostics_indicator = function(count, level)
+          local icon = level:match 'error' and ' ' or ' '
+          return ' ' .. icon .. count
+        end,
+      },
+    }
+  end,
 }
