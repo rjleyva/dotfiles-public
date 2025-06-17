@@ -47,6 +47,7 @@ return {
       { '<leader>l', group = 'LSP Actions' },
       { '<leader>x', group = 'Diagnostics' },
       { '<leader>g', group = 'Git' },
+      { '<leader>h', group = 'Harpoon2' },
       { '<leader>r', group = 'Refactoring' },
       { '<leader>n', group = 'Noice' },
       { '<leader>t', group = 'Test Runner (Neotest)' },
