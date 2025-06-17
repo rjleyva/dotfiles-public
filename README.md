@@ -106,6 +106,42 @@ If you’d rather manage files through a UI inside Neovim, switch to the master 
 
 ---
 
+## Keybindings Overview
+
+Here is a quick reference table of `<leader>` keybindings available in your configuration:
+
+| Keybinding  | Action                                  |
+| ----------- | --------------------------------------- |
+| `<leader>+` | Increment number under cursor           |
+| `<leader>-` | Decrement number under cursor           |
+| `<leader>?` | 󰈔 Buffer Local Keymaps (`which-key`)    |
+| `<leader>/` | 󰓩 +Tab Management                       |
+| `<leader>c` |  +Code                                 |
+| `<leader>d` | +Dadbod                                 |
+| `<leader>f` |  +Fuzzy Finder                         |
+| `<leader>g` |  +Git                                  |
+| `<leader>h` | +Harpoon2                               |
+| `<leader>i` | Inspect highlight groups under cursor   |
+| `<leader>I` | Open Treesitter Inspector + Insert Mode |
+| `<leader>l` | +LSP Actions                            |
+| `<leader>L` | Open `lazy.nvim` plugin manager         |
+| `<leader>M` | Open Mason tool manager                 |
+| `<leader>n` | 󰈸 +Noice                                |
+| `<leader>N` | 📄 New File                             |
+| `<leader>t` | +Test Runner (`neotest`)                |
+| `<leader>w` |  +Window Management                    |
+| `<leader>x` | 󱖫 +Diagnostics                          |
+| `<leader>X` | 🛑 Quit all windows and exit            |
+| `<leader>:` | 󰃤 +Debug (`DAP`)                        |
+
+### Notes:
+
+- All keybindings are prefixed with `<leader>`, typically mapped to `\` or `Space` in most Neovim setups.
+- Icons such as `󰈔`, ``, etc., require a [Nerd Font](https://www.nerdfonts.com/) for proper display.
+- Group names with `+` (e.g., `+Git`) indicate that the key opens a category with more sub-bindings, typically displayed via `which-key`.
+
+---
+
 ## Contributing
 
 Contributions are welcome!
