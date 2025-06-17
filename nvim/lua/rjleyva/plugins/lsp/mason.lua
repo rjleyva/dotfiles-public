@@ -31,6 +31,7 @@ return {
         'jsonls',
         'yamlls',
         'emmet_language_server',
+        'graphql',
         'pyright',
         'gopls',
       },
