@@ -3,7 +3,7 @@
 These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
 > **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, `eslint_d`, `js-debug-adapter`, `debugpy`, and `delve` are **not auto-installed**.
-> You’ll need to manually install them using the :Mason command or by pressing <leader>M — a custom keybinding inspired by Folke’s setup that launches Mason directly from within Neovim.
+> You’ll need to manually install them using the :Mason command or by pressing `<leader>M` — a custom keybinding inspired by Folke’s setup that launches Mason directly from within Neovim.
 > This config is optimized for speed, with a cold startup time of under 30ms on a modern machine.
 
 > Measured with lazy.nvim’s built-in profiler.
