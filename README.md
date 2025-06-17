@@ -2,7 +2,7 @@
 
 These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
-> **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.
+> **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, `eslint_d`, `js-debug-adapter`, `debugpy`, and `delve` are **not auto-installed**.
 > You’ll need to manually install them using the :Mason command or by pressing <leader>M — a custom keybinding inspired by Folke’s setup that launches Mason directly from within Neovim.
 > This config is optimized for speed, with a cold startup time of under 30ms on a modern machine.
 
@@ -77,7 +77,7 @@ This repository uses Git branches to track the evolution of my Neovim configurat
 ### `master`
 
 - The original configuration, designed for a feature-rich and visually enhanced editing experience.
-- Includes UI plugins like `lualine.nvim`, `bufferline.nvim`, and `alpha.nvim`.
+- Includes UI plugins like `neo-tree`, `lualine.nvim`, `bufferline.nvim`, and `alpha.nvim`.
 
 ### `nvim-2025`
 
@@ -89,6 +89,20 @@ This repository uses Git branches to track the evolution of my Neovim configurat
   - [`incline.nvim`](https://github.com/b0o/incline.nvim) – lightweight floating statusline per window
 
 This setup is ideal for distraction-free development with speed, simplicity, and focus at its core.
+
+### File & Directory Management
+
+In the nvim-2025 branch, I’ve removed UI-heavy plugins like neo-tree, favoring a minimal and distraction-free environment. This branch is optimized for a shell-driven workflow.
+
+nvim-2025 Workflow
+
+- Create files and directories using your terminal shell (mkdir, touch, etc.).
+- Use `fzf-lua` for fuzzy finding and `harpoon2` for quick navigation.
+- Git commits are mostly handled via Commitizen, with optional use of lazygit.
+
+### Prefer file creation inside Neovim?
+
+If you’d rather manage files through a UI inside Neovim, switch to the master branch, which includes neo-tree and related plugins for an integrated file explorer.
 
 ---
 
