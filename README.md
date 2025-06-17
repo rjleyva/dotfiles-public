@@ -82,7 +82,7 @@ This repository uses Git branches to track the evolution of my Neovim configurat
 ### `nvim-2025`
 
 - A minimalist and focused configuration introduced in 2025.
-- Removes UI-heavy plugins (`lualine.nvim`, `bufferline.nvim`, `alpha.nvim`) to reduce distractions and improve startup performance.
+- Removes UI-heavy plugins (`neo-treee`, `lualine.nvim`, `bufferline.nvim`, `alpha.nvim`) to reduce distractions and improve startup performance.
 - Introduces new, purposeful tools:
   - [`harpoon2`](https://github.com/ThePrimeagen/harpoon) – for fast file/project navigation
   - [`hardtime.nvim`](https://github.com/m4xshen/hardtime.nvim) – encourages efficient movement usage
