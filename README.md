@@ -2,10 +2,9 @@
 
 These dotfiles reflect my current development setup, tailored for daily use. I regularly update this repository as I discover new tools or ways to streamline my workflow. While these configurations are optimized for my needs, I hope you’ll find something here that enhances your own setup too.
 
-> **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.  
-> You need to manually install them via the command `:Mason` inside Neovim.
-
-This config is optimized for speed, with a cold startup time of under 30ms on a modern machine.
+> **IMPORTANT:** Tools like `prettier`, `stylua`, `selene`, and `eslint_d` are **not auto-installed**.
+> You’ll need to manually install them using the :Mason command or by pressing <leader>M — a custom keybinding inspired by Folke’s setup that launches Mason directly from within Neovim.
+> This config is optimized for speed, with a cold startup time of under 30ms on a modern machine.
 
 > Measured with lazy.nvim’s built-in profiler.
 
@@ -69,9 +68,29 @@ This configuration includes tightly integrated tools for HTTP requests, debuggin
 | **Debugger**    | [`nvim-dap`] + [`nvim-dap-ui`] | JavaScript/TypeScript debugging via `js-debug-adapter`, UI integration     |
 | **Test Runner** | [`neotest`] + [`neotest-jest`] | Run tests in Jest, view results inline or in floating output               |
 
-## WIP
+---
 
-- Auto-suggestion of JSON schemas using `jsonls`
+## 🪴 Branching Strategy
+
+This repository uses Git branches to track the evolution of my Neovim configuration over time.
+
+### `master`
+
+- The original configuration, designed for a feature-rich and visually enhanced editing experience.
+- Includes UI plugins like `lualine.nvim`, `bufferline.nvim`, and `alpha.nvim`.
+
+### `nvim-2025`
+
+- A minimalist and focused configuration introduced in 2025.
+- Removes UI-heavy plugins (`lualine.nvim`, `bufferline.nvim`, `alpha.nvim`) to reduce distractions and improve startup performance.
+- Introduces new, purposeful tools:
+  - [`harpoon2`](https://github.com/ThePrimeagen/harpoon) – for fast file/project navigation
+  - [`hardtime.nvim`](https://github.com/m4xshen/hardtime.nvim) – encourages efficient movement usage
+  - [`incline.nvim`](https://github.com/b0o/incline.nvim) – lightweight floating statusline per window
+
+This setup is ideal for distraction-free development with speed, simplicity, and focus at its core.
+
+---
 
 ## Contributing
 
