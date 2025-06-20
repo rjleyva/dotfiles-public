@@ -3,6 +3,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Enable vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+function zle-keymap-select {
+  if [[ $KEYMAP == vicmd ]] ; then
+    echo -ne "\e]2;NORMAL MODE\a"
+  else
+    echo -ne "\e]2;INSERT MODE\a"
+  fi
+}
+zle -N zle-keymap-select
+
 # Load the Powerlevel10k theme
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
