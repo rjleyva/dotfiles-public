@@ -18,6 +18,15 @@ alias g="git"
 # Alias "c" for clear
 alias c="clear"
 
+#Alias "s" for source
+alias s="source"
+
+#Alias "m" for mkdir
+alias m="mkdir"
+
+#Alias "mp" for mkdir -p
+alias mp="mkdir -p"
+
 # Alias "x" for exit
 alias x="exit"
 
@@ -34,7 +43,7 @@ alias ls="eza -al --color=always --long --git --icons=always --created --time-st
 eval "$(zoxide init zsh)"
 
 # Set the default theme for bat syntax highlighting
-export BAT_THEME="gruvbox-dark"
+export BAT_THEME="Solarized (dark)"
 
 # Add Mason's bin directory to PATH for Neovim LSPs
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
