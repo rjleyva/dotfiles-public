@@ -83,6 +83,24 @@ return {
 
     local capabilities = require('blink-cmp').get_lsp_capabilities()
     local lspconfig = require 'lspconfig'
+
+    local function detect_package_manager(root_dir)
+      local lockfiles = {
+        ['yarn.lock'] = 'yarn',
+        ['pnpm-lock.yaml'] = 'pnpm',
+        ['package-lock.json'] = 'npm',
+        ['bun.lockb'] = 'bun',
+      }
+
+      for file, manager in pairs(lockfiles) do
+        if vim.fn.filereadable(vim.fn.join({ root_dir, file }, '/')) == 1 then
+          return manager
+        end
+      end
+
+      return 'npm' -- default fallback
+    end
+
     local root_pattern = require('lspconfig.util').root_pattern
 
     vim.diagnostic.config {
@@ -407,7 +425,7 @@ return {
           experimental = {
             completion = {
               enableServerSideFuzzyMatch = true,
-              preferredPackageManager = 'yarn', -- or "npm", "pnpm", "bun"
+              preferredPackageManager = 'npm',
             },
           },
         },
@@ -421,6 +439,22 @@ return {
             tsdk = tsdk,
           }
         end
+        local detected_pm = detect_package_manager(new_root_dir)
+        -- Notify which package manager was detected for the current project.
+        -- You can comment this out if you prefer not to see notifications.
+        vim.notify(
+          'VTSLS using package manager: ' .. detected_pm,
+          vim.log.levels.INFO
+        )
+
+        new_config.settings = new_config.settings or {}
+        new_config.settings.vtsls = new_config.settings.vtsls or {}
+        new_config.settings.vtsls.experimental = new_config.settings.vtsls.experimental
+          or {}
+        new_config.settings.vtsls.experimental.completion = new_config.settings.vtsls.experimental.completion
+          or {}
+        new_config.settings.vtsls.experimental.completion.preferredPackageManager =
+          detected_pm
       end,
     }
 
