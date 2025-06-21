@@ -407,6 +407,7 @@ return {
           experimental = {
             completion = {
               enableServerSideFuzzyMatch = true,
+              preferredPackageManager = 'yarn', -- or "npm", "pnpm", "bun"
             },
           },
         },
