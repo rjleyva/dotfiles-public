@@ -8,6 +8,7 @@ package.path = table.concat({
 
 -- LSP servers
 vim.lsp.enable {
+  'astro',
   'lua_ls',
 }
 
