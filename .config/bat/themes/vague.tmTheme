@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Vague</string>
+  <key>settings</key>
+  <array>
+    <!-- Global colors -->
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>background</key><string>#141414</string>
+        <key>foreground</key><string>#cdcdcd</string>
+        <key>caret</key><string>#cdcdcd</string>
+        <key>invisibles</key><string>#606079</string>
+        <key>lineHighlight</key><string>#252530</string>
+        <key>selection</key><string>#252530</string>
+      </dict>
+    </dict>
+
+    <!-- Comments (brightBlack #606079) -->
+    <dict>
+      <key>scope</key><string>comment</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#606079</string></dict>
+    </dict>
+
+    <!-- Keywords (brightRed #e08398) -->
+    <dict>
+      <key>scope</key><string>keyword</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#e08398</string></dict>
+    </dict>
+
+    <!-- Strings (brightGreen #99b782) -->
+    <dict>
+      <key>scope</key><string>string</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#99b782</string></dict>
+    </dict>
+
+    <!-- Numbers (brightYellow #f5cb96) -->
+    <dict>
+      <key>scope</key><string>constant.numeric</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#f5cb96</string></dict>
+    </dict>
+
+    <!-- Functions (brightBlue #8ba9c1) -->
+    <dict>
+      <key>scope</key><string>entity.name.function</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#8ba9c1</string></dict>
+    </dict>
+
+    <!-- Types (brightPurple #c9b1ca) -->
+    <dict>
+      <key>scope</key><string>storage.type</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#c9b1ca</string></dict>
+    </dict>
+
+    <!-- Variables (brightCyan #bebeda) -->
+    <dict>
+      <key>scope</key><string>variable</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#bebeda</string></dict>
+    </dict>
+
+    <!-- Constants / Foreground (brightWhite #d7d7d7) -->
+    <dict>
+      <key>scope</key><string>constant</string>
+      <key>settings</key>
+      <dict><key>foreground</key><string>#d7d7d7</string></dict>
+    </dict>
+  </array>
+</dict>
+</plist>
