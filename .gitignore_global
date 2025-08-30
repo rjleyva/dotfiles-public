@@ -1,0 +1,81 @@
+# macOS system files
+._*
+.cache/
+.config/local/
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.apdisk
+.com.apple.timemachine.donotpresent
+.metadata_never_index
+
+# Zsh shell
+.zsh_history
+.zcompdump*
+
+# Backup and temp files
+*.bak
+*.tmp
+*.swp
+*.swo
+*.log
+
+# Sensitive dotfiles
+.CFUserTextEncoding
+.p10k.zsh
+.wget-hsts
+.zprofile
+.npm/
+.pnpm/
+.yarn/
+.yarnrc
+.yarnrc.yml
+.bun/
+
+# SSH keys and config
+.ssh/
+
+# Local configs and caches
+.local/
+Library/
+.Trash/
+
+# macOS user folders
+Desktop/
+Documents/
+Downloads/
+Movies/
+Music/
+Pictures/
+Public/
+
+# Languages / tools
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+target/
+
+.config/yarn/
+.config/raycast/
+.config/tmux/plugins/
+
+
+# Force tracking project folders/files that may conflict with global ignore
+!public/
+
+!dotfiles-public/.config/bat
+!dotfiles-public/.config/nvim
+!dotfiles-public/.config/tmux
+!dotfiles-public/.czrc
+!dotfiles-public/.gitconfig
+!dotfiles-public/.gitignore_global
+!dotfiles-public/.wezterm.lua
+!dotfiles-public/.zshrc
