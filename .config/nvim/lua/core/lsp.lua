@@ -37,6 +37,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     then
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
+
+    -- Keymaps
+    require('lsp.keymaps').setup(bufnr)
   end,
 })
 
