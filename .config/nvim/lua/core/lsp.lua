@@ -12,6 +12,7 @@ vim.lsp.enable {
   'cssls',
   'emmet-language-server',
   'gopls',
+  'graphql',
   'lua_ls',
 }
 
