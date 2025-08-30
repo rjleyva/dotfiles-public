@@ -11,6 +11,7 @@ vim.lsp.enable {
   'astro',
   'cssls',
   'emmet-language-server',
+  'gopls',
   'lua_ls',
 }
 
