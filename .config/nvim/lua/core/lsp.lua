@@ -13,6 +13,7 @@ vim.lsp.enable {
   'emmet-language-server',
   'gopls',
   'graphql',
+  'html',
   'lua_ls',
 }
 
