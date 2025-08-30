@@ -18,6 +18,7 @@ vim.lsp.enable {
   'lua_ls',
   'marksman',
   'pyright',
+  'vtsls',
 }
 
 -- On LSP attach
