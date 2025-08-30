@@ -13,14 +13,11 @@ function M.ui()
   vim.opt.numberwidth = 3
   vim.opt.relativenumber = true
   vim.opt.scrolloff = 8
-  vim.opt.showcmd = true
-  vim.opt.showmode = true
   vim.opt.signcolumn = 'yes:1'
   vim.opt.termguicolors = true
   vim.opt.title = true
   vim.opt.wrap = false
   vim.opt.conceallevel = 0
-  vim.opt.hidden = true
   vim.opt.updatetime = 300
 end
 
@@ -31,7 +28,6 @@ function M.splits()
 end
 
 function M.indent()
-  vim.opt.autoindent = true
   vim.opt.expandtab = true
   vim.opt.shiftwidth = 2
   vim.opt.smartindent = true
@@ -66,7 +62,7 @@ function M.misc()
   vim.opt.backspace = { 'start', 'eol', 'indent' }
   vim.opt.backup = false
   vim.opt.swapfile = false
-  vim.opt.shortmess:append 'WICc'
+  vim.opt.shortmess:append 'WI'
   vim.g.deprecation_warnings = true
 
   -- Netrw
