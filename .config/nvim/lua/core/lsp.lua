@@ -19,6 +19,7 @@ vim.lsp.enable {
   'marksman',
   'pyright',
   'vtsls',
+  'yamlls',
 }
 
 -- On LSP attach
