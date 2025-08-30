@@ -84,15 +84,6 @@ function M.setup()
       vim.opt_local.conceallevel = 0
     end,
   })
-
-  -- Turn off paste mode when leaving insert
-  vim.api.nvim_create_autocmd('InsertLeave', {
-    group = vim.api.nvim_create_augroup('disable_paste_mode', { clear = true }),
-    desc = 'Turn off paste mode when leaving insert mode',
-    callback = function()
-      vim.o.paste = false
-    end,
-  })
 end
 
 return M
