@@ -10,6 +10,7 @@ package.path = table.concat({
 vim.lsp.enable {
   'astro',
   'cssls',
+  'emmet-language-server',
   'lua_ls',
 }
 
