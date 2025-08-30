@@ -5,14 +5,11 @@ M.spec = {
   event = { 'InsertEnter' },
 
   dependencies = {
-
-    -- Core completion sources
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-path' },
     { 'hrsh7th/cmp-buffer' },
     { 'saadparwaiz1/cmp_luasnip' },
 
-    -- Snippets engine
     {
       'L3MON4D3/LuaSnip',
       build = 'make install_jsregexp',
@@ -22,6 +19,7 @@ M.spec = {
         updateevents = 'TextChanged,TextChangedI',
         enable_autosnippets = true,
       },
+
       config = function(_, opts)
         local luasnip = require 'luasnip'
         luasnip.config.set_config(opts)
@@ -94,7 +92,19 @@ M.spec = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
-        { name = 'buffer' },
+        {
+          name = 'buffer',
+          option = {
+            get_bufnrs = function()
+              local buf = vim.api.nvim_get_current_buf()
+              local line_count = vim.api.nvim_buf_line_count(buf)
+              if line_count > 5000 then
+                return {}
+              end
+              return { buf }
+            end,
+          },
+        },
       },
 
       window = {
@@ -119,10 +129,13 @@ M.spec = {
       },
     }
 
-    -- SQL-specific setup: enable vim-dadbod-completion only in SQL buffers
+    -- Restrict DB completion to SQL filetypes
     cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
       sources = cmp.config.sources {
         { name = 'vim-dadbod-completion' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'path' },
         { name = 'buffer' },
       },
     })
