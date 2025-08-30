@@ -16,6 +16,7 @@ vim.lsp.enable {
   'html',
   'jsonls',
   'lua_ls',
+  'marksman',
 }
 
 -- On LSP attach
